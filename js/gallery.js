@@ -37,7 +37,7 @@ function photoNode(photo, index) {
     `<span class="shot__name"></span><span class="shot__where"></span>`;
   cap.querySelector('.shot__name').textContent = photo.title;
   cap.querySelector('.shot__where').textContent =
-    `${photo.location} · ${photo.year}`;
+    [photo.location, photo.year].filter(Boolean).join(' · ');
 
   fig.append(button, cap);
   return fig;

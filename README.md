@@ -10,8 +10,7 @@ js/data.js          ← the only file you need to edit
 js/gallery.js       grid, filters, series index
 js/lightbox.js      full-screen viewer
 js/main.js          copy, theme, loader, cursor, scroll
-images/             photographs (placeholders for now)
-tools/              placeholder generator (not needed once you add real photos)
+images/             photographs, resized to 1800px and stripped of EXIF
 ```
 
 ## Adding your photographs
@@ -36,7 +35,8 @@ caption — comes from `js/data.js`.
 ```
 
 `ratio` is worth getting right — it reserves the correct space before the image
-loads, so the grid never jumps while you scroll.
+loads, so the grid never jumps while you scroll. `location` is optional: leave it
+off and the caption shows just the year.
 
 Series live in the `SERIES` array; add, rename or reorder them freely and the
 filters and the series index follow. Your name, tagline, intro, email and social
@@ -48,12 +48,14 @@ Export at around 2000px on the long edge and save as JPEG or WebP. The grid
 never displays a frame wider than about 1100px, so anything larger is bandwidth
 you're paying for and your visitors are waiting on.
 
-## The placeholder images
+## About the images currently in here
 
-`images/*.svg` are generated stand-ins — seeded gradient fields with grain and a
-vignette — so the layout can be judged with something in it. Regenerate them
-with `node tools/gen-placeholders.mjs`. Once your own photographs are in, delete
-the SVGs and `tools/` entirely; nothing else refers to them.
+These are 17 frames pulled from the shared `photos` Drive folder, resized to
+1800px on the long edge and re-encoded as progressive JPEG. **EXIF is stripped
+on the way in** — several originals carried GPS coordinates, and those should
+not ship to the open web. The `location` field in `js/data.js` was filled in by
+hand from that GPS before it was discarded, and only on the frames that actually
+had it; the rest show the year alone rather than a guessed place.
 
 ## Running it locally
 

@@ -30,7 +30,7 @@ export function createLightbox() {
     image.src = photo.src;
     image.alt = photo.alt || photo.title;
     title.textContent = photo.title;
-    meta.textContent = `${photo.location} · ${photo.year}`;
+    meta.textContent = [photo.location, photo.year].filter(Boolean).join(' · ');
     counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
 
     const done = () => root.classList.add('is-loaded');

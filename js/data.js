@@ -1,190 +1,195 @@
 /**
  * The whole portfolio lives here.
  *
- * To publish your own work you only need to edit this file:
+ * To change what the site shows you only need to edit this file:
  *   1. drop your photographs into images/
  *   2. point `src` at them and fill in the caption fields
  *   3. optionally add or rename series in SERIES
  *
- * `ratio` is width / height. It reserves the right amount of space before the
- * image loads, so the grid never jumps around — set it to your file's real
- * aspect ratio.
+ * `ratio` is width / height, taken from the actual file. It reserves the right
+ * amount of space before the image loads, so the grid never jumps as you scroll.
+ *
+ * `location` is optional — it is set only on frames whose EXIF carried GPS.
+ * Captions fall back to the year alone rather than inventing a place.
  */
 
 export const SITE = {
   name: 'Sam',
   role: 'Photographer',
-  tagline: 'Quiet light, held still.',
-  location: 'Lisbon, Portugal',
+  tagline: 'What the film kept.',
+  location: 'Tunis, TN',
   email: 'hello@example.com',
   social: [
     { label: 'Instagram', href: 'https://instagram.com/' },
     { label: 'Behance', href: 'https://behance.net/' },
-    { label: 'Newsletter', href: '#contact' },
+    { label: 'Email', href: '#contact' },
   ],
   intro:
-    'I photograph the hour before something happens — a coastline emptying out, ' +
-    'light crossing a wall, a room still holding the shape of whoever just left. ' +
-    'Available for editorial, brand and print commissions worldwide.',
-  services: ['Editorial', 'Brand campaigns', 'Fine art prints', 'Exhibition work'],
+    'I shoot mostly 35mm — portraits, bodies under coloured light, and whatever ' +
+    'the city gives up in black and white. Some of these frames are accidents the ' +
+    'film made on its own, and I kept them. Available for editorial, portrait and ' +
+    'fashion commissions.',
+  services: ['Editorial', 'Portraiture', 'Fashion', 'Prints'],
+  since: '2018',
+  formats: '35mm film · Digital',
 };
 
 export const SERIES = [
-  { id: 'coast',    title: 'Silent Coast',  years: '2021 — 2024' },
-  { id: 'concrete', title: 'Concrete Light', years: '2022 — 2025' },
-  { id: 'north',    title: 'Northbound',    years: '2019 — 2023' },
-  { id: 'interior', title: 'Interiors',     years: '2023 — 2025' },
+  { id: 'latent',   title: 'Latent',       years: '2019' },
+  { id: 'sitters',  title: 'Sitters',      years: '2019 — 2020' },
+  { id: 'concrete', title: 'Concrete',     years: '2018 — 2021' },
+  { id: 'winter',   title: 'Winter Light', years: '2021 — 2022' },
 ];
 
 export const PHOTOS = [
+  /* --- Latent: light leaks and double exposures on 35mm --------------- */
   {
-    src: 'images/coast-01.svg',
-    alt: 'A pale shoreline dissolving into fog at low tide',
-    title: 'Low Water',
-    series: 'coast',
-    location: 'Comporta, PT',
-    year: '2023',
-    ratio: 3 / 2,
-    feature: true,
-  },
-  {
-    src: 'images/coast-02.svg',
-    alt: 'Sea spray blurred against a colourless sky',
-    title: 'Spray',
-    series: 'coast',
-    location: 'Nazaré, PT',
-    year: '2022',
-    ratio: 4 / 5,
-  },
-  {
-    src: 'images/coast-03.svg',
-    alt: 'A flat horizon line dividing the frame in two',
-    title: 'Divide',
-    series: 'coast',
-    location: 'Ericeira, PT',
-    year: '2024',
-    ratio: 1,
-  },
-  {
-    src: 'images/coast-04.svg',
-    alt: 'Dark water under an overcast evening sky',
-    title: 'After the Squall',
-    series: 'coast',
-    location: 'Sagres, PT',
-    year: '2021',
-    ratio: 3 / 2,
-  },
-
-  {
-    src: 'images/concrete-01.svg',
-    alt: 'Sunlight cutting a hard diagonal across a concrete wall',
-    title: 'Diagonal',
-    series: 'concrete',
-    location: 'Porto, PT',
-    year: '2024',
-    ratio: 4 / 5,
-  },
-  {
-    src: 'images/concrete-02.svg',
-    alt: 'A stairwell reduced to overlapping grey planes',
-    title: 'Stairwell',
-    series: 'concrete',
-    location: 'Marseille, FR',
-    year: '2025',
-    ratio: 3 / 2,
-    feature: true,
-  },
-  {
-    src: 'images/concrete-03.svg',
-    alt: 'A narrow column of shadow between two buildings',
-    title: 'Gap',
-    series: 'concrete',
-    location: 'Milan, IT',
-    year: '2023',
-    ratio: 2 / 3,
-  },
-  {
-    src: 'images/concrete-04.svg',
-    alt: 'Warm late light on a rendered facade',
-    title: 'Six O’Clock',
-    series: 'concrete',
-    location: 'Seville, ES',
-    year: '2022',
-    ratio: 1,
-  },
-
-  {
-    src: 'images/north-01.svg',
-    alt: 'A cold blue landscape under heavy cloud',
-    title: 'Weather Coming',
-    series: 'north',
-    location: 'Lofoten, NO',
+    src: 'images/latent-01.jpg',
+    alt: 'A red light leak cutting across a bare arm on green-cast colour film',
+    title: 'Red Arm',
+    series: 'latent',
     year: '2019',
-    ratio: 3 / 2,
-  },
-  {
-    src: 'images/north-02.svg',
-    alt: 'Moss and stone softened by mist',
-    title: 'Moss',
-    series: 'north',
-    location: 'Snæfellsnes, IS',
-    year: '2021',
-    ratio: 4 / 5,
-  },
-  {
-    src: 'images/north-03.svg',
-    alt: 'A wide empty valley at dusk',
-    title: 'The Long Valley',
-    series: 'north',
-    location: 'Highlands, UK',
-    year: '2023',
-    ratio: 16 / 9,
+    ratio: 1.5088,
     feature: true,
   },
   {
-    src: 'images/north-04.svg',
-    alt: 'A single track disappearing into low cloud',
-    title: 'Track',
-    series: 'north',
-    location: 'Jotunheimen, NO',
-    year: '2020',
-    ratio: 2 / 3,
+    src: 'images/latent-02.jpg',
+    alt: 'A torso dissolving into a vertical wash of red on exposed film',
+    title: 'Torso, Red',
+    series: 'latent',
+    year: '2019',
+    ratio: 1.5088,
+  },
+  {
+    src: 'images/latent-03.jpg',
+    alt: 'Blue and red streaks crossing a green frame',
+    title: 'Cross Light',
+    series: 'latent',
+    year: '2019',
+    ratio: 1.5088,
+  },
+  {
+    src: 'images/latent-04.jpg',
+    alt: 'A neon tube burning pink against a dark, blue-smeared frame',
+    title: 'Tube',
+    series: 'latent',
+    year: '2019',
+    ratio: 1.5088,
   },
 
+  /* --- Sitters: portraits, studio and on assignment -------------------- */
   {
-    src: 'images/interior-01.svg',
-    alt: 'Warm light falling across an empty room',
-    title: 'Ten Past Four',
-    series: 'interior',
-    location: 'Lisbon, PT',
-    year: '2024',
-    ratio: 4 / 5,
+    src: 'images/sitters-01.jpg',
+    alt: 'A woman in a black blazer standing beside an exposed studio light stand',
+    title: 'Between Setups',
+    series: 'sitters',
+    year: '2020',
+    ratio: 1.509,
   },
   {
-    src: 'images/interior-02.svg',
-    alt: 'A doorway framing a second, brighter room',
-    title: 'Threshold',
-    series: 'interior',
-    location: 'Tangier, MA',
-    year: '2025',
-    ratio: 3 / 2,
-  },
-  {
-    src: 'images/interior-03.svg',
-    alt: 'A curtain holding the shape of the wind',
-    title: 'Curtain',
-    series: 'interior',
-    location: 'Lisbon, PT',
-    year: '2023',
+    src: 'images/sitters-02.jpg',
+    alt: 'A face behind a beaded veil, eyes closed',
+    title: 'Veil',
+    series: 'sitters',
+    location: 'Tunis, TN',
+    year: '2020',
     ratio: 1,
   },
   {
-    src: 'images/interior-04.svg',
-    alt: 'A tall window with light pooling on the floor below',
-    title: 'Pool',
-    series: 'interior',
-    location: 'Palermo, IT',
-    year: '2025',
-    ratio: 2 / 3,
+    src: 'images/sitters-03.jpg',
+    alt: 'A figure in dark fur under hard stripes of window light',
+    title: 'Blinds',
+    series: 'sitters',
+    year: '2020',
+    ratio: 0.9798,
+  },
+  {
+    src: 'images/sitters-04.jpg',
+    alt: 'A model on a white paper backdrop holding a sheaf of dried stems',
+    title: 'Backstage',
+    series: 'sitters',
+    year: '2019',
+    ratio: 0.6678,
+  },
+  {
+    src: 'images/sitters-05.jpg',
+    alt: 'A head tipped back in warm light, gold earrings catching the sun',
+    title: 'Gold',
+    series: 'sitters',
+    year: '2019',
+    ratio: 1.4975,
+    feature: true,
+  },
+
+  /* --- Concrete: buildings, streets, signage --------------------------- */
+  {
+    src: 'images/concrete-01.jpg',
+    alt: 'A grid of apartment balconies in cold cyan light',
+    title: 'Balconies',
+    series: 'concrete',
+    year: '2018',
+    ratio: 1.5369,
+  },
+  {
+    src: 'images/concrete-02.jpg',
+    alt: 'A tower block cutting a hard diagonal across a white sky',
+    title: 'Rake',
+    series: 'concrete',
+    year: '2021',
+    ratio: 0.6706,
+  },
+  {
+    src: 'images/concrete-03.jpg',
+    alt: 'The words NO ENTRY painted across wet tarmac',
+    title: 'No Entry',
+    series: 'concrete',
+    location: 'London, UK',
+    year: '2021',
+    ratio: 0.7256,
+  },
+  {
+    src: 'images/concrete-04.jpg',
+    alt: 'A streetlight and two small birds against a flat blue sky',
+    title: 'Streetlight',
+    series: 'concrete',
+    year: '2018',
+    ratio: 0.9273,
+  },
+
+  /* --- Winter Light: the quiet frames ---------------------------------- */
+  {
+    src: 'images/winter-01.jpg',
+    alt: 'Bare branches filling the frame against a bright winter sky',
+    title: 'Bare',
+    series: 'winter',
+    location: 'Bournemouth, UK',
+    year: '2021',
+    ratio: 0.75,
+  },
+  {
+    src: 'images/winter-02.jpg',
+    alt: 'A snow-covered path running between trees, one figure far off',
+    title: 'Path',
+    series: 'winter',
+    location: 'London, UK',
+    year: '2021',
+    ratio: 0.75,
+  },
+  {
+    src: 'images/winter-03.jpg',
+    alt: 'A figure blurred by a long exposure in a dim corridor',
+    title: 'Corridor',
+    series: 'winter',
+    year: '2021',
+    ratio: 0.5437,
+  },
+  {
+    src: 'images/winter-04.jpg',
+    alt: 'Daylight pooling through a drawn curtain',
+    title: 'Curtain',
+    series: 'winter',
+    location: 'Tunis, TN',
+    year: '2022',
+    ratio: 0.75,
   },
 ];

@@ -20,6 +20,8 @@ function fillCopy() {
 
   document.getElementById('aboutLead').textContent = SITE.intro;
   document.getElementById('aboutLocation').textContent = SITE.location;
+  document.getElementById('aboutSince').textContent = SITE.since;
+  document.getElementById('aboutFormats').textContent = SITE.formats;
   document.getElementById('year').textContent = new Date().getFullYear();
   document.getElementById('frameCount').textContent = String(PHOTOS.length).padStart(2, '0');
 
