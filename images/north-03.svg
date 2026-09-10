@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img">
+  <defs><linearGradient id="g-north-03-3033" x1="0.55" y1="0" x2="0.45" y2="1">
+      <stop offset="0" stop-color="#d5dcdd"/>
+      <stop offset="0.56" stop-color="#9dadb2"/>
+      <stop offset="1" stop-color="#5b6f76"/>
+    </linearGradient><filter id="h-north-03-3033" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="93.12"/></filter><filter id="s-north-03-3033" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="8.23"/></filter><radialGradient id="l-north-03-3033" cx="0.57" cy="0.42" r="0.52">
+      <stop offset="0" stop-color="#d5dcdd" stop-opacity="0.37"/>
+      <stop offset="1" stop-color="#d5dcdd" stop-opacity="0"/>
+    </radialGradient><radialGradient id="v-north-03-3033" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.4" stop-color="#212f35" stop-opacity="0"/>
+      <stop offset="1" stop-color="#212f35" stop-opacity="0.7"/>
+    </radialGradient><filter id="n-north-03-3033" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="3033" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter></defs>
+  <rect width="1600" height="900" fill="url(#g-north-03-3033)"/>
+  <g filter="url(#h-north-03-3033)"><ellipse cx="508.05" cy="392.31" rx="734.32" ry="274.3" fill="#9dadb2" opacity="0.45"/><ellipse cx="828.65" cy="-49.47" rx="605.93" ry="180.4" fill="#9dadb2" opacity="0.27"/><ellipse cx="-39.32" cy="55.41" rx="597.24" ry="300.98" fill="#5b6f76" opacity="0.21"/><ellipse cx="223.18" cy="342.86" rx="872.35" ry="314.11" fill="#9dadb2" opacity="0.42"/></g>
+  <g filter="url(#s-north-03-3033)"><path d="M0,900 L0,465.7 L200,423.41 L400,463.58 L600,506.37 L800,489.19 L1000,438.18 L1200,439.91 L1400,471.74 L1600,510.43 L1600,900 Z" fill="#9dadb2" opacity="0.45"/><path d="M0,900 L0,608.34 L200,618.16 L400,606.29 L600,580.29 L800,590.06 L1000,617.07 L1200,613.72 L1400,594.8 L1600,576.96 L1600,900 Z" fill="#5b6f76" opacity="0.7"/><path d="M0,900 L0,694.15 L200,786.64 L400,767.27 L600,738.27 L800,700.99 L1000,714.6 L1200,798.89 L1400,756.16 L1600,690.15 L1600,900 Z" fill="#212f35" opacity="0.95"/></g>
+  <rect width="1600" height="900" fill="url(#l-north-03-3033)" style="mix-blend-mode:screen"/>
+  <rect width="1600" height="900" fill="url(#v-north-03-3033)"/>
+  <rect width="1600" height="900" filter="url(#n-north-03-3033)" opacity="0.2" style="mix-blend-mode:overlay"/>
+</svg>

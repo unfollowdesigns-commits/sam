@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2000" width="1600" height="2000" role="img">
+  <defs><linearGradient id="g-interior-01-5011" x1="0.01" y1="0.58" x2="0.99" y2="0.42">
+      <stop offset="0" stop-color="#ecd8c8"/>
+      <stop offset="0.59" stop-color="#cc9d80"/>
+      <stop offset="1" stop-color="#8d5a44"/>
+    </linearGradient><filter id="h-interior-01-5011" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="99.92"/></filter><filter id="s-interior-01-5011" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="18.03"/></filter><radialGradient id="l-interior-01-5011" cx="0.46" cy="0.21" r="0.52">
+      <stop offset="0" stop-color="#ecd8c8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ecd8c8" stop-opacity="0"/>
+    </radialGradient><radialGradient id="v-interior-01-5011" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.4" stop-color="#2f1e19" stop-opacity="0"/>
+      <stop offset="1" stop-color="#2f1e19" stop-opacity="0.7"/>
+    </radialGradient><filter id="n-interior-01-5011" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="5011" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter></defs>
+  <rect width="1600" height="2000" fill="url(#g-interior-01-5011)"/>
+  <g filter="url(#h-interior-01-5011)"><ellipse cx="1598" cy="1019.69" rx="928.68" ry="666.33" fill="#8d5a44" opacity="0.25"/><ellipse cx="1589.57" cy="277.9" rx="444.74" ry="612.47" fill="#cc9d80" opacity="0.24"/><ellipse cx="1559.02" cy="1625.67" rx="555.44" ry="572.92" fill="#cc9d80" opacity="0.21"/><ellipse cx="155.83" cy="1800.38" rx="669.61" ry="398.05" fill="#cc9d80" opacity="0.3"/></g>
+  <g filter="url(#s-interior-01-5011)"><rect x="0" y="1457.33" width="1600" height="2000" fill="#2f1e19" opacity="0.4"/><ellipse cx="895.44" cy="1378.23" rx="312.99" ry="453.6" fill="#2f1e19" opacity="0.24"/><rect x="695.5" y="785.68" width="385.85" height="772.26" fill="#ecd8c8" opacity="0.53" transform="rotate(-0.45 695.5 785.68)"/></g>
+  <rect width="1600" height="2000" fill="url(#l-interior-01-5011)" style="mix-blend-mode:screen"/>
+  <rect width="1600" height="2000" fill="url(#v-interior-01-5011)"/>
+  <rect width="1600" height="2000" filter="url(#n-interior-01-5011)" opacity="0.2" style="mix-blend-mode:overlay"/>
+</svg>

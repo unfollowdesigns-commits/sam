@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="img">
+  <defs><linearGradient id="g-coast-04-1044" x1="0.73" y1="0.06" x2="0.27" y2="0.94">
+      <stop offset="0" stop-color="#c9cfd9"/>
+      <stop offset="0.43" stop-color="#8b93a5"/>
+      <stop offset="1" stop-color="#4a5364"/>
+    </linearGradient><filter id="h-coast-04-1044" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="83.12"/></filter><filter id="s-coast-04-1044" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="33.13"/></filter><radialGradient id="l-coast-04-1044" cx="0.62" cy="0.64" r="0.52">
+      <stop offset="0" stop-color="#c9cfd9" stop-opacity="0.41"/>
+      <stop offset="1" stop-color="#c9cfd9" stop-opacity="0"/>
+    </radialGradient><radialGradient id="v-coast-04-1044" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.4" stop-color="#141821" stop-opacity="0"/>
+      <stop offset="1" stop-color="#141821" stop-opacity="0.7"/>
+    </radialGradient><filter id="n-coast-04-1044" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="1044" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter></defs>
+  <rect width="1600" height="1067" fill="url(#g-coast-04-1044)"/>
+  <g filter="url(#h-coast-04-1044)"><ellipse cx="-49.19" cy="659.46" rx="785.03" ry="198.34" fill="#4a5364" opacity="0.39"/><ellipse cx="-30.89" cy="-77.43" rx="755.41" ry="244.74" fill="#8b93a5" opacity="0.25"/><ellipse cx="1613.28" cy="331.11" rx="764.9" ry="167.65" fill="#4a5364" opacity="0.31"/><ellipse cx="522.65" cy="312.25" rx="481.91" ry="393.13" fill="#4a5364" opacity="0.38"/></g>
+  <g filter="url(#s-coast-04-1044)"><rect x="388.3" y="809.6" width="1412.51" height="92.63" fill="#c9cfd9" opacity="0.34" transform="rotate(0.89 800 809.6)"/><rect x="-431.3" y="171.11" width="1273.19" height="46.16" fill="#141821" opacity="0.31" transform="rotate(2.45 800 171.11)"/><rect x="191.66" y="802.7" width="1200.7" height="57.18" fill="#c9cfd9" opacity="0.27" transform="rotate(-3.97 800 802.7)"/><rect x="45.73" y="260.34" width="1361.01" height="100.6" fill="#c9cfd9" opacity="0.4" transform="rotate(-2.57 800 260.34)"/><rect x="-381.94" y="323.66" width="1560.08" height="96.22" fill="#c9cfd9" opacity="0.21" transform="rotate(0.1 800 323.66)"/><rect x="-228.77" y="1044.07" width="1017.38" height="75.77" fill="#c9cfd9" opacity="0.39" transform="rotate(-2.93 800 1044.07)"/></g>
+  <rect width="1600" height="1067" fill="url(#l-coast-04-1044)" style="mix-blend-mode:screen"/>
+  <rect width="1600" height="1067" fill="url(#v-coast-04-1044)"/>
+  <rect width="1600" height="1067" filter="url(#n-coast-04-1044)" opacity="0.2" style="mix-blend-mode:overlay"/>
+</svg>

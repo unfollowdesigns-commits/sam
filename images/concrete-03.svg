@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2400" width="1600" height="2400" role="img">
+  <defs><linearGradient id="g-concrete-03-2033" x1="0.03" y1="0.67" x2="0.97" y2="0.33">
+      <stop offset="0" stop-color="#e2ddd5"/>
+      <stop offset="0.42" stop-color="#b3aca2"/>
+      <stop offset="1" stop-color="#6f6a63"/>
+    </linearGradient><filter id="h-concrete-03-2033" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="106.58"/></filter><filter id="s-concrete-03-2033" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="6.48"/></filter><radialGradient id="l-concrete-03-2033" cx="0.47" cy="0.3" r="0.61">
+      <stop offset="0" stop-color="#e2ddd5" stop-opacity="0.59"/>
+      <stop offset="1" stop-color="#e2ddd5" stop-opacity="0"/>
+    </radialGradient><radialGradient id="v-concrete-03-2033" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.4" stop-color="#2c2a27" stop-opacity="0"/>
+      <stop offset="1" stop-color="#2c2a27" stop-opacity="0.7"/>
+    </radialGradient><filter id="n-concrete-03-2033" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="2033" result="n"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter></defs>
+  <rect width="1600" height="2400" fill="url(#g-concrete-03-2033)"/>
+  <g filter="url(#h-concrete-03-2033)"><ellipse cx="479.04" cy="684.22" rx="700.07" ry="384.19" fill="#6f6a63" opacity="0.44"/><ellipse cx="314.93" cy="1479.31" rx="955.65" ry="360.75" fill="#b3aca2" opacity="0.44"/><ellipse cx="-149.12" cy="20.34" rx="608.57" ry="748.95" fill="#b3aca2" opacity="0.31"/><ellipse cx="296.3" cy="558.04" rx="580.55" ry="367.21" fill="#6f6a63" opacity="0.32"/></g>
+  <g filter="url(#s-concrete-03-2033)"><rect x="-19.58" y="-600" width="140.77" height="3840" fill="#2c2a27" opacity="0.43" transform="rotate(-3.8 50.81 1200)"/><rect x="524.31" y="-600" width="140.25" height="3840" fill="#2c2a27" opacity="0.25" transform="rotate(-3.8 594.43 1200)"/><rect x="1342.75" y="-600" width="216.17" height="3840" fill="#2c2a27" opacity="0.51" transform="rotate(-3.8 1450.83 1200)"/><rect x="484.5" y="-600" width="142.96" height="3840" fill="#2c2a27" opacity="0.26" transform="rotate(-3.8 555.98 1200)"/><rect x="64.12" y="-600" width="195" height="3840" fill="#e2ddd5" opacity="0.35" transform="rotate(-3.8 161.61 1200)"/><rect x="0" y="1584.78" width="1600" height="2400" fill="#2c2a27" opacity="0.35"/></g>
+  <rect width="1600" height="2400" fill="url(#l-concrete-03-2033)" style="mix-blend-mode:screen"/>
+  <rect width="1600" height="2400" fill="url(#v-concrete-03-2033)"/>
+  <rect width="1600" height="2400" filter="url(#n-concrete-03-2033)" opacity="0.2" style="mix-blend-mode:overlay"/>
+</svg>

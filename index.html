@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sam — Photographer</title>
+<meta name="description" content="Selected photographic work by Sam. Editorial, brand and fine art commissions.">
+<meta name="theme-color" content="#0b0b0c">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sam — Photographer">
+<meta property="og:description" content="Selected photographic work. Editorial, brand and fine art commissions.">
+<meta property="og:image" content="images/hero.svg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b0b0c'/><circle cx='16' cy='16' r='6' fill='%23f2efe9'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="css/style.css">
+
+<noscript>
+  <style>
+    /* Without scripting there is nothing to load and nothing to reveal —
+       show the static half of the page rather than an opening curtain. */
+    .loader, .filters, .grid, .index-list { display: none !important; }
+    .reveal, .shot__cap { opacity: 1 !important; transform: none !important; }
+    .line > span { transform: none !important; }
+    .no-js { display: block !important; }
+  </style>
+</noscript>
+</head>
+<body>
+
+<!-- Opening curtain. Removed entirely if JS never runs. -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <span class="loader__word">Sam</span>
+    <span class="loader__count" id="loaderCount">0</span>
+  </div>
+  <div class="loader__bar"><i id="loaderBar"></i></div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span id="cursorLabel"></span></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<a class="skip-link" href="#work">Skip to the work</a>
+
+<header class="site-head" id="siteHead">
+  <a class="site-head__mark" href="#top" data-cursor="Top">
+    <span>Sam</span>
+    <em>Photographer</em>
+  </a>
+
+  <nav class="site-nav" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#series">Series</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
+    <span class="theme-toggle__track"><i></i></span>
+    <span class="visually-hidden">Switch between dark and light</span>
+  </button>
+</header>
+
+<main id="top">
+
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero__media" data-parallax="0.18">
+      <img src="images/hero.svg" alt="A wide, quiet horizon at dusk" fetchpriority="high" decoding="async">
+    </div>
+    <div class="hero__veil"></div>
+
+    <div class="hero__type">
+      <h1 class="display">
+        <span class="line"><span>Quiet light,</span></span>
+        <span class="line"><span><em>held</em> still.</span></span>
+      </h1>
+      <p class="hero__sub reveal">
+        Selected photographs, 2019 — 2025.
+        <span>Lisbon &amp; elsewhere.</span>
+      </p>
+    </div>
+
+    <div class="hero__foot">
+      <a class="scroll-cue" href="#work" data-cursor="Enter">
+        <span class="scroll-cue__line"><i></i></span>
+        <span>Scroll</span>
+      </a>
+      <p class="hero__count reveal"><span id="frameCount">—</span> frames</p>
+    </div>
+  </section>
+
+  <!-- ── Work ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="work">
+    <div class="section__head">
+      <h2 class="section__title reveal"><span class="idx">01</span> Selected work</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filter photographs by series"></div>
+    </div>
+
+    <p class="no-js" hidden>This gallery needs JavaScript to load the photographs.
+      You can still reach me at <a href="mailto:hello@example.com">hello@example.com</a>.</p>
+
+    <div class="grid" id="grid"></div>
+
+    <p class="grid__empty" id="gridEmpty" hidden>Nothing in this series yet.</p>
+  </section>
+
+  <!-- ── Series index ─────────────────────────────────────────────────── -->
+  <section class="section section--index" id="series">
+    <h2 class="section__title reveal"><span class="idx">02</span> Series</h2>
+    <ul class="index-list" id="indexList"></ul>
+    <div class="index-preview" id="indexPreview" aria-hidden="true"></div>
+  </section>
+
+  <!-- ── About ────────────────────────────────────────────────────────── -->
+  <section class="section section--about" id="about">
+    <div class="about__media reveal">
+      <img src="images/about.svg" alt="Portrait of the photographer in soft window light" loading="lazy" decoding="async">
+    </div>
+    <div class="about__body">
+      <h2 class="section__title reveal"><span class="idx">03</span> About</h2>
+      <p class="about__lead reveal" id="aboutLead"></p>
+      <ul class="about__services reveal" id="aboutServices"></ul>
+      <dl class="about__meta reveal">
+        <div><dt>Based in</dt><dd id="aboutLocation"></dd></div>
+        <div><dt>Working since</dt><dd>2016</dd></div>
+        <div><dt>Formats</dt><dd>35mm · 6×7 · Digital</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ── Contact ──────────────────────────────────────────────────────── -->
+  <section class="section section--contact" id="contact">
+    <h2 class="section__title reveal"><span class="idx">04</span> Contact</h2>
+    <p class="contact__lead reveal">Commissions, prints and exhibitions.</p>
+    <a class="contact__mail display reveal" id="contactMail" href="#" data-cursor="Write"></a>
+    <ul class="contact__social reveal" id="contactSocial"></ul>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <p>&copy; <span id="year"></span> Sam. All photographs are the property of the artist.</p>
+  <a href="#top" data-cursor="Top">Back to top</a>
+</footer>
+
+<!-- ── Lightbox ───────────────────────────────────────────────────────── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+  <button class="lightbox__close" id="lbClose" type="button" aria-label="Close viewer">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+
+  <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="Previous photograph">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4L7 12l8 8"/></svg>
+  </button>
+
+  <figure class="lightbox__stage">
+    <img id="lbImage" alt="">
+    <figcaption class="lightbox__caption">
+      <span class="lightbox__title" id="lbTitle"></span>
+      <span class="lightbox__meta" id="lbMeta"></span>
+      <span class="lightbox__counter" id="lbCounter"></span>
+    </figcaption>
+  </figure>
+
+  <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="Next photograph">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+  </button>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
