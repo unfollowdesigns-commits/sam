@@ -83,6 +83,9 @@ export const PHOTOS = [
     alt: 'A woman in a black blazer standing beside an exposed studio light stand',
     title: 'Between Setups',
     series: 'sitters',
+    // Same session as 'Veil' — same sitter, backdrop and date — so it carries
+    // that frame's location even though only 'Veil' recorded GPS.
+    location: 'Tunis, TN',
     year: '2020',
     ratio: 1.509,
   },
