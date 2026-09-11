@@ -77,6 +77,23 @@ export const PHOTOS = [
     ratio: 1.5088,
   },
 
+  {
+    src: 'images/latent-05.jpg',
+    alt: 'A red bloom and a blue streak crossing green-cast film',
+    title: 'Bloom',
+    series: 'latent',
+    year: '2019',
+    ratio: 1.5088,
+  },
+  {
+    src: 'images/latent-06.jpg',
+    alt: 'A second exposure from the same roll, the red mass drifting left',
+    title: 'Drift',
+    series: 'latent',
+    year: '2019',
+    ratio: 1.5088,
+  },
+
   /* --- Sitters: portraits, studio and on assignment -------------------- */
   {
     src: 'images/sitters-01.jpg',
@@ -194,5 +211,13 @@ export const PHOTOS = [
     location: 'Tunis, TN',
     year: '2022',
     ratio: 0.75,
+  },
+  {
+    src: 'images/winter-05.jpg',
+    alt: 'Bare branches against a white sky, scanned as a bordered print',
+    title: 'Branches',
+    series: 'winter',
+    location: 'Tunis, TN',
+    ratio: 1,
   },
 ];
