@@ -92,14 +92,14 @@ function initTheme() {
   try { stored = localStorage.getItem(KEY); } catch { /* private browsing */ }
 
   const initial =
-    stored ?? (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    stored ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
   apply(initial);
 
   function apply(theme) {
     document.documentElement.dataset.theme = theme;
     toggle.setAttribute('aria-pressed', String(theme === 'light'));
-    meta?.setAttribute('content', theme === 'light' ? '#f3f1ec' : '#0b0b0c');
+    meta?.setAttribute('content', theme === 'light' ? '#eae6dc' : '#12110f');
   }
 
   toggle.addEventListener('click', () => {

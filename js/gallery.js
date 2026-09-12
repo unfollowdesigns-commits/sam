@@ -46,13 +46,18 @@ function photoNode(photo, index) {
   img.addEventListener('error', settle, { once: true });
   button.append(img);
 
+  // Caption as a catalogue entry: plate number, title, then the recorded
+  // facts as a data row under a hairline.
   const cap = document.createElement('figcaption');
   cap.className = 'shot__cap';
   cap.innerHTML =
-    `<span class="shot__name"></span><span class="shot__where"></span>`;
+    `<span class="shot__plate"></span>
+     <span class="shot__name"></span>
+     <span class="shot__where"></span>`;
+  cap.querySelector('.shot__plate').textContent = String(index + 1).padStart(3, '0');
   cap.querySelector('.shot__name').textContent = photo.title;
   cap.querySelector('.shot__where').textContent =
-    [photo.location, photo.year].filter(Boolean).join(' · ');
+    [seriesTitle(photo.series), photo.location, photo.year].filter(Boolean).join(' / ');
 
   fig.append(button, cap);
   return fig;

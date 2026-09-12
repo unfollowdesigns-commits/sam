@@ -11,6 +11,8 @@ js/gallery.js       grid, filters, series index
 js/lightbox.js      full-screen viewer
 js/main.js          copy, theme, loader, cursor, scroll
 images/             photographs, resized to 1800px and stripped of EXIF
+js/lqip.js          generated blur-up placeholders (see below)
+tools/build-lqip.mjs
 ```
 
 ## Adding your photographs
@@ -57,6 +59,26 @@ not ship to the open web. The `location` field in `js/data.js` was filled in by
 hand from that GPS before it was discarded, and only on the frames that actually
 had it; the rest show the year alone rather than a guessed place.
 
+## The look
+
+The site is set as printed matter rather than as a screen: a warm paper stock
+with a little tooth in it, ink-dark as the alternate, a serif for titles and a
+monospace for everything factual. Each frame is a catalogue entry — plate
+number, title, then series / place / year as a data row under a hairline. Dark
+mode follows the system; the toggle overrides and is remembered.
+
+## Blur-up placeholders
+
+`js/lqip.js` holds a 24px JPEG of every photograph as a data URI, painted
+behind the real file so a frame arrives in its own colours instead of as an
+empty box. It is generated, and the output is committed, so the site itself
+still has no build step. After adding or replacing photographs:
+
+```sh
+npm i sharp          # dev-only, not a site dependency
+node tools/build-lqip.mjs
+```
+
 ## Running it locally
 
 The page uses ES modules, which browsers refuse to load over `file://`. Serve
@@ -79,7 +101,10 @@ For GitHub Pages: Settings → Pages → deploy from a branch, pick the branch a
 
 - **Series filter** that re-flows the editorial grid for whatever it's showing
 - **Full-screen viewer** with arrow keys, Escape, swipe, focus trapping, and
-  neighbouring frames preloaded so paging is instant
+  neighbouring frames preloaded so paging is instant. It flies out of the frame
+  you clicked and back into wherever that frame has moved to
+- **A link per photograph** — opening one sets `#f/<slug>`, and that link opens
+  the viewer directly. Paging replaces the history entry; Back closes
 - **Series index** with a preview that trails the pointer
 - **Light and dark themes**, following the system by default and remembered once
   the visitor chooses
