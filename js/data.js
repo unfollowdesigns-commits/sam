@@ -94,6 +94,14 @@ export const PHOTOS = [
     ratio: 1.5088,
   },
 
+  {
+    src: 'images/latent-07.jpg',
+    alt: 'A double exposure: a figure in cold blue crossed by a band of orange light',
+    title: 'Opal',
+    series: 'latent',
+    ratio: 0.6894,
+  },
+
   /* --- Sitters: portraits, studio and on assignment -------------------- */
   {
     src: 'images/sitters-01.jpg',
@@ -176,6 +184,25 @@ export const PHOTOS = [
     ratio: 0.9273,
   },
 
+  {
+    src: 'images/concrete-05.jpg',
+    alt: 'Hard-edged shadows thrown across a bare wall',
+    title: 'Shadow Fall',
+    series: 'concrete',
+    location: 'Tunis, TN',
+    year: '2020',
+    ratio: 0.75,
+  },
+  {
+    src: 'images/concrete-06.jpg',
+    alt: 'Glass towers rising behind a bus shelter in the City',
+    title: 'Glass',
+    series: 'concrete',
+    location: 'London, UK',
+    year: '2021',
+    ratio: 0.7633,
+  },
+
   /* --- Winter Light: the quiet frames ---------------------------------- */
   {
     src: 'images/winter-01.jpg',
@@ -219,5 +246,14 @@ export const PHOTOS = [
     series: 'winter',
     location: 'Tunis, TN',
     ratio: 1,
+  },
+  {
+    src: 'images/winter-06.jpg',
+    alt: 'A snowed-over park seen from above, benches and paths picked out in white',
+    title: 'Park',
+    series: 'winter',
+    location: 'London, UK',
+    year: '2021',
+    ratio: 0.75,
   },
 ];
