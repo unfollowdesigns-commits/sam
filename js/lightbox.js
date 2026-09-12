@@ -7,8 +7,32 @@
  * the thumbnail on close.
  */
 const FOCUSABLE = 'button:not([disabled])';
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 
-export function createLightbox() {
+/**
+ * Animate the full-screen image out of (or back into) the grid frame that was
+ * clicked. Both boxes share the photograph's aspect ratio, so a single uniform
+ * scale carries one onto the other without distortion.
+ */
+function flight(image, fromRect) {
+  if (!fromRect || reduced.matches) return;
+  const to = image.getBoundingClientRect();
+  if (!to.width || !to.height) return;
+
+  const scale = fromRect.width / to.width;
+  const dx = fromRect.left + fromRect.width / 2 - (to.left + to.width / 2);
+  const dy = fromRect.top + fromRect.height / 2 - (to.top + to.height / 2);
+
+  return image.animate(
+    [
+      { transform: `translate(${dx}px, ${dy}px) scale(${scale})` },
+      { transform: 'none' },
+    ],
+    { duration: 520, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+  );
+}
+
+export function createLightbox({ onOpen, onClose } = {}) {
   const root = document.getElementById('lightbox');
   const image = document.getElementById('lbImage');
   const title = document.getElementById('lbTitle');
@@ -21,6 +45,7 @@ export function createLightbox() {
   let list = [];
   let index = 0;
   let opener = null;
+  let originRect = null;
 
   function show(i) {
     index = (i + list.length) % list.length;
@@ -33,7 +58,14 @@ export function createLightbox() {
     meta.textContent = [photo.location, photo.year].filter(Boolean).join(' · ');
     counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
 
-    const done = () => root.classList.add('is-loaded');
+    const done = () => {
+      root.classList.add('is-loaded');
+      // Measure only once the browser has laid the image out at its final size.
+      requestAnimationFrame(() => {
+        flight(image, originRect);
+        originRect = null;
+      });
+    };
     if (image.complete) done();
     else image.addEventListener('load', done, { once: true });
 
@@ -43,11 +75,14 @@ export function createLightbox() {
 
     const single = list.length < 2;
     prev.hidden = next.hidden = single;
+
+    onOpen?.(photo);
   }
 
-  function open(photos, i) {
+  function open(photos, i, origin) {
     list = photos;
-    opener = document.activeElement;
+    opener = origin ?? document.activeElement;
+    originRect = origin?.getBoundingClientRect() ?? null;
     root.hidden = false;
     document.body.classList.add('is-locked');
     show(i);
@@ -55,7 +90,14 @@ export function createLightbox() {
     close.focus({ preventScroll: true });
   }
 
-  function dismiss() {
+  function dismiss({ silent = false } = {}) {
+    // Fly back into whichever frame is currently showing this photograph.
+    const home = returnRect?.(list[index]);
+    if (home && !reduced.matches) {
+      const back = flight(image, home);
+      if (back) back.reverse();
+    }
+
     root.classList.remove('is-open');
     document.body.classList.remove('is-locked');
     const finish = () => {
@@ -65,7 +107,12 @@ export function createLightbox() {
     root.addEventListener('transitionend', finish, { once: true });
     setTimeout(finish, 600); // in case the transition never fires
     opener?.focus({ preventScroll: true });
+    if (!silent) onClose?.();
   }
+
+  let returnRect = null;
+  /** Lets the page say where a photograph currently sits in the grid. */
+  function setHoming(fn) { returnRect = fn; }
 
   prev.addEventListener('click', () => show(index - 1));
   next.addEventListener('click', () => show(index + 1));
@@ -96,5 +143,5 @@ export function createLightbox() {
     if (Math.abs(dx) > 60) show(index + (dx < 0 ? 1 : -1));
   });
 
-  return { open };
+  return { open, dismiss, setHoming, isOpen: () => !root.hidden };
 }

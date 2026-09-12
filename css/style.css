@@ -455,6 +455,9 @@ button {
   position: relative;
   overflow: hidden;
   background: var(--bg-soft);
+  /* Holds the blurred stand-in until the real file arrives. */
+  background-size: cover;
+  background-position: center;
   /* The reveal: an inset mask opens upward as the figure enters view. */
   clip-path: inset(0 0 100% 0);
   transition: clip-path 1.1s var(--ease);
@@ -466,8 +469,11 @@ button {
   aspect-ratio: var(--ratio, 3 / 2);
   object-fit: cover;
   transform: scale(1.14);
-  transition: transform 1.3s var(--ease), filter 0.7s var(--ease);
+  opacity: 0;
+  transition: transform 1.3s var(--ease), opacity 0.8s var(--ease);
 }
+/* The photograph resolves out of its own blurred colours. */
+.shot__frame.is-loaded img { opacity: 1; }
 .shot.is-in .shot__frame img { transform: scale(1); }
 @media (hover: hover) {
   .shot__frame:hover img { transform: scale(1.04); }
@@ -569,8 +575,10 @@ button {
 
 .about__media img {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  /* Driven by the file's real ratio, so the frame is never cropped. */
+  aspect-ratio: var(--about-ratio, 4 / 5);
+  object-fit: contain;
+  background: var(--bg-soft);
 }
 .about__lead {
   margin-top: clamp(1.2rem, 3vh, 2rem);
@@ -684,6 +692,7 @@ button {
   height: 100%;
 }
 .lightbox__stage img {
+  transform-origin: center center;
   max-width: 100%;
   max-height: 100%;
   min-height: 0;
@@ -782,7 +791,7 @@ button {
   }
   .reveal, .shot__cap { opacity: 1; transform: none; }
   .shot__frame { clip-path: none; }
-  .shot__frame img { transform: none; }
+  .shot__frame img { transform: none; opacity: 1; }
   .line > span { transform: none; }
   .cursor, .index-preview { display: none; }
 }

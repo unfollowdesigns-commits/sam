@@ -32,6 +32,12 @@ export const SITE = {
   services: ['Editorial', 'Portraiture', 'Fashion', 'Prints'],
   since: '2018',
   formats: '35mm film · Digital',
+  // The About frame carries its own ratio so the layout never crops it.
+  about: {
+    src: 'images/about.jpg',
+    alt: 'A contact sheet of four black and white frames, numbered 001',
+    ratio: 1,
+  },
 };
 
 export const SERIES = [

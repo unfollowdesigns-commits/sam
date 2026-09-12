@@ -6,11 +6,17 @@
  * whatever is actually on screen.
  */
 import { PHOTOS, SERIES } from './data.js';
+import { LQIP } from './lqip.js';
 
 /* Width/offset patterns, cycled to keep the page from settling into a grid. */
 const RHYTHM = ['a', 'b', 'c', 'd', 'e', 'f'];
 
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
+
+/** Stable, readable id for deep links: 'Red Arm' -> 'red-arm'. */
+export const slugOf = (photo) =>
+  photo.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function photoNode(photo, index) {
   const fig = document.createElement('figure');
@@ -24,11 +30,20 @@ function photoNode(photo, index) {
   button.dataset.cursor = 'View';
   button.setAttribute('aria-label', `Open ${photo.title} full screen`);
 
+  // The blurred stand-in sits behind the real file and is revealed through it,
+  // so a frame arrives in its own colours rather than as an empty box.
+  const seed = LQIP[photo.src];
+  if (seed) button.style.backgroundImage = `url("${seed}")`;
+
   const img = document.createElement('img');
   img.src = photo.src;
   img.alt = photo.alt || photo.title;
   img.loading = index < 2 ? 'eager' : 'lazy';
   img.decoding = 'async';
+  const settle = () => button.classList.add('is-loaded');
+  if (img.complete) settle();
+  else img.addEventListener('load', settle, { once: true });
+  img.addEventListener('error', settle, { once: true });
   button.append(img);
 
   const cap = document.createElement('figcaption');
@@ -65,9 +80,8 @@ export function createGallery({ onOpen, observe }) {
       } else {
         node.classList.add(`shot--${RHYTHM[step++ % RHYTHM.length]}`);
       }
-      node.querySelector('.shot__frame').addEventListener('click', () =>
-        onOpen(visible, i)
-      );
+      const frame = node.querySelector('.shot__frame');
+      frame.addEventListener('click', () => onOpen(visible, i, frame));
       grid.append(node);
       observe(node);
     });
@@ -100,7 +114,20 @@ export function createGallery({ onOpen, observe }) {
   buildFilters();
   render();
 
-  return { setSeries, count: PHOTOS.length };
+  /** Find a frame by slug across the whole set, ignoring the active filter. */
+  function find(slug) {
+    const all = PHOTOS;
+    const index = all.findIndex((p) => slugOf(p) === slug);
+    return index === -1 ? null : { list: all, index };
+  }
+
+  /** The element showing a photograph right now, if it is on screen. */
+  function frameFor(photo) {
+    const i = visible.indexOf(photo);
+    return i === -1 ? null : grid.children[i]?.querySelector('.shot__frame') ?? null;
+  }
+
+  return { setSeries, find, frameFor, count: PHOTOS.length };
 }
 
 /**

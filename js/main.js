@@ -3,7 +3,7 @@
  * gallery, the series index and the viewer.
  */
 import { SITE, PHOTOS } from './data.js';
-import { createGallery, createSeriesIndex } from './gallery.js';
+import { createGallery, createSeriesIndex, slugOf } from './gallery.js';
 import { createLightbox } from './lightbox.js';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -17,6 +17,13 @@ function fillCopy() {
     el.textContent = SITE.name;
   });
   document.querySelector('.site-head__mark em').textContent = SITE.role;
+
+  const aboutImage = document.getElementById('aboutImage');
+  if (aboutImage && SITE.about) {
+    aboutImage.src = SITE.about.src;
+    aboutImage.alt = SITE.about.alt;
+    aboutImage.style.setProperty('--about-ratio', String(SITE.about.ratio));
+  }
 
   document.getElementById('aboutLead').textContent = SITE.intro;
   document.getElementById('aboutLocation').textContent = SITE.location;
@@ -249,8 +256,48 @@ function build() {
   const observe = createRevealer();
   document.querySelectorAll('.reveal:not(.hero .reveal)').forEach(observe);
 
-  const lightbox = createLightbox();
+  // Each photograph gets its own address, so a single frame can be sent to
+  // someone. '#f/…' matches no element id, so the browser never jumps.
+  let viewerOpen = false;
+
+  const lightbox = createLightbox({
+    onOpen: (photo) => {
+      const hash = `#f/${slugOf(photo)}`;
+      if (location.hash !== hash) {
+        // Paging within the viewer replaces; opening it adds a step back.
+        history[viewerOpen ? 'replaceState' : 'pushState'](null, '', hash);
+      }
+      viewerOpen = true;
+    },
+    onClose: () => {
+      viewerOpen = false;
+      if (location.hash.startsWith('#f/')) {
+        history.pushState(null, '', location.pathname + location.search);
+      }
+    },
+  });
+
   const gallery = createGallery({ observe, onOpen: lightbox.open });
+
+  // Closing flies the picture back to wherever it now sits in the grid.
+  lightbox.setHoming((photo) => gallery.frameFor(photo)?.getBoundingClientRect() ?? null);
+
+  function syncFromHash() {
+    const slug = location.hash.match(/^#f\/(.+)$/)?.[1];
+    if (slug) {
+      if (lightbox.isOpen()) return;
+      const hit = gallery.find(slug);
+      if (hit) {
+        viewerOpen = true;
+        lightbox.open(hit.list, hit.index, gallery.frameFor(hit.list[hit.index]));
+      }
+    } else if (lightbox.isOpen()) {
+      viewerOpen = false;
+      lightbox.dismiss({ silent: true });
+    }
+  }
+
+  addEventListener('popstate', syncFromHash);
 
   createSeriesIndex({
     observe,
@@ -265,6 +312,9 @@ function build() {
 
   initScrollChrome();
   initCursor();
+
+  // Honour a link that points straight at one photograph.
+  syncFromHash();
 }
 
 if (document.readyState === 'loading') {
