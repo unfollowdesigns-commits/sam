@@ -143,6 +143,19 @@ function initScrollChrome() {
   const progress = document.getElementById('scrollProgress');
   const parallax = [...document.querySelectorAll('[data-parallax]')];
 
+  // The sticky filter bar has to sit exactly under the header, so its offset
+  // is the header's measured height rather than a guess — and drops to zero
+  // while the header is retracted, or the bar would hang below a gap of
+  // scrolling content.
+  function syncHeadHeight() {
+    const offset = head.classList.contains('is-hidden') ? 0 : head.offsetHeight;
+    document.documentElement.style.setProperty('--head-h', `${offset}px`);
+  }
+  if (typeof ResizeObserver === 'function') {
+    new ResizeObserver(syncHeadHeight).observe(head);
+  }
+  addEventListener('resize', syncHeadHeight, { passive: true });
+
   const hero = document.getElementById('hero');
   // The point at which the header clears the hero's scrim.
   const heroDepth = () => (hero?.offsetHeight ?? 0) - head.offsetHeight * 1.4;
@@ -161,6 +174,7 @@ function initScrollChrome() {
     const goingDown = y > last && y > innerHeight * 0.6;
     head.classList.toggle('is-hidden', goingDown);
     head.classList.toggle('is-over-hero', y < heroDepth());
+    syncHeadHeight();
     last = y;
 
     if (!reduced.matches) {
@@ -177,7 +191,47 @@ function initScrollChrome() {
     requestAnimationFrame(frame);
   }, { passive: true });
 
+  syncHeadHeight();
   frame();
+}
+
+/* --- Drift ------------------------------------------------------------------
+   Each photograph moves a little inside its own frame as it crosses the
+   screen. It is barely perceptible per frame, but it is the difference
+   between pictures pasted onto a page and pictures sitting in it. */
+function initDrift() {
+  if (reduced.matches) return;
+
+  const RANGE = 26; // px of travel across a full pass
+  let frames = [];
+  let ticking = false;
+
+  function collect() {
+    frames = [...document.querySelectorAll('.shot__frame img')];
+  }
+
+  function apply() {
+    ticking = false;
+    const h = innerHeight;
+    for (const img of frames) {
+      const box = img.getBoundingClientRect();
+      if (box.bottom < -200 || box.top > h + 200) continue;
+      // -1 entering from below, 0 centred, +1 leaving at the top.
+      const progress = clamp((h / 2 - (box.top + box.height / 2)) / (h / 2 + box.height / 2), -1, 1);
+      img.style.setProperty('--py', `${(progress * RANGE).toFixed(2)}px`);
+    }
+  }
+
+  addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(apply);
+  }, { passive: true });
+  addEventListener('resize', apply, { passive: true });
+
+  collect();
+  apply();
+  return collect;
 }
 
 /* --- Cursor ---------------------------------------------------------------- */
@@ -340,6 +394,9 @@ function build() {
 
   initScrollChrome();
   initRail();
+  const recollectDrift = initDrift();
+  // The grid re-renders on filter, so the drift needs the new nodes.
+  if (recollectDrift) gallery.onRender(recollectDrift);
   initCursor();
 
   // Honour a link that points straight at one photograph.

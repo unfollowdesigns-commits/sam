@@ -3,6 +3,12 @@
    A single stylesheet, ordered: tokens, base, chrome, sections, viewer.
    ========================================================================= */
 
+@property --sc {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1.12;
+}
+
 /* --- Tokens ------------------------------------------------------------ */
 :root {
   /* Paper, not screen: a warm stock with ink on it. */
@@ -23,9 +29,12 @@
   --step--1: clamp(0.72rem, 0.68rem + 0.18vw, 0.8rem);
   --step-0:  clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
   --step-1:  clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
-  --step-2:  clamp(1.6rem, 1.2rem + 1.8vw, 2.6rem);
+  --step-2:  clamp(2rem, 1.15rem + 3.4vw, 4.4rem);
   --step-3:  clamp(2.4rem, 1.4rem + 4.4vw, 5rem);
   --step-4:  clamp(3.2rem, 0.8rem + 10vw, 11rem);
+
+  /* Replaced with the header's measured height as soon as the script runs. */
+  --head-h: 5.2rem;
 
   --gutter: clamp(1.15rem, 4vw, 4.5rem);
   --gap: clamp(1rem, 2.2vw, 2.4rem);
@@ -487,33 +496,6 @@ button {
    Taken from the posters — a system laid down strictly, then broken in one
    place. The break is the subject; the grid is only there to be broken. */
 
-.field {
-  position: relative;
-  height: clamp(5rem, 11vh, 8.5rem);
-  margin: clamp(3rem, 8vh, 6rem) 0 0;
-  padding: 0.9rem 0;
-  background-image: radial-gradient(var(--faint) 1.9px, transparent 2px);
-  background-size: var(--dot, 15px) var(--dot, 15px);
-  background-origin: content-box;
-  background-clip: content-box;
-  color: var(--faint);
-}
-/* The fault: a slanted band where the grid is lifted out... */
-.field::before,
-.field::after {
-  content: '';
-  position: absolute;
-  inset: 0.9rem 0;
-  clip-path: polygon(0 34%, 100% 24%, 100% 58%, 0 68%);
-}
-.field::before { background: var(--bg); }
-/* ...and set down again out of register. */
-.field::after {
-  background-image: radial-gradient(var(--faint) 1.9px, transparent 2px);
-  background-size: var(--dot, 15px) var(--dot, 15px);
-  background-position: calc(var(--dot, 15px) / 2) calc(var(--dot, 15px) / 3);
-}
-
 /* A rule that stops short, then resumes a few pixels lower. */
 .opener {
   position: relative;
@@ -530,27 +512,6 @@ button {
 .opener::after { top: 6px; right: 0; width: 27%; }
 .opener--centred::before { width: 38%; }
 .opener--centred::after { width: 38%; }
-
-/* Registration ticks, as a printer would leave them. */
-.tick {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  opacity: 0.5;
-  pointer-events: none;
-}
-.tick::before,
-.tick::after {
-  content: '';
-  position: absolute;
-  background: currentColor;
-}
-.tick::before { left: 50%; top: 0; width: 1px; height: 100%; }
-.tick::after { top: 50%; left: 0; height: 1px; width: 100%; }
-.tick--tl { top: 0; left: 0; }
-.tick--tr { top: 0; right: 0; }
-.tick--bl { bottom: 0; left: 0; }
-.tick--br { bottom: 0; right: 0; }
 
 /* --- Page furniture ------------------------------------------------------ */
 .rail {
@@ -593,8 +554,10 @@ button {
   border-bottom: 1px solid var(--line);
   /* Stays reachable while you scroll the plates. */
   position: sticky;
-  top: clamp(3.25rem, 7vw, 4.75rem);
+  top: var(--head-h);
   z-index: 60;
+  /* Glides with the header as it retracts, at the same rate. */
+  transition: top 0.5s var(--ease);
   background: var(--glass-solid);
   backdrop-filter: blur(22px) saturate(1.5);
   -webkit-backdrop-filter: blur(22px) saturate(1.5);
@@ -634,11 +597,17 @@ button {
   .shot--e { grid-column: 1 / span 3; margin-top: clamp(1rem, 5vw, 4rem); }
   .shot--f { grid-column: 5 / span 7; }
 
-  /* Full measure, and past the page margin entirely. */
+  /* A feature plate is not a wider picture — it is a whole screen. Nothing
+     else is visible while it passes, which is the only way a photograph on a
+     website gets the room a print gets on a wall. */
   .shot--bleed {
     grid-column: 1 / -1;
     margin-inline: calc(var(--gutter) * -1);
-    margin-top: clamp(1rem, 4vw, 3rem);
+    margin-block: clamp(3rem, 9vw, 8rem);
+  }
+  .shot--bleed .shot__frame img {
+    aspect-ratio: auto;
+    height: min(94vh, 58rem);
   }
   .shot--bleed .shot__cap {
     margin-inline: var(--gutter);
@@ -687,15 +656,19 @@ button {
   width: 100%;
   aspect-ratio: var(--ratio, 3 / 2);
   object-fit: cover;
-  transform: scale(1.14);
+  /* --py is driven per frame from its position on screen; the resting scale
+     leaves just enough headroom that the drift never exposes an edge. */
+  --py: 0px;
+  transform: translate3d(0, var(--py), 0) scale(var(--sc));
   opacity: 0;
-  transition: transform 1.3s var(--ease), opacity 0.8s var(--ease);
+  will-change: transform;
+  transition: --sc 1.3s var(--ease), opacity 0.8s var(--ease);
 }
 /* The photograph resolves out of its own blurred colours. */
 .shot__frame.is-loaded img { opacity: 1; }
-.shot.is-in .shot__frame img { transform: scale(1); }
+.shot.is-in .shot__frame img { --sc: 1.04; }
 @media (hover: hover) {
-  .shot__frame:hover img { transform: scale(1.04); }
+  .shot__frame:hover img { --sc: 1.09; }
   /* Lift the print off the page under the pointer. */
   .shot__frame:hover {
     box-shadow: var(--lift-2);
@@ -1035,6 +1008,7 @@ button {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .shot__frame:hover { transform: none; }
+  .shot__frame img { --py: 0px !important; --sc: 1 !important; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

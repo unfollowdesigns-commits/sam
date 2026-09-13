@@ -72,6 +72,8 @@ export function createGallery({ onOpen, observe }) {
   let active = 'all';
   let visible = [];
 
+  const listeners = [];
+
   function render() {
     visible = active === 'all' ? PHOTOS : PHOTOS.filter((p) => p.series === active);
 
@@ -93,6 +95,7 @@ export function createGallery({ onOpen, observe }) {
     });
 
     empty.hidden = visible.length > 0;
+    listeners.forEach((fn) => fn());
   }
 
   function buildFilters() {
@@ -133,7 +136,10 @@ export function createGallery({ onOpen, observe }) {
     return i === -1 ? null : grid.children[i]?.querySelector('.shot__frame') ?? null;
   }
 
-  return { setSeries, find, frameFor, count: PHOTOS.length };
+  /** Called after every render, so anything holding node references can refresh. */
+  function onRender(fn) { listeners.push(fn); }
+
+  return { setSeries, find, frameFor, onRender, count: PHOTOS.length };
 }
 
 /**
