@@ -1,2 +1,5 @@
 node_modules/
 .DS_Store
+
+# Stray test output — screenshots land here if a harness path is unset.
+undefined/
