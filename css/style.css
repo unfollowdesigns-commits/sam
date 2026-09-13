@@ -198,16 +198,20 @@ button {
   font-variant-numeric: tabular-nums;
 }
 .loader__bar {
+  position: relative;
   width: min(52vw, 22rem);
-  height: 1px;
-  background: var(--line);
+  height: 7px;
+  /* An empty run of dots that fills in as the frames arrive. */
+  background-image: radial-gradient(var(--faint) 2.6px, transparent 2.7px);
+  background-size: 13px 7px;
   overflow: hidden;
 }
 .loader__bar i {
   display: block;
   height: 100%;
   width: 0;
-  background: var(--ink);
+  background-image: radial-gradient(var(--ink) 2.6px, transparent 2.7px);
+  background-size: 13px 7px;
   transition: width 0.35s var(--ease);
 }
 
@@ -478,6 +482,75 @@ button {
 }
 .opener--centred { justify-items: center; grid-template-columns: auto auto; }
 .opener--centred .opener__note { grid-column: auto; }
+
+/* --- Marks: dots, rules, and the faults in them --------------------------
+   Taken from the posters — a system laid down strictly, then broken in one
+   place. The break is the subject; the grid is only there to be broken. */
+
+.field {
+  position: relative;
+  height: clamp(5rem, 11vh, 8.5rem);
+  margin: clamp(3rem, 8vh, 6rem) 0 0;
+  padding: 0.9rem 0;
+  background-image: radial-gradient(var(--faint) 1.9px, transparent 2px);
+  background-size: var(--dot, 15px) var(--dot, 15px);
+  background-origin: content-box;
+  background-clip: content-box;
+  color: var(--faint);
+}
+/* The fault: a slanted band where the grid is lifted out... */
+.field::before,
+.field::after {
+  content: '';
+  position: absolute;
+  inset: 0.9rem 0;
+  clip-path: polygon(0 34%, 100% 24%, 100% 58%, 0 68%);
+}
+.field::before { background: var(--bg); }
+/* ...and set down again out of register. */
+.field::after {
+  background-image: radial-gradient(var(--faint) 1.9px, transparent 2px);
+  background-size: var(--dot, 15px) var(--dot, 15px);
+  background-position: calc(var(--dot, 15px) / 2) calc(var(--dot, 15px) / 3);
+}
+
+/* A rule that stops short, then resumes a few pixels lower. */
+.opener {
+  position: relative;
+  border-top: 0;
+}
+.opener::before,
+.opener::after {
+  content: '';
+  position: absolute;
+  height: 2px;
+  background: var(--ink);
+}
+.opener::before { top: 0; left: 0; width: 61%; }
+.opener::after { top: 6px; right: 0; width: 27%; }
+.opener--centred::before { width: 38%; }
+.opener--centred::after { width: 38%; }
+
+/* Registration ticks, as a printer would leave them. */
+.tick {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+.tick::before,
+.tick::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+.tick::before { left: 50%; top: 0; width: 1px; height: 100%; }
+.tick::after { top: 50%; left: 0; height: 1px; width: 100%; }
+.tick--tl { top: 0; left: 0; }
+.tick--tr { top: 0; right: 0; }
+.tick--bl { bottom: 0; left: 0; }
+.tick--br { bottom: 0; right: 0; }
 
 /* --- Page furniture ------------------------------------------------------ */
 .rail {
