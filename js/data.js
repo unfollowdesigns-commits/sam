@@ -155,6 +155,30 @@ export const PHOTOS = [
     feature: true,
   },
 
+  {
+    src: 'images/sitters-06.jpg',
+    alt: 'A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard',
+    title: 'Scrapyard',
+    series: 'sitters',
+    year: '2019',
+    ratio: 0.6306,
+  },
+  {
+    src: 'images/sitters-07.jpg',
+    alt: 'A woman in a white tee in a workshop, benches and working figures behind her',
+    title: 'Workshop',
+    series: 'sitters',
+    year: '2020',
+    ratio: 1.509,
+  },
+  {
+    src: 'images/sitters-08.jpg',
+    alt: 'A figure in black against a bright wall, caught mid-turn',
+    title: 'Sfayaa',
+    series: 'sitters',
+    ratio: 0.6627,
+  },
+
   /* --- Concrete: buildings, streets, signage --------------------------- */
   {
     src: 'images/concrete-01.jpg',
