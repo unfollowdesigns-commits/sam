@@ -709,6 +709,73 @@ button {
 .grid__empty, .no-js { color: var(--muted); padding-block: 4rem; }
 .no-js a { text-decoration: underline; text-underline-offset: 0.25em; }
 
+/* --- The strip -----------------------------------------------------------
+   One series at a time, read sideways. Plates sit at a common height so the
+   eye travels along a single baseline and reads the sequence, rather than
+   hunting around a page. */
+.grid.is-strip {
+  display: flex;
+  grid-template-columns: none;
+  align-items: stretch;
+  gap: clamp(1rem, 2.6vw, 2.75rem);
+  /* Sized so a plate and its caption both clear the fold under the opener. */
+  height: min(58vh, 34rem);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-behavior: auto;
+  /* Runs edge to edge, so the sequence reads as continuous. */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  scrollbar-width: none;
+}
+.grid.is-strip::-webkit-scrollbar { display: none; }
+
+.grid.is-strip .shot {
+  grid-column: auto;
+  flex: 0 0 auto;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.grid.is-strip .shot__frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: auto;
+  clip-path: none;
+}
+.grid.is-strip .shot__frame img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  aspect-ratio: var(--ratio, 3 / 2);
+  --sc: 1;
+  --py: 0px;
+}
+/* Captions sit under the plate, never in the margin. */
+.grid.is-strip .shot__cap {
+  position: static;
+  writing-mode: horizontal-tb;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.9rem;
+  height: auto;
+  flex: 0 0 auto;
+  margin: 0.75rem 0 0;
+  padding: 0.55rem 0 0;
+  border-left: 0;
+  border-top: 1px solid var(--line);
+  opacity: 1;
+  transform: none;
+}
+.grid.is-strip .shot__plate { padding-top: 0.35em; }
+.grid.is-strip .shot__name { font-size: var(--step-1); }
+
+@media (max-width: 749px) {
+  .grid.is-strip { height: min(52vh, 24rem); }
+}
+
 /* --- Series index ------------------------------------------------------- */
 .section--index { border-top: 1px solid var(--line); }
 

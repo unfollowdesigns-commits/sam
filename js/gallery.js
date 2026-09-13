@@ -77,12 +77,22 @@ export function createGallery({ onOpen, observe }) {
   function render() {
     visible = active === 'all' ? PHOTOS : PHOTOS.filter((p) => p.series === active);
 
+    // Two ways of reading, not one. All the work is an editorial page you
+    // scroll down; a single series is a strip you travel along sideways, the
+    // way you would pull a contact sheet across a light table.
+    const strip = active !== 'all';
+    grid.classList.toggle('is-strip', strip);
+    grid.scrollLeft = 0;
+
     grid.replaceChildren();
     let step = 0;
     visible.forEach((photo, i) => {
       const node = photoNode(photo, i);
-      // A feature frame spans wide and restarts the rhythm underneath it.
-      if (photo.feature && active === 'all') {
+      if (strip) {
+        // In the strip every plate is already present; nothing is withheld.
+        node.classList.add('is-in');
+      } else if (photo.feature) {
+        // A feature plate takes a whole screen and restarts the rhythm.
         node.classList.add('shot--bleed');
         step = 0;
       } else {
@@ -91,7 +101,7 @@ export function createGallery({ onOpen, observe }) {
       const frame = node.querySelector('.shot__frame');
       frame.addEventListener('click', () => onOpen(visible, i, frame));
       grid.append(node);
-      observe(node);
+      if (!strip) observe(node);
     });
 
     empty.hidden = visible.length > 0;
@@ -119,6 +129,35 @@ export function createGallery({ onOpen, observe }) {
     );
     render();
   }
+
+  /** How much room the strip still has in a given direction. */
+  function stripRoom(delta) {
+    const max = grid.scrollWidth - grid.clientWidth;
+    if (delta < 0) return grid.scrollLeft > 1;
+    return grid.scrollLeft < max - 1;
+  }
+
+  // A vertical wheel carries you along the strip. At either end the page
+  // takes the scroll back, so you are never trapped in the sequence.
+  grid.addEventListener('wheel', (e) => {
+    if (!grid.classList.contains('is-strip')) return;
+    if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    if (!stripRoom(e.deltaY)) return;
+    e.preventDefault();
+    grid.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  // Arrow keys step plate by plate, once the strip is the thing in view.
+  addEventListener('keydown', (e) => {
+    if (!grid.classList.contains('is-strip')) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if (!document.getElementById('lightbox').hidden) return;
+    const box = grid.getBoundingClientRect();
+    if (box.bottom < 120 || box.top > innerHeight - 120) return;
+    e.preventDefault();
+    const step = grid.clientWidth * 0.55;
+    grid.scrollBy({ left: e.key === 'ArrowRight' ? step : -step, behavior: 'smooth' });
+  });
 
   buildFilters();
   render();
