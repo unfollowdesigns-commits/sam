@@ -45,6 +45,7 @@ export const SERIES = [
   { id: 'sitters',  title: 'Sitters',      years: '2019 — 2020' },
   { id: 'concrete', title: 'Concrete',     years: '2018 — 2021' },
   { id: 'winter',   title: 'Winter Light', years: '2021 — 2022' },
+  { id: 'printed',  title: 'Printed',      years: '2021' },
 ];
 
 export const PHOTOS = [
@@ -261,5 +262,23 @@ export const PHOTOS = [
     location: 'London, UK',
     year: '2021',
     ratio: 0.75,
+  },
+  /* --- Printed: the work as it was laid out on a page ------------------ */
+  {
+    src: 'images/printed-01.jpg',
+    alt: 'A zine page: a framed text reading "The physical go home but the connection still stay strong", above a small dark photograph',
+    title: 'The Physical',
+    series: 'printed',
+    year: '2021',
+    ratio: 0.8315,
+  },
+  {
+    src: 'images/printed-02.jpg',
+    alt: 'A layout sheet of five black and white London street frames, numbered 009 and 010',
+    title: 'London Plates',
+    series: 'printed',
+    location: 'London, UK',
+    year: '2021',
+    ratio: 1.4138,
   },
 ];
