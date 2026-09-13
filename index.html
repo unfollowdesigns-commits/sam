@@ -45,6 +45,12 @@
 <div class="cursor" id="cursor" aria-hidden="true"><span id="cursorLabel"></span></div>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
+<div class="rail" aria-hidden="true">
+  <span class="rail__mark">Sam</span>
+  <span class="rail__rule"></span>
+  <span class="rail__now" id="railNow">Selected work</span>
+</div>
+
 <a class="skip-link" href="#work">Skip to the work</a>
 
 <header class="site-head" id="siteHead">
@@ -97,10 +103,15 @@
 
   <!-- ── Work ─────────────────────────────────────────────────────────── -->
   <section class="section" id="work">
-    <div class="section__head">
-      <h2 class="section__title reveal"><span class="idx">01</span> Selected work</h2>
+    <header class="opener">
+      <span class="opener__plate">01</span>
+      <h2 class="opener__title">Selected&nbsp;work</h2>
+      <p class="opener__note reveal">
+        <span id="workCount">—</span> frames, 2018 — 2022. Thirty-five millimetre
+        unless the caption says otherwise; scans left as the lab returned them.
+      </p>
       <div class="filters" id="filters" role="group" aria-label="Filter photographs by series"></div>
-    </div>
+    </header>
 
     <p class="no-js" hidden>This gallery needs JavaScript to load the photographs.
       You can still reach me at <a href="mailto:hello@example.com">hello@example.com</a>.</p>
@@ -112,7 +123,13 @@
 
   <!-- ── Series index ─────────────────────────────────────────────────── -->
   <section class="section section--index" id="series">
-    <h2 class="section__title reveal"><span class="idx">02</span> Series</h2>
+    <header class="opener">
+      <span class="opener__plate">02</span>
+      <h2 class="opener__title">Series</h2>
+      <p class="opener__note reveal">
+        Four bodies of work. Pick one to filter the plates above.
+      </p>
+    </header>
     <ul class="index-list" id="indexList"></ul>
     <div class="index-preview" id="indexPreview" aria-hidden="true"></div>
   </section>
@@ -123,7 +140,10 @@
       <img id="aboutImage" alt="" loading="lazy" decoding="async">
     </div>
     <div class="about__body">
-      <h2 class="section__title reveal"><span class="idx">03</span> About</h2>
+      <header class="opener opener--stacked">
+        <span class="opener__plate">03</span>
+        <h2 class="opener__title">About</h2>
+      </header>
       <p class="about__lead reveal" id="aboutLead"></p>
       <ul class="about__services reveal" id="aboutServices"></ul>
       <dl class="about__meta reveal">
@@ -136,7 +156,10 @@
 
   <!-- ── Contact ──────────────────────────────────────────────────────── -->
   <section class="section section--contact" id="contact">
-    <h2 class="section__title reveal"><span class="idx">04</span> Contact</h2>
+    <header class="opener opener--centred">
+      <span class="opener__plate">04</span>
+      <h2 class="opener__title">Contact</h2>
+    </header>
     <p class="contact__lead reveal">Commissions, prints and exhibitions.</p>
     <a class="contact__mail display reveal" id="contactMail" href="#" data-cursor="Write"></a>
     <ul class="contact__social reveal" id="contactSocial"></ul>

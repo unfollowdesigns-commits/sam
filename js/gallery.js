@@ -8,8 +8,9 @@
 import { PHOTOS, SERIES } from './data.js';
 import { LQIP } from './lqip.js';
 
-/* Width/offset patterns, cycled to keep the page from settling into a grid. */
-const RHYTHM = ['a', 'b', 'c', 'd', 'e', 'f'];
+/* Width/offset patterns, cycled so the page never settles into a grid.
+   'e' is the marginal thumbnail; 'bleed' runs past the page margin. */
+const RHYTHM = ['a', 'b', 'c', 'e', 'd', 'f'];
 
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 
@@ -80,7 +81,7 @@ export function createGallery({ onOpen, observe }) {
       const node = photoNode(photo, i);
       // A feature frame spans wide and restarts the rhythm underneath it.
       if (photo.feature && active === 'all') {
-        node.classList.add('shot--wide');
+        node.classList.add('shot--bleed');
         step = 0;
       } else {
         node.classList.add(`shot--${RHYTHM[step++ % RHYTHM.length]}`);

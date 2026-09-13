@@ -13,6 +13,7 @@ js/main.js          copy, theme, loader, cursor, scroll
 images/             photographs, resized to 1800px and stripped of EXIF
 js/lqip.js          generated blur-up placeholders (see below)
 tools/build-lqip.mjs
+tools/find-dupes.mjs
 ```
 
 ## Adding your photographs
@@ -78,6 +79,23 @@ still has no build step. After adding or replacing photographs:
 npm i sharp          # dev-only, not a site dependency
 node tools/build-lqip.mjs
 ```
+
+## Checking for duplicates
+
+The one mistake that makes a portfolio look careless is showing the same
+picture twice, and it is easy to do when a negative has been scanned twice,
+graded differently, or cropped again — the files differ, the photograph does
+not. After adding anything to `images/`:
+
+```sh
+node tools/find-dupes.mjs
+```
+
+It compares a dHash of every image, which ignores scale, compression and
+overall brightness, so it still catches two grades of one frame. Under ~6 bits
+is almost always the same frame; 6-16 needs a look; above that it is usually
+just two pictures with similar tone. Open the pair before deleting anything —
+the tool reports, it does not decide.
 
 ## Running it locally
 

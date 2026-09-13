@@ -410,24 +410,77 @@ button {
 }
 .hero + .section { border-top: 0; }
 
-.section__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--gap);
-  margin-bottom: clamp(2rem, 5vh, 4rem);
+/* Every section opens like a title page: plate in the margin, title in the
+   serif, and a standfirst set narrow off to the side. */
+.opener {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  column-gap: clamp(0.75rem, 2vw, 1.5rem);
+  row-gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: start;
+  padding-top: clamp(0.75rem, 2vw, 1.5rem);
+  border-top: 2px solid var(--ink);
+  margin-bottom: clamp(2.5rem, 6vh, 5rem);
 }
-.section__title {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
+.opener__plate {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.5em;
+}
+.opener__title {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--step-2);
-  letter-spacing: -0.015em;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
 }
-.section__title .idx { color: var(--accent); }
+.opener__note {
+  grid-column: 2;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: var(--step-0);
+  line-height: 1.5;
+}
+.opener .filters { grid-column: 2; justify-self: start; }
+
+@media (min-width: 900px) {
+  .opener {
+    grid-template-columns: 3.25rem minmax(0, 1fr) minmax(0, 26rem);
+    align-items: baseline;
+  }
+  .opener__note { grid-column: 3; grid-row: 1; }
+  .opener .filters { grid-column: 2 / -1; }
+}
+.opener--centred { justify-items: center; grid-template-columns: auto auto; }
+.opener--centred .opener__note { grid-column: auto; }
+
+/* --- Page furniture ------------------------------------------------------ */
+.rail {
+  position: fixed;
+  top: 50%;
+  left: clamp(0.35rem, 1.1vw, 0.9rem);
+  z-index: 100;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  writing-mode: vertical-rl;
+  font-family: var(--font-ui);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  filter: invert(1);
+}
+[data-theme='dark'] .rail { filter: none; }
+.rail__rule { width: 1px; height: 3.5rem; background: currentColor; opacity: 0.45; }
+.rail__now { transition: opacity 0.35s var(--ease); }
+
+@media (max-width: 899px) { .rail { display: none; } }
 
 /* --- Filters ------------------------------------------------------------ */
 .filters {
@@ -460,16 +513,47 @@ button {
 
 .shot { position: relative; grid-column: span 12; }
 
-/* An editorial rhythm rather than a uniform grid: widths and vertical
-   offsets cycle so the eye keeps moving down the page. */
+/* Scale is the point. A plate runs the full measure, the next is a thumbnail
+   pushed into the margin — the jump between them is what makes a page read as
+   a page rather than as a feed. */
 @media (min-width: 750px) {
-  .shot--a { grid-column: 1 / span 7; }
-  .shot--b { grid-column: 9 / span 4; margin-top: clamp(3rem, 12vw, 10rem); }
-  .shot--c { grid-column: 2 / span 4; }
-  .shot--d { grid-column: 7 / span 6; margin-top: clamp(2rem, 6vw, 5rem); }
-  .shot--e { grid-column: 1 / span 4; }
-  .shot--f { grid-column: 6 / span 6; margin-top: clamp(1rem, 4vw, 3rem); }
-  .shot--wide { grid-column: 2 / span 10; margin-top: 0; }
+  .shot--a { grid-column: 1 / span 6; }
+  .shot--b { grid-column: 9 / span 3; margin-top: clamp(4rem, 14vw, 12rem); }
+  .shot--c { grid-column: 3 / span 5; }
+  .shot--d { grid-column: 9 / span 4; margin-top: clamp(2rem, 7vw, 6rem); }
+  .shot--e { grid-column: 1 / span 3; margin-top: clamp(1rem, 5vw, 4rem); }
+  .shot--f { grid-column: 5 / span 7; }
+
+  /* Full measure, and past the page margin entirely. */
+  .shot--bleed {
+    grid-column: 1 / -1;
+    margin-inline: calc(var(--gutter) * -1);
+    margin-top: clamp(1rem, 4vw, 3rem);
+  }
+  .shot--bleed .shot__cap {
+    margin-inline: var(--gutter);
+  }
+
+  /* A thumbnail carries its caption up the margin beside it, not beneath. */
+  .shot--e .shot__cap {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 0.85rem);
+    height: 100%;
+    margin: 0;
+    padding: 0 0 0 0.8rem;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+    writing-mode: vertical-rl;
+    /* In vertical-rl the inline axis runs downward, so `row` keeps plate,
+       title and data on one line reading top to bottom. */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+  .shot--e .shot__plate { padding: 0; }
+  .shot--e .shot__name { font-size: var(--step-0); }
 }
 
 .shot__frame {
@@ -526,6 +610,7 @@ button {
   font-size: var(--step-1);
   line-height: 1.1;
 }
+.shot--bleed .shot__name { font-size: var(--step-2); }
 .shot__where {
   color: var(--muted);
   line-height: 1.5;

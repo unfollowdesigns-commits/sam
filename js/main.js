@@ -31,6 +31,8 @@ function fillCopy() {
   document.getElementById('aboutFormats').textContent = SITE.formats;
   document.getElementById('year').textContent = new Date().getFullYear();
   document.getElementById('frameCount').textContent = String(PHOTOS.length).padStart(2, '0');
+  const workCount = document.getElementById('workCount');
+  if (workCount) workCount.textContent = String(PHOTOS.length);
 
   const services = document.getElementById('aboutServices');
   SITE.services.forEach((service) => {
@@ -110,6 +112,32 @@ function initTheme() {
 }
 
 /* --- Header, progress bar, hero parallax ---------------------------------- */
+/** The margin rail names the section currently in view. */
+function initRail() {
+  const now = document.getElementById('railNow');
+  if (!now) return;
+
+  const sections = [...document.querySelectorAll('main section[id]')]
+    .map((el) => ({ el, label: el.querySelector('.opener__title')?.textContent?.trim() }))
+    .filter((s) => s.label);
+  if (!sections.length) return;
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      const top = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!top) return;
+      const label = sections.find((s) => s.el === top.target)?.label;
+      if (!label || now.textContent === label) return;
+      now.style.opacity = '0';
+      setTimeout(() => { now.textContent = label; now.style.opacity = ''; }, 180);
+    },
+    { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.01, 0.5] }
+  );
+  sections.forEach((s) => io.observe(s.el));
+}
+
 function initScrollChrome() {
   const head = document.getElementById('siteHead');
   const progress = document.getElementById('scrollProgress');
@@ -311,6 +339,7 @@ function build() {
   });
 
   initScrollChrome();
+  initRail();
   initCursor();
 
   // Honour a link that points straight at one photograph.
