@@ -32,12 +32,15 @@ function flight(image, fromRect) {
   );
 }
 
-export function createLightbox({ onOpen, onClose } = {}) {
+export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
   const root = document.getElementById('lightbox');
   const image = document.getElementById('lbImage');
   const title = document.getElementById('lbTitle');
-  const meta = document.getElementById('lbMeta');
+  const plateNo = document.getElementById('lbPlate');
+  const note = document.getElementById('lbNote');
+  const data = document.getElementById('lbData');
   const counter = document.getElementById('lbCounter');
+  const ticks = document.getElementById('lbTicks');
   const prev = document.getElementById('lbPrev');
   const next = document.getElementById('lbNext');
   const close = document.getElementById('lbClose');
@@ -54,9 +57,35 @@ export function createLightbox({ onOpen, onClose } = {}) {
     root.classList.remove('is-loaded');
     image.src = photo.src;
     image.alt = photo.alt || photo.title;
+
+    plateNo.textContent = String(index + 1).padStart(3, '0');
     title.textContent = photo.title;
-    meta.textContent = [photo.location, photo.year].filter(Boolean).join(' · ');
-    counter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
+    // The alt text already describes the picture plainly; it reads as plate
+    // text, so there is no second description to write or keep in step.
+    note.textContent = photo.alt || '';
+
+    // Only fields the file actually recorded — no invented rows.
+    const rows = [
+      ['Series', seriesOf?.(photo.series) ?? photo.series],
+      ['Place', photo.location],
+      ['Year', photo.year],
+    ].filter(([, value]) => value);
+    data.replaceChildren(...rows.flatMap(([label, value]) => {
+      const dt = document.createElement('dt');
+      dt.textContent = label;
+      const dd = document.createElement('dd');
+      dd.textContent = value;
+      return [dt, dd];
+    }));
+
+    counter.textContent =
+      `${String(index + 1).padStart(3, '0')} / ${String(list.length).padStart(3, '0')}`;
+
+    // One tick per plate in the sequence — position at a glance.
+    if (ticks.childElementCount !== list.length) {
+      ticks.replaceChildren(...list.map(() => document.createElement('i')));
+    }
+    [...ticks.children].forEach((t, i) => t.classList.toggle('is-here', i === index));
 
     const done = () => {
       root.classList.add('is-loaded');

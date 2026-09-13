@@ -3,7 +3,7 @@
  * gallery, the series index and the viewer.
  */
 import { SITE, PHOTOS } from './data.js';
-import { createGallery, createSeriesIndex, slugOf } from './gallery.js';
+import { createGallery, createSeriesIndex, slugOf, seriesTitle } from './gallery.js';
 import { createLightbox } from './lightbox.js';
 
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -343,6 +343,7 @@ function build() {
   let viewerOpen = false;
 
   const lightbox = createLightbox({
+    seriesOf: seriesTitle,
     onOpen: (photo) => {
       const hash = `#f/${slugOf(photo)}`;
       if (location.hash !== hash) {

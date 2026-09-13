@@ -932,36 +932,42 @@ button {
   color: var(--muted);
 }
 
-/* --- Lightbox ------------------------------------------------------------ */
+/* --- The viewer ----------------------------------------------------------
+   A plate, not a popup: the photograph on the left and the apparatus that
+   describes it on the right, ruled like a catalogue entry. */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: 180;
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  /* A bounded row, so the stage inside can never grow past the screen. */
+  grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-rows: minmax(0, 1fr);
   align-items: stretch;
-  gap: clamp(0.5rem, 2vw, 2rem);
-  padding: clamp(3.5rem, 8vh, 6rem) clamp(0.75rem, 3vw, 3rem);
+  gap: clamp(0.5rem, 2vw, 1.75rem);
+  padding: clamp(3.5rem, 8vh, 5.5rem) clamp(0.75rem, 3vw, 2.5rem);
   background: var(--shade);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(26px) saturate(1.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2);
+  color: #ece7dc;
   opacity: 0;
   transition: opacity 0.45s var(--ease);
 }
 .lightbox.is-open { opacity: 1; }
 
-.lightbox__stage {
-  /* Rows rather than flex: the caption reserves its height first, so a tall
-     photograph can never push it off the bottom of the screen. */
+.lightbox__plate {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  justify-items: center;
-  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 19rem);
+  gap: clamp(1.25rem, 3vw, 3rem);
   min-width: 0;
   min-height: 0;
-  height: 100%;
+}
+
+.lightbox__stage {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
 }
 .lightbox__stage img {
   transform-origin: center center;
@@ -970,7 +976,6 @@ button {
   min-height: 0;
   width: auto;
   object-fit: contain;
-  align-self: center;
   box-shadow: 0 30px 80px -20px rgb(0 0 0 / 0.7);
   opacity: 0;
   transform: scale(0.985);
@@ -978,24 +983,84 @@ button {
 }
 .lightbox.is-loaded .lightbox__stage img { opacity: 1; transform: none; }
 
-.lightbox__caption {
+/* --- The apparatus -------------------------------------------------------- */
+.plate {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.6rem 1.4rem;
-  color: #f6f4f0;
-  text-align: center;
+  flex-direction: column;
+  align-self: center;
+  gap: 0.9rem;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-left: clamp(1rem, 2vw, 1.75rem);
+  border-left: 1px solid rgb(236 231 220 / 0.22);
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: opacity 0.6s var(--ease) 0.12s, transform 0.6s var(--ease) 0.12s;
 }
-.lightbox__title { font-family: var(--font-display); font-size: var(--step-1); }
-.lightbox__meta, .lightbox__counter {
-  color: rgb(236 231 220 / 0.6);
+.lightbox.is-loaded .plate { opacity: 1; transform: none; }
+
+.plate__no {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
-.lightbox__counter {
-  padding-left: 1.4rem;
-  border-left: 1px solid rgb(236 231 220 / 0.28);
+.plate__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 1.1rem + 2.2vw, 3.1rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
+.plate__note {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  line-height: 1.65;
+  color: rgb(236 231 220 / 0.62);
+  padding-top: 0.9rem;
+  border-top: 1px solid rgb(236 231 220 / 0.18);
+  max-width: 34ch;
+}
+
+.plate__data {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0 1rem;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+}
+.plate__data dt,
+.plate__data dd {
+  padding: 0.5rem 0;
+  border-top: 1px solid rgb(236 231 220 / 0.14);
+  margin: 0;
+}
+.plate__data dt { color: rgb(236 231 220 / 0.45); text-transform: uppercase; letter-spacing: 0.1em; }
+
+.plate__seq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgb(236 231 220 / 0.18);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  color: rgb(236 231 220 / 0.55);
+  font-variant-numeric: tabular-nums;
+}
+/* One tick per plate: where you are in the sequence, without a scrollbar. */
+.plate__ticks { display: flex; gap: 3px; align-items: center; }
+.plate__ticks i {
+  flex: 1 1 auto;
+  height: 8px;
+  background: rgb(236 231 220 / 0.22);
+  transition: background-color 0.35s var(--ease), height 0.35s var(--ease);
+}
+.plate__ticks i.is-here { background: var(--accent); height: 14px; }
 
 .lightbox__nav, .lightbox__close {
   display: grid;
@@ -1012,11 +1077,11 @@ button {
   transition: background-color 0.35s, border-color 0.35s, color 0.35s,
               transform 0.35s var(--ease), opacity 0.3s;
 }
-.lightbox__nav:hover, .lightbox__close:hover { transform: scale(1.06); }
 .lightbox__nav:hover, .lightbox__close:hover {
   background: #ece7dc;
   border-color: #ece7dc;
   color: #12110f;
+  transform: scale(1.06);
 }
 .lightbox__nav svg, .lightbox__close svg {
   width: 42%;
@@ -1028,16 +1093,34 @@ button {
 }
 .lightbox__close {
   position: absolute;
-  top: clamp(0.75rem, 3vh, 1.75rem);
-  right: clamp(0.75rem, 3vw, 3rem);
+  top: clamp(0.75rem, 3vh, 1.5rem);
+  right: clamp(0.75rem, 3vw, 2.5rem);
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .lightbox__plate { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; }
+  .plate {
+    align-self: stretch;
+    border-left: 0;
+    border-top: 1px solid rgb(236 231 220 / 0.22);
+    padding: 1rem 0 0;
+    gap: 0.6rem;
+  }
+  .plate__note { display: none; }
+  .plate__data { grid-template-columns: 4.5rem 1fr; }
 }
 
 @media (max-width: 640px) {
   .lightbox { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; }
-  .lightbox__stage { grid-row: 1; }
-  .lightbox__nav { grid-row: 2; }
+  .lightbox__plate { grid-row: 1; grid-column: 1; }
+  /* Both arrows share one cell; justify-self decides which edge. Without an
+     explicit column the first one is auto-placed into an implicit second
+     column, which silently swaps them. */
+  .lightbox__nav { grid-row: 2; grid-column: 1; }
   .lightbox__nav--prev { justify-self: start; }
-  .lightbox__nav--next { justify-self: end; grid-row: 2; grid-column: 1; }
+  .lightbox__nav--next { justify-self: end; }
+  .plate__data { display: none; }
 }
 
 /* --- Scroll reveals ------------------------------------------------------ */

@@ -1049,14 +1049,23 @@
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4L7 12l8 8"/></svg>
   </button>
 
-  <figure class="lightbox__stage">
-    <img id="lbImage" alt="">
-    <figcaption class="lightbox__caption">
-      <span class="lightbox__title" id="lbTitle"></span>
-      <span class="lightbox__meta" id="lbMeta"></span>
-      <span class="lightbox__counter" id="lbCounter"></span>
-    </figcaption>
-  </figure>
+  <!-- The plate: the photograph and the apparatus that describes it. -->
+  <div class="lightbox__plate">
+    <figure class="lightbox__stage">
+      <img id="lbImage" alt="">
+    </figure>
+
+    <aside class="plate">
+      <span class="plate__no" id="lbPlate"></span>
+      <h2 class="plate__title" id="lbTitle"></h2>
+      <p class="plate__note" id="lbNote"></p>
+      <dl class="plate__data" id="lbData"></dl>
+      <div class="plate__seq">
+        <span class="plate__count" id="lbCounter"></span>
+        <span class="plate__ticks" id="lbTicks" aria-hidden="true"></span>
+      </div>
+    </aside>
+  </div>
 
   <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="Next photograph">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
