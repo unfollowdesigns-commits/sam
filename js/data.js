@@ -172,6 +172,23 @@ export const PHOTOS = [
     ratio: 1,
   },
 
+  {
+    src: 'images/sitters-10.jpg',
+    alt: 'A face in silver makeup wearing a head chain and ear chain, in black and white',
+    title: 'Earchain',
+    series: 'sitters',
+    year: '2020',
+    ratio: 0.75,
+  },
+  {
+    src: 'images/sitters-11.jpg',
+    alt: 'Gold necklaces on a bare throat, framed by pampas grass and carnations',
+    title: 'Pampas',
+    series: 'sitters',
+    year: '2019',
+    ratio: 0.6678,
+  },
+
   /* --- Concrete: buildings, streets, signage --------------------------- */
   {
     src: 'images/concrete-01.jpg',
