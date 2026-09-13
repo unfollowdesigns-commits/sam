@@ -161,7 +161,15 @@ export const PHOTOS = [
     alt: 'A figure in black against a bright wall, caught mid-turn',
     title: 'Sfayaa',
     series: 'sitters',
-    ratio: 0.6627,
+    ratio: 0.6628,
+  },
+
+  {
+    src: 'images/sitters-09.jpg',
+    alt: 'Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky',
+    title: 'Kept',
+    series: 'sitters',
+    ratio: 1,
   },
 
   /* --- Concrete: buildings, streets, signage --------------------------- */
