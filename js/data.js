@@ -200,6 +200,15 @@ export const PHOTOS = [
     ratio: 0.6678,
   },
 
+  {
+    src: 'images/sitters-12.jpg',
+    alt: 'Two square brass earrings resting on rumpled white linen in soft daylight',
+    title: 'Brass',
+    series: 'sitters',
+    year: '2020',
+    ratio: 1,
+  },
+
   /* --- Concrete: buildings, streets, signage --------------------------- */
   {
     src: 'images/concrete-01.jpg',
