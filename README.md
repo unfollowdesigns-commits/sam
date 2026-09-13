@@ -14,6 +14,9 @@ images/             photographs, resized to 1800px and stripped of EXIF
 js/lqip.js          generated blur-up placeholders (see below)
 tools/build-lqip.mjs
 tools/find-dupes.mjs
+tools/build-seo.mjs
+sitemap.xml         generated
+robots.txt          generated
 ```
 
 ## Adding your photographs
@@ -89,6 +92,9 @@ not. After adding anything to `images/`:
 
 ```sh
 node tools/find-dupes.mjs
+tools/build-seo.mjs
+sitemap.xml         generated
+robots.txt          generated
 ```
 
 It compares a dHash of every image, which ignores scale, compression and
@@ -96,6 +102,32 @@ overall brightness, so it still catches two grades of one frame. Under ~6 bits
 is almost always the same frame; 6-16 needs a look; above that it is usually
 just two pictures with similar tone. Open the pair before deleting anything —
 the tool reports, it does not decide.
+
+## Being found
+
+The gallery is built by JavaScript, so a crawler that does not run scripts —
+and most answer engines do not — would see an empty page where the work is.
+`tools/build-seo.mjs` fixes that by writing three things into the repo:
+
+1. **The gallery markup, into `index.html`** between `generated-grid` markers.
+   Every photograph, plate number, caption and alt text is in the HTML source.
+   The script replaces it on load with the same content, laid out and
+   interactive, so there is no hidden text and no mismatch.
+2. **JSON-LD** describing the photographer (`Person`), the site, and every
+   photograph as an `ImageObject` carrying its creator, medium, year and place.
+   This is what lets an answer engine say who made a picture and where.
+3. **`sitemap.xml`** with image entries, and **`robots.txt`**.
+
+Run it after editing `js/data.js` or adding photographs:
+
+```sh
+node tools/build-seo.mjs
+```
+
+**Set `SITE.url` first.** The canonical link, the sitemap and the structured
+data all point at it, and the work cannot be attributed to you while it points
+somewhere else. `SITE.summary` is the one-sentence description answer engines
+tend to quote — keep it factual: who, what, where, in what medium.
 
 ## Running it locally
 

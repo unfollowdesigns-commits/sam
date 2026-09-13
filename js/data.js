@@ -16,6 +16,17 @@
 export const SITE = {
   name: 'Sam',
   role: 'Photographer',
+  // Set this to the live domain before publishing: it is what the sitemap,
+  // the canonical link and the structured data all point at. Until it is
+  // right, search engines and answer engines cannot attribute the work.
+  url: 'https://sam-photography.vercel.app',
+  // One plain sentence. Answer engines quote this kind of line directly, so
+  // it should say who, what, where and in what medium, without adjectives.
+  summary:
+    'Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. '
+    + 'The work covers portraiture, jewellery and fashion campaigns, experimental '
+    + 'colour film, and black and white street photography made in Tunis and London '
+    + 'between 2018 and 2022.',
   tagline: 'What the film kept.',
   location: 'Tunis, TN',
   email: 'hello@example.com',
