@@ -43,6 +43,42 @@ export const SITE = {
   services: ['Editorial', 'Portraiture', 'Fashion', 'Prints'],
   since: '2018',
   formats: '35mm film · Digital',
+  // Questions an answer engine gets asked about a photographer, answered in
+  // the plainest form they can be answered in. These are rendered onto the
+  // page by tools/build-seo.mjs and marked up as FAQPage in the same pass:
+  // the text a machine quotes is the exact text a visitor reads, which is
+  // both the honest arrangement and the one Google's guidelines require.
+  //
+  // Keep answers to one or two sentences and to things that are true. An
+  // answer engine will repeat these verbatim.
+  faq: [
+    {
+      q: 'Who is Sam?',
+      a: 'Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm '
+        + 'film. He has photographed in Tunis and London since 2018.',
+    },
+    {
+      q: 'What kind of photography does Sam shoot?',
+      a: 'Portraiture, fashion and jewellery campaigns, experimental colour film, '
+        + 'and black and white street photography.',
+    },
+    {
+      q: 'What does Sam shoot on?',
+      a: 'Mostly 35mm film, with some digital work. Scans are published as the '
+        + 'lab returned them rather than graded back towards a corrected image.',
+    },
+    {
+      q: 'Where is Sam based?',
+      a: 'Tunis, Tunisia. Much of the black and white work was made in London '
+        + 'between 2021 and 2022.',
+    },
+    {
+      q: 'Is Sam available for commissions?',
+      a: 'Yes — editorial, portrait and fashion commissions, and prints. '
+        + 'Enquiries by email.',
+    },
+  ],
+
   // The About frame carries its own ratio so the layout never crops it.
   about: {
     src: 'images/about.jpg',

@@ -10,9 +10,12 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sam — Photographer">
 <meta property="og:description" content="Selected photographs — 35mm film, portraits and cities.">
-<meta property="og:image" content="https://sam-photography.vercel.app/images/hero.jpg">
-<meta property="og:image:alt" content="A torso dissolving into red and teal light on exposed 35mm film">
+<meta property="og:image" content="https://sam-photography.vercel.app/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A red light leak cutting across a bare arm on green-cast 35mm film">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sam-photography.vercel.app/images/og.jpg">
 
 <link rel="canonical" href="https://sam-photography.vercel.app/">
 <meta name="author" content="Sam">
@@ -21,6 +24,7 @@
 <meta property="og:site_name" content="Sam — Photographer">
 <meta property="og:locale" content="en">
 
+<link rel="alternate" type="application/rss+xml" title="Sam — Journal" href="https://sam-photography.vercel.app/feed.xml">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b0b0c'/><circle cx='16' cy='16' r='6' fill='%23f2efe9'/></svg>">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +45,7 @@
       "description": "Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. The work covers portraiture, jewellery and fashion campaigns, experimental colour film, and black and white street photography made in Tunis and London between 2018 and 2022.",
       "email": "mailto:hello@example.com",
       "url": "https://sam-photography.vercel.app",
+      "image": "https://sam-photography.vercel.app/images/og.jpg",
       "knowsAbout": [
         "Film photography",
         "35mm photography",
@@ -48,6 +53,11 @@
         "Fashion photography",
         "Jewellery photography",
         "Street photography"
+      ],
+      "knowsLanguage": [
+        "en",
+        "ar",
+        "fr"
       ],
       "address": {
         "@type": "PostalAddress",
@@ -60,6 +70,83 @@
       ]
     },
     {
+      "@type": "ProfessionalService",
+      "@id": "https://sam-photography.vercel.app/#studio",
+      "name": "Sam — Photographer",
+      "description": "Editorial, portrait, fashion and jewellery photography on 35mm film, by Sam, based in Tunis and working in Tunis and London.",
+      "url": "https://sam-photography.vercel.app",
+      "image": "https://sam-photography.vercel.app/images/og.jpg",
+      "email": "mailto:hello@example.com",
+      "founder": {
+        "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "employee": {
+        "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "priceRange": "$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tunis",
+        "addressCountry": "TN"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Tunis"
+        },
+        {
+          "@type": "City",
+          "name": "London"
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Commissions",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Editorial",
+              "provider": {
+                "@id": "https://sam-photography.vercel.app/#person"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Portraiture",
+              "provider": {
+                "@id": "https://sam-photography.vercel.app/#person"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Fashion",
+              "provider": {
+                "@id": "https://sam-photography.vercel.app/#person"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Prints",
+              "provider": {
+                "@id": "https://sam-photography.vercel.app/#person"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "@type": "WebSite",
       "@id": "https://sam-photography.vercel.app/#website",
       "url": "https://sam-photography.vercel.app",
@@ -68,7 +155,49 @@
       "inLanguage": "en",
       "publisher": {
         "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "copyrightHolder": {
+        "@id": "https://sam-photography.vercel.app/#person"
       }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sam-photography.vercel.app/#webpage",
+      "url": "https://sam-photography.vercel.app/",
+      "name": "Sam — Photographer",
+      "description": "Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. The work covers portraiture, jewellery and fashion campaigns, experimental colour film, and black and white street photography made in Tunis and London between 2018 and 2022.",
+      "isPartOf": {
+        "@id": "https://sam-photography.vercel.app/#website"
+      },
+      "about": {
+        "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://sam-photography.vercel.app/#f/arm-burned-in"
+      },
+      "dateModified": "2026-09-14",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".hero__sub",
+          ".about__lead"
+        ]
+      },
+      "breadcrumb": {
+        "@id": "https://sam-photography.vercel.app/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://sam-photography.vercel.app/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Sam",
+          "item": "https://sam-photography.vercel.app/"
+        }
+      ]
     },
     {
       "@type": "ImageGallery",
@@ -79,20 +208,28 @@
       "author": {
         "@id": "https://sam-photography.vercel.app/#person"
       },
+      "isPartOf": {
+        "@id": "https://sam-photography.vercel.app/#webpage"
+      },
       "associatedMedia": [
         {
           "@type": "ImageObject",
           "@id": "https://sam-photography.vercel.app/#f/arm-burned-in",
           "name": "Arm, Burned In",
           "caption": "A red light leak cutting across a bare arm on green-cast colour film",
-          "description": "A red light leak cutting across a bare arm on green-cast colour film. Latent. 2019",
+          "description": "Nothing about this was decided by me.. A red light leak cutting across a bare arm on green-cast colour film. Latent. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/latent-01.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/latent-01.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Latent",
           "dateCreated": "2019"
         },
@@ -107,8 +244,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Latent",
           "dateCreated": "2019"
         },
@@ -117,14 +259,19 @@
           "@id": "https://sam-photography.vercel.app/#f/tube",
           "name": "Tube",
           "caption": "A neon tube burning pink against a dark, blue-smeared frame",
-          "description": "A neon tube burning pink against a dark, blue-smeared frame. Latent. 2019",
+          "description": "Walking home. The whole roll came back like this and I printed six of them.. A neon tube burning pink against a dark, blue-smeared frame. Latent. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/latent-04.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/latent-04.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Latent",
           "dateCreated": "2019"
         },
@@ -133,14 +280,19 @@
           "@id": "https://sam-photography.vercel.app/#f/bloom",
           "name": "Bloom",
           "caption": "A red bloom and a blue streak crossing green-cast film",
-          "description": "A red bloom and a blue streak crossing green-cast film. Latent. 2019",
+          "description": "Heat, probably.. A red bloom and a blue streak crossing green-cast film. Latent. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/latent-05.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/latent-05.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Latent",
           "dateCreated": "2019"
         },
@@ -149,14 +301,19 @@
           "@id": "https://sam-photography.vercel.app/#f/opal",
           "name": "Opal",
           "caption": "A double exposure: a figure in cold blue crossed by a band of orange light",
-          "description": "A double exposure: a figure in cold blue crossed by a band of orange light. Latent",
+          "description": "Two exposures, one frame. I only meant to make one.. A double exposure: a figure in cold blue crossed by a band of orange light. Latent",
           "contentUrl": "https://sam-photography.vercel.app/images/latent-07.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/latent-07.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Latent"
         },
         {
@@ -164,14 +321,19 @@
           "@id": "https://sam-photography.vercel.app/#f/between-setups",
           "name": "Between Setups",
           "caption": "A woman in a black blazer standing beside an exposed studio light stand",
-          "description": "A woman in a black blazer standing beside an exposed studio light stand. Sitters. Tunis, TN. 2020",
+          "description": "The picture I came for took forty minutes. This one took none.. A woman in a black blazer standing beside an exposed studio light stand. Sitters. Tunis, TN. 2020",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-01.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-01.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2020",
           "contentLocation": {
@@ -184,14 +346,19 @@
           "@id": "https://sam-photography.vercel.app/#f/veil",
           "name": "Veil",
           "caption": "A face behind a beaded veil, eyes closed",
-          "description": "A face behind a beaded veil, eyes closed. Sitters. Tunis, TN. 2020",
+          "description": "She closed her eyes before I asked her to.. A face behind a beaded veil, eyes closed. Sitters. Tunis, TN. 2020",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-02.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-02.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2020",
           "contentLocation": {
@@ -204,14 +371,19 @@
           "@id": "https://sam-photography.vercel.app/#f/nine-bars",
           "name": "Nine Bars",
           "caption": "A figure in dark fur under hard stripes of window light",
-          "description": "A figure in dark fur under hard stripes of window light. Sitters. 2020",
+          "description": "The blinds did the work.. A figure in dark fur under hard stripes of window light. Sitters. 2020",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-03.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-03.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2020"
         },
@@ -226,8 +398,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2019"
         },
@@ -236,14 +413,19 @@
           "@id": "https://sam-photography.vercel.app/#f/gold-looking-up",
           "name": "Gold, Looking Up",
           "caption": "A head tipped back in warm light, gold earrings catching the sun",
-          "description": "A head tipped back in warm light, gold earrings catching the sun. Sitters. 2019",
+          "description": "Late afternoon, which in Tunis is still the middle of the day.. A head tipped back in warm light, gold earrings catching the sun. Sitters. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-05.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-05.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2019"
         },
@@ -252,14 +434,19 @@
           "@id": "https://sam-photography.vercel.app/#f/he-chose-the-spot",
           "name": "He Chose the Spot",
           "caption": "A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard",
-          "description": "A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard. Sitters. 2019",
+          "description": "And he was right about the spot.. A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard. Sitters. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-06.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-06.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2019"
         },
@@ -268,14 +455,19 @@
           "@id": "https://sam-photography.vercel.app/#f/on-the-floor",
           "name": "On the Floor",
           "caption": "A woman in a white tee in a workshop, benches and working figures behind her",
-          "description": "A woman in a white tee in a workshop, benches and working figures behind her. Sitters. 2020",
+          "description": "Made between two orders going out. Nobody stopped.. A woman in a white tee in a workshop, benches and working figures behind her. Sitters. 2020",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-07.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-07.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2020"
         },
@@ -284,14 +476,19 @@
           "@id": "https://sam-photography.vercel.app/#f/sfayaa",
           "name": "Sfayaa",
           "caption": "A figure in black against a bright wall, caught mid-turn",
-          "description": "A figure in black against a bright wall, caught mid-turn. Sitters",
+          "description": "Mid-turn, last frame on the roll.. A figure in black against a bright wall, caught mid-turn. Sitters",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-08.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-08.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters"
         },
         {
@@ -299,14 +496,19 @@
           "@id": "https://sam-photography.vercel.app/#f/kept-diptych",
           "name": "KEPT — Diptych",
           "caption": "Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky",
-          "description": "Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky. Sitters",
+          "description": "Two frames, one second apart. The shirt supplied the title.. Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky. Sitters",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-09.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-09.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters"
         },
         {
@@ -320,8 +522,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2020"
         },
@@ -330,14 +537,19 @@
           "@id": "https://sam-photography.vercel.app/#f/pampas",
           "name": "Pampas",
           "caption": "Gold necklaces on a bare throat, framed by pampas grass and carnations",
-          "description": "Gold necklaces on a bare throat, framed by pampas grass and carnations. Sitters. 2019",
+          "description": "Campaign work. The flowers were not my idea and they were the right idea.. Gold necklaces on a bare throat, framed by pampas grass and carnations. Sitters. 2019",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-11.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-11.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters",
           "dateCreated": "2019"
         },
@@ -346,14 +558,19 @@
           "@id": "https://sam-photography.vercel.app/#f/study-two-legs-one-chair",
           "name": "Study: Two Legs, One Chair",
           "caption": "Two legs in dark tights raised over the back of a wire chair, in grainy black and white",
-          "description": "Two legs in dark tights raised over the back of a wire chair, in grainy black and white. Sitters",
+          "description": "Pushed film, and still not enough of it.. Two legs in dark tights raised over the back of a wire chair, in grainy black and white. Sitters",
           "contentUrl": "https://sam-photography.vercel.app/images/sitters-12.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/sitters-12.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Sitters"
         },
         {
@@ -367,8 +584,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2018"
         },
@@ -377,14 +599,19 @@
           "@id": "https://sam-photography.vercel.app/#f/rake",
           "name": "Rake",
           "caption": "A tower block cutting a hard diagonal across a white sky",
-          "description": "A tower block cutting a hard diagonal across a white sky. Concrete. 2021",
+          "description": "White sky is the only weather this block reads in.. A tower block cutting a hard diagonal across a white sky. Concrete. 2021",
           "contentUrl": "https://sam-photography.vercel.app/images/concrete-02.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/concrete-02.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2021"
         },
@@ -393,14 +620,19 @@
           "@id": "https://sam-photography.vercel.app/#f/no-entry",
           "name": "NO ENTRY",
           "caption": "The words NO ENTRY painted across wet tarmac",
-          "description": "The words NO ENTRY painted across wet tarmac. Concrete. London, UK. 2021",
+          "description": "Rain first. Then the sign.. The words NO ENTRY painted across wet tarmac. Concrete. London, UK. 2021",
           "contentUrl": "https://sam-photography.vercel.app/images/concrete-03.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/concrete-03.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2021",
           "contentLocation": {
@@ -419,8 +651,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2018"
         },
@@ -429,14 +666,19 @@
           "@id": "https://sam-photography.vercel.app/#f/shadow-fall",
           "name": "Shadow Fall",
           "caption": "Hard-edged shadows thrown across a bare wall",
-          "description": "Hard-edged shadows thrown across a bare wall. Concrete. Tunis, TN. 2020",
+          "description": "One wall, one hour, nothing else happening anywhere.. Hard-edged shadows thrown across a bare wall. Concrete. Tunis, TN. 2020",
           "contentUrl": "https://sam-photography.vercel.app/images/concrete-05.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/concrete-05.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2020",
           "contentLocation": {
@@ -455,8 +697,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete",
           "dateCreated": "2021",
           "contentLocation": {
@@ -469,14 +716,19 @@
           "@id": "https://sam-photography.vercel.app/#f/eighty-balconies",
           "name": "Eighty Balconies",
           "caption": "A repeating grid of balconies on a tall block, seen from below against a cyan sky",
-          "description": "A repeating grid of balconies on a tall block, seen from below against a cyan sky. Concrete",
+          "description": "The sky came back this colour. I left it.. A repeating grid of balconies on a tall block, seen from below against a cyan sky. Concrete",
           "contentUrl": "https://sam-photography.vercel.app/images/concrete-07.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/concrete-07.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete"
         },
         {
@@ -484,14 +736,19 @@
           "@id": "https://sam-photography.vercel.app/#f/not-all-of-these-are-birds",
           "name": "Not All of These Are Birds",
           "caption": "A flock of birds over a corner building, with two larger shapes among them",
-          "description": "A flock of birds over a corner building, with two larger shapes among them. Concrete",
+          "description": "Look again at the middle of the frame.. A flock of birds over a corner building, with two larger shapes among them. Concrete",
           "contentUrl": "https://sam-photography.vercel.app/images/concrete-08.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/concrete-08.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Concrete"
         },
         {
@@ -499,14 +756,19 @@
           "@id": "https://sam-photography.vercel.app/#f/lemon-noon",
           "name": "Lemon, Noon",
           "caption": "A single slice of lemon on a pale concrete floor in hard sunlight",
-          "description": "A single slice of lemon on a pale concrete floor in hard sunlight. Still",
+          "description": "Cut in the morning. By the time the light was right it had gone to glass.. A single slice of lemon on a pale concrete floor in hard sunlight. Still",
           "contentUrl": "https://sam-photography.vercel.app/images/still-01.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/still-01.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Still"
         },
         {
@@ -520,8 +782,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Still"
         },
         {
@@ -529,14 +796,19 @@
           "@id": "https://sam-photography.vercel.app/#f/cup-face-down",
           "name": "Cup, Face Down",
           "caption": "A tipped-over cup on stone, its long shadow thrown across the frame",
-          "description": "A tipped-over cup on stone, its long shadow thrown across the frame. Still",
+          "description": "The shadow is the better object.. A tipped-over cup on stone, its long shadow thrown across the frame. Still",
           "contentUrl": "https://sam-photography.vercel.app/images/still-03.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/still-03.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Still"
         },
         {
@@ -544,14 +816,19 @@
           "@id": "https://sam-photography.vercel.app/#f/leaning-out",
           "name": "Leaning Out",
           "caption": "Cannabis leaves leaning out from the left of the frame against a flat white wall",
-          "description": "Cannabis leaves leaning out from the left of the frame against a flat white wall. Still",
+          "description": "Somebody else’s balcony, and a lot of white wall behind it.. Cannabis leaves leaning out from the left of the frame against a flat white wall. Still",
           "contentUrl": "https://sam-photography.vercel.app/images/still-04.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/still-04.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Still"
         },
         {
@@ -559,14 +836,19 @@
           "@id": "https://sam-photography.vercel.app/#f/fish-held-up-to-the-window",
           "name": "Fish, Held Up to the Window",
           "caption": "A goldfish in a clear plastic bottle, held up in two hands against warm window light",
-          "description": "A goldfish in a clear plastic bottle, held up in two hands against warm window light. Still",
+          "description": "So the water would do something.. A goldfish in a clear plastic bottle, held up in two hands against warm window light. Still",
           "contentUrl": "https://sam-photography.vercel.app/images/still-05.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/still-05.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Still"
         },
         {
@@ -580,8 +862,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light",
           "dateCreated": "2021",
           "contentLocation": {
@@ -594,14 +881,19 @@
           "@id": "https://sam-photography.vercel.app/#f/path-with-one-figure",
           "name": "Path, With One Figure",
           "caption": "A snow-covered path running between trees, one figure far off",
-          "description": "A snow-covered path running between trees, one figure far off. Winter Light. London, UK. 2021",
+          "description": "A long way off, and getting further.. A snow-covered path running between trees, one figure far off. Winter Light. London, UK. 2021",
           "contentUrl": "https://sam-photography.vercel.app/images/winter-02.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/winter-02.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light",
           "dateCreated": "2021",
           "contentLocation": {
@@ -614,14 +906,19 @@
           "@id": "https://sam-photography.vercel.app/#f/corridor",
           "name": "Corridor",
           "caption": "A figure blurred by a long exposure in a dim corridor",
-          "description": "A figure blurred by a long exposure in a dim corridor. Winter Light. 2021",
+          "description": "Half a second, hand-held.. A figure blurred by a long exposure in a dim corridor. Winter Light. 2021",
           "contentUrl": "https://sam-photography.vercel.app/images/winter-03.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/winter-03.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light",
           "dateCreated": "2021"
         },
@@ -630,14 +927,19 @@
           "@id": "https://sam-photography.vercel.app/#f/curtain",
           "name": "Curtain",
           "caption": "Daylight pooling through a drawn curtain",
-          "description": "Daylight pooling through a drawn curtain. Winter Light. Tunis, TN. 2022",
+          "description": "January in Tunis is not winter. The light disagrees.. Daylight pooling through a drawn curtain. Winter Light. Tunis, TN. 2022",
           "contentUrl": "https://sam-photography.vercel.app/images/winter-04.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/winter-04.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light",
           "dateCreated": "2022",
           "contentLocation": {
@@ -656,8 +958,13 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light",
           "dateCreated": "2021",
           "contentLocation": {
@@ -670,14 +977,19 @@
           "@id": "https://sam-photography.vercel.app/#f/she-was-faster-than-the-shutter",
           "name": "She Was Faster Than the Shutter",
           "caption": "A figure crossing in front of a bright window, smeared by a long exposure",
-          "description": "A figure crossing in front of a bright window, smeared by a long exposure. Winter Light",
+          "description": "One attempt. There is never a second one of these.. A figure crossing in front of a bright window, smeared by a long exposure. Winter Light",
           "contentUrl": "https://sam-photography.vercel.app/images/winter-07.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/winter-07.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Winter Light"
         },
         {
@@ -685,14 +997,19 @@
           "@id": "https://sam-photography.vercel.app/#f/the-physical-go-home",
           "name": "The Physical Go Home",
           "caption": "A zine page: a framed text reading \"The physical go home but the connection still stay strong\", above a small dark photograph",
-          "description": "A zine page: a framed text reading \"The physical go home but the connection still stay strong\", above a small dark photograph. Printed. 2021",
+          "description": "From the zine. The line is not mine.. A zine page: a framed text reading \"The physical go home but the connection still stay strong\", above a small dark photograph. Printed. 2021",
           "contentUrl": "https://sam-photography.vercel.app/images/printed-01.jpg",
           "thumbnailUrl": "https://sam-photography.vercel.app/images/printed-01.jpg",
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Printed",
           "dateCreated": "2021"
         },
@@ -707,13 +1024,105 @@
           "creator": {
             "@id": "https://sam-photography.vercel.app/#person"
           },
+          "copyrightHolder": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          },
           "creditText": "Sam",
           "copyrightNotice": "© Sam",
+          "license": "https://sam-photography.vercel.app/#contact",
+          "acquireLicensePage": "https://sam-photography.vercel.app/#contact",
           "isPartOf": "Printed",
           "dateCreated": "2021",
           "contentLocation": {
             "@type": "Place",
             "name": "London, UK"
+          }
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://sam-photography.vercel.app/#faq",
+      "isPartOf": {
+        "@id": "https://sam-photography.vercel.app/#webpage"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Who is Sam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. He has photographed in Tunis and London since 2018."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of photography does Sam shoot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Portraiture, fashion and jewellery campaigns, experimental colour film, and black and white street photography."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Sam shoot on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mostly 35mm film, with some digital work. Scans are published as the lab returned them rather than graded back towards a corrected image."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is Sam based?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tunis, Tunisia. Much of the black and white work was made in London between 2021 and 2022."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Sam available for commissions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — editorial, portrait and fashion commissions, and prints. Enquiries by email."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://sam-photography.vercel.app/journal/#blog",
+      "name": "Journal — Sam",
+      "url": "https://sam-photography.vercel.app/journal/",
+      "author": {
+        "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "publisher": {
+        "@id": "https://sam-photography.vercel.app/#person"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://sam-photography.vercel.app/journal/what-the-lab-sent-back/#post",
+          "headline": "What the lab sent back",
+          "description": "Five rolls came back from the lab wrong, and one of them became a series. A note on keeping the frames you did not plan.",
+          "datePublished": "2022-04-02",
+          "dateModified": "2022-04-02",
+          "url": "https://sam-photography.vercel.app/journal/what-the-lab-sent-back/",
+          "author": {
+            "@id": "https://sam-photography.vercel.app/#person"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "@id": "https://sam-photography.vercel.app/journal/shooting-tunis-in-january/#post",
+          "headline": "Shooting Tunis in January",
+          "description": "January in Tunis is not winter, but the light behaves as though it were — low, long, and gone by five.",
+          "datePublished": "2022-01-18",
+          "dateModified": "2022-01-18",
+          "url": "https://sam-photography.vercel.app/journal/shooting-tunis-in-january/",
+          "author": {
+            "@id": "https://sam-photography.vercel.app/#person"
           }
         }
       ]
@@ -767,6 +1176,7 @@
   <nav class="site-nav" aria-label="Primary">
     <a href="#work">Work</a>
     <a href="#series">Series</a>
+    <a href="journal/">Journal</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -788,6 +1198,11 @@
 
     <div class="hero__type">
       <h1 class="display">
+        <!-- The heading is the tagline, which tells a visitor nothing about
+             whose site this is — a screen reader hears "What the film kept."
+             and stops there, and a search engine reads the same. The name and
+             the trade lead the heading and are hidden visually only. -->
+        <span class="visually-hidden">Sam — photographer, Tunis. </span>
         <span class="line"><span>What the film</span></span>
         <span class="line"><span><em>kept</em>.</span></span>
       </h1>
@@ -830,7 +1245,7 @@
 <!-- generated-grid:start -->
       <figure class="shot" data-index="0" id="plate-001">
         <a class="shot__frame" href="#f/arm-burned-in" style="--ratio:1.5088" aria-label="Open Arm, Burned In full screen">
-          <img src="images/latent-01.jpg" alt="A red light leak cutting across a bare arm on green-cast colour film" width="1800" loading="eager" decoding="async">
+          <img src="images/latent-01.jpg" alt="A red light leak cutting across a bare arm on green-cast colour film" width="1800" height="1193" loading="eager" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">001</span>
@@ -840,7 +1255,7 @@
       </figure>
       <figure class="shot" data-index="1" id="plate-002">
         <a class="shot__frame" href="#f/two-reds-and-a-blue" style="--ratio:1.5088" aria-label="Open Two Reds and a Blue full screen">
-          <img src="images/latent-03.jpg" alt="Blue and red streaks crossing a green frame" width="1800" loading="eager" decoding="async">
+          <img src="images/latent-03.jpg" alt="Blue and red streaks crossing a green frame" width="1800" height="1193" loading="eager" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">002</span>
@@ -850,7 +1265,7 @@
       </figure>
       <figure class="shot" data-index="2" id="plate-003">
         <a class="shot__frame" href="#f/tube" style="--ratio:1.5088" aria-label="Open Tube full screen">
-          <img src="images/latent-04.jpg" alt="A neon tube burning pink against a dark, blue-smeared frame" width="1800" loading="lazy" decoding="async">
+          <img src="images/latent-04.jpg" alt="A neon tube burning pink against a dark, blue-smeared frame" width="1800" height="1193" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">003</span>
@@ -860,7 +1275,7 @@
       </figure>
       <figure class="shot" data-index="3" id="plate-004">
         <a class="shot__frame" href="#f/bloom" style="--ratio:1.5088" aria-label="Open Bloom full screen">
-          <img src="images/latent-05.jpg" alt="A red bloom and a blue streak crossing green-cast film" width="1800" loading="lazy" decoding="async">
+          <img src="images/latent-05.jpg" alt="A red bloom and a blue streak crossing green-cast film" width="1800" height="1193" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">004</span>
@@ -870,7 +1285,7 @@
       </figure>
       <figure class="shot" data-index="4" id="plate-005">
         <a class="shot__frame" href="#f/opal" style="--ratio:0.6894" aria-label="Open Opal full screen">
-          <img src="images/latent-07.jpg" alt="A double exposure: a figure in cold blue crossed by a band of orange light" width="1800" loading="lazy" decoding="async">
+          <img src="images/latent-07.jpg" alt="A double exposure: a figure in cold blue crossed by a band of orange light" width="1800" height="2611" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">005</span>
@@ -880,7 +1295,7 @@
       </figure>
       <figure class="shot" data-index="5" id="plate-006">
         <a class="shot__frame" href="#f/between-setups" style="--ratio:1.509" aria-label="Open Between Setups full screen">
-          <img src="images/sitters-01.jpg" alt="A woman in a black blazer standing beside an exposed studio light stand" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-01.jpg" alt="A woman in a black blazer standing beside an exposed studio light stand" width="1800" height="1193" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">006</span>
@@ -890,7 +1305,7 @@
       </figure>
       <figure class="shot" data-index="6" id="plate-007">
         <a class="shot__frame" href="#f/veil" style="--ratio:1" aria-label="Open Veil full screen">
-          <img src="images/sitters-02.jpg" alt="A face behind a beaded veil, eyes closed" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-02.jpg" alt="A face behind a beaded veil, eyes closed" width="1800" height="1800" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">007</span>
@@ -900,7 +1315,7 @@
       </figure>
       <figure class="shot" data-index="7" id="plate-008">
         <a class="shot__frame" href="#f/nine-bars" style="--ratio:0.9798" aria-label="Open Nine Bars full screen">
-          <img src="images/sitters-03.jpg" alt="A figure in dark fur under hard stripes of window light" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-03.jpg" alt="A figure in dark fur under hard stripes of window light" width="1800" height="1837" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">008</span>
@@ -910,7 +1325,7 @@
       </figure>
       <figure class="shot" data-index="8" id="plate-009">
         <a class="shot__frame" href="#f/sheaf" style="--ratio:0.6678" aria-label="Open Sheaf full screen">
-          <img src="images/sitters-04.jpg" alt="A model on a white paper backdrop holding a sheaf of dried stems" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-04.jpg" alt="A model on a white paper backdrop holding a sheaf of dried stems" width="1800" height="2695" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">009</span>
@@ -920,7 +1335,7 @@
       </figure>
       <figure class="shot" data-index="9" id="plate-010">
         <a class="shot__frame" href="#f/gold-looking-up" style="--ratio:1.4975" aria-label="Open Gold, Looking Up full screen">
-          <img src="images/sitters-05.jpg" alt="A head tipped back in warm light, gold earrings catching the sun" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-05.jpg" alt="A head tipped back in warm light, gold earrings catching the sun" width="1800" height="1202" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">010</span>
@@ -930,7 +1345,7 @@
       </figure>
       <figure class="shot" data-index="10" id="plate-011">
         <a class="shot__frame" href="#f/he-chose-the-spot" style="--ratio:0.6306" aria-label="Open He Chose the Spot full screen">
-          <img src="images/sitters-06.jpg" alt="A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-06.jpg" alt="A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard" width="1800" height="2854" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">011</span>
@@ -940,7 +1355,7 @@
       </figure>
       <figure class="shot" data-index="11" id="plate-012">
         <a class="shot__frame" href="#f/on-the-floor" style="--ratio:1.509" aria-label="Open On the Floor full screen">
-          <img src="images/sitters-07.jpg" alt="A woman in a white tee in a workshop, benches and working figures behind her" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-07.jpg" alt="A woman in a white tee in a workshop, benches and working figures behind her" width="1800" height="1193" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">012</span>
@@ -950,7 +1365,7 @@
       </figure>
       <figure class="shot" data-index="12" id="plate-013">
         <a class="shot__frame" href="#f/sfayaa" style="--ratio:0.6628" aria-label="Open Sfayaa full screen">
-          <img src="images/sitters-08.jpg" alt="A figure in black against a bright wall, caught mid-turn" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-08.jpg" alt="A figure in black against a bright wall, caught mid-turn" width="1800" height="2716" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">013</span>
@@ -960,7 +1375,7 @@
       </figure>
       <figure class="shot" data-index="13" id="plate-014">
         <a class="shot__frame" href="#f/kept-diptych" style="--ratio:1" aria-label="Open KEPT — Diptych full screen">
-          <img src="images/sitters-09.jpg" alt="Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-09.jpg" alt="Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky" width="1800" height="1800" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">014</span>
@@ -970,7 +1385,7 @@
       </figure>
       <figure class="shot" data-index="14" id="plate-015">
         <a class="shot__frame" href="#f/silver-chained" style="--ratio:0.75" aria-label="Open Silver, Chained full screen">
-          <img src="images/sitters-10.jpg" alt="A face in silver makeup wearing a head chain and ear chain, in black and white" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-10.jpg" alt="A face in silver makeup wearing a head chain and ear chain, in black and white" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">015</span>
@@ -980,7 +1395,7 @@
       </figure>
       <figure class="shot" data-index="15" id="plate-016">
         <a class="shot__frame" href="#f/pampas" style="--ratio:0.6678" aria-label="Open Pampas full screen">
-          <img src="images/sitters-11.jpg" alt="Gold necklaces on a bare throat, framed by pampas grass and carnations" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-11.jpg" alt="Gold necklaces on a bare throat, framed by pampas grass and carnations" width="1800" height="2695" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">016</span>
@@ -990,7 +1405,7 @@
       </figure>
       <figure class="shot" data-index="16" id="plate-017">
         <a class="shot__frame" href="#f/study-two-legs-one-chair" style="--ratio:1.087" aria-label="Open Study: Two Legs, One Chair full screen">
-          <img src="images/sitters-12.jpg" alt="Two legs in dark tights raised over the back of a wire chair, in grainy black and white" width="1800" loading="lazy" decoding="async">
+          <img src="images/sitters-12.jpg" alt="Two legs in dark tights raised over the back of a wire chair, in grainy black and white" width="1800" height="1656" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">017</span>
@@ -1000,7 +1415,7 @@
       </figure>
       <figure class="shot" data-index="17" id="plate-018">
         <a class="shot__frame" href="#f/cyan-grid" style="--ratio:1.5369" aria-label="Open Cyan Grid full screen">
-          <img src="images/concrete-01.jpg" alt="A grid of apartment balconies in cold cyan light" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-01.jpg" alt="A grid of apartment balconies in cold cyan light" width="1800" height="1171" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">018</span>
@@ -1010,7 +1425,7 @@
       </figure>
       <figure class="shot" data-index="18" id="plate-019">
         <a class="shot__frame" href="#f/rake" style="--ratio:0.6706" aria-label="Open Rake full screen">
-          <img src="images/concrete-02.jpg" alt="A tower block cutting a hard diagonal across a white sky" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-02.jpg" alt="A tower block cutting a hard diagonal across a white sky" width="1800" height="2684" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">019</span>
@@ -1020,7 +1435,7 @@
       </figure>
       <figure class="shot" data-index="19" id="plate-020">
         <a class="shot__frame" href="#f/no-entry" style="--ratio:0.7256" aria-label="Open NO ENTRY full screen">
-          <img src="images/concrete-03.jpg" alt="The words NO ENTRY painted across wet tarmac" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-03.jpg" alt="The words NO ENTRY painted across wet tarmac" width="1800" height="2481" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">020</span>
@@ -1030,7 +1445,7 @@
       </figure>
       <figure class="shot" data-index="20" id="plate-021">
         <a class="shot__frame" href="#f/lamp-and-two-birds" style="--ratio:0.9273" aria-label="Open Lamp and Two Birds full screen">
-          <img src="images/concrete-04.jpg" alt="A streetlight and two small birds against a flat blue sky" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-04.jpg" alt="A streetlight and two small birds against a flat blue sky" width="1800" height="1941" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">021</span>
@@ -1040,7 +1455,7 @@
       </figure>
       <figure class="shot" data-index="21" id="plate-022">
         <a class="shot__frame" href="#f/shadow-fall" style="--ratio:0.75" aria-label="Open Shadow Fall full screen">
-          <img src="images/concrete-05.jpg" alt="Hard-edged shadows thrown across a bare wall" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-05.jpg" alt="Hard-edged shadows thrown across a bare wall" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">022</span>
@@ -1050,7 +1465,7 @@
       </figure>
       <figure class="shot" data-index="22" id="plate-023">
         <a class="shot__frame" href="#f/the-city-from-a-bus-shelter" style="--ratio:0.7633" aria-label="Open The City, From a Bus Shelter full screen">
-          <img src="images/concrete-06.jpg" alt="Glass towers rising behind a bus shelter in the City" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-06.jpg" alt="Glass towers rising behind a bus shelter in the City" width="1800" height="2358" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">023</span>
@@ -1060,7 +1475,7 @@
       </figure>
       <figure class="shot" data-index="23" id="plate-024">
         <a class="shot__frame" href="#f/eighty-balconies" style="--ratio:0.6239" aria-label="Open Eighty Balconies full screen">
-          <img src="images/concrete-07.jpg" alt="A repeating grid of balconies on a tall block, seen from below against a cyan sky" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-07.jpg" alt="A repeating grid of balconies on a tall block, seen from below against a cyan sky" width="1800" height="2885" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">024</span>
@@ -1070,7 +1485,7 @@
       </figure>
       <figure class="shot" data-index="24" id="plate-025">
         <a class="shot__frame" href="#f/not-all-of-these-are-birds" style="--ratio:1.509" aria-label="Open Not All of These Are Birds full screen">
-          <img src="images/concrete-08.jpg" alt="A flock of birds over a corner building, with two larger shapes among them" width="1800" loading="lazy" decoding="async">
+          <img src="images/concrete-08.jpg" alt="A flock of birds over a corner building, with two larger shapes among them" width="1800" height="1193" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">025</span>
@@ -1080,7 +1495,7 @@
       </figure>
       <figure class="shot" data-index="25" id="plate-026">
         <a class="shot__frame" href="#f/lemon-noon" style="--ratio:0.8012" aria-label="Open Lemon, Noon full screen">
-          <img src="images/still-01.jpg" alt="A single slice of lemon on a pale concrete floor in hard sunlight" width="1800" loading="lazy" decoding="async">
+          <img src="images/still-01.jpg" alt="A single slice of lemon on a pale concrete floor in hard sunlight" width="1800" height="2247" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">026</span>
@@ -1090,7 +1505,7 @@
       </figure>
       <figure class="shot" data-index="26" id="plate-027">
         <a class="shot__frame" href="#f/pencil-and-the-shadow-of-something-else" style="--ratio:1" aria-label="Open Pencil and the Shadow of Something Else full screen">
-          <img src="images/still-02.jpg" alt="A pencil lying on concrete, crossed by the soft shadow of something outside the frame" width="1800" loading="lazy" decoding="async">
+          <img src="images/still-02.jpg" alt="A pencil lying on concrete, crossed by the soft shadow of something outside the frame" width="1800" height="1800" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">027</span>
@@ -1100,7 +1515,7 @@
       </figure>
       <figure class="shot" data-index="27" id="plate-028">
         <a class="shot__frame" href="#f/cup-face-down" style="--ratio:1.6319" aria-label="Open Cup, Face Down full screen">
-          <img src="images/still-03.jpg" alt="A tipped-over cup on stone, its long shadow thrown across the frame" width="1800" loading="lazy" decoding="async">
+          <img src="images/still-03.jpg" alt="A tipped-over cup on stone, its long shadow thrown across the frame" width="1800" height="1103" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">028</span>
@@ -1110,7 +1525,7 @@
       </figure>
       <figure class="shot" data-index="28" id="plate-029">
         <a class="shot__frame" href="#f/leaning-out" style="--ratio:0.5133" aria-label="Open Leaning Out full screen">
-          <img src="images/still-04.jpg" alt="Cannabis leaves leaning out from the left of the frame against a flat white wall" width="1800" loading="lazy" decoding="async">
+          <img src="images/still-04.jpg" alt="Cannabis leaves leaning out from the left of the frame against a flat white wall" width="1800" height="3507" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">029</span>
@@ -1120,7 +1535,7 @@
       </figure>
       <figure class="shot" data-index="29" id="plate-030">
         <a class="shot__frame" href="#f/fish-held-up-to-the-window" style="--ratio:0.5761" aria-label="Open Fish, Held Up to the Window full screen">
-          <img src="images/still-05.jpg" alt="A goldfish in a clear plastic bottle, held up in two hands against warm window light" width="1800" loading="lazy" decoding="async">
+          <img src="images/still-05.jpg" alt="A goldfish in a clear plastic bottle, held up in two hands against warm window light" width="1800" height="3124" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">030</span>
@@ -1130,7 +1545,7 @@
       </figure>
       <figure class="shot" data-index="30" id="plate-031">
         <a class="shot__frame" href="#f/bare" style="--ratio:0.75" aria-label="Open Bare full screen">
-          <img src="images/winter-01.jpg" alt="Bare branches against a white winter sky" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-01.jpg" alt="Bare branches against a white winter sky" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">031</span>
@@ -1140,7 +1555,7 @@
       </figure>
       <figure class="shot" data-index="31" id="plate-032">
         <a class="shot__frame" href="#f/path-with-one-figure" style="--ratio:0.75" aria-label="Open Path, With One Figure full screen">
-          <img src="images/winter-02.jpg" alt="A snow-covered path running between trees, one figure far off" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-02.jpg" alt="A snow-covered path running between trees, one figure far off" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">032</span>
@@ -1150,7 +1565,7 @@
       </figure>
       <figure class="shot" data-index="32" id="plate-033">
         <a class="shot__frame" href="#f/corridor" style="--ratio:0.5437" aria-label="Open Corridor full screen">
-          <img src="images/winter-03.jpg" alt="A figure blurred by a long exposure in a dim corridor" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-03.jpg" alt="A figure blurred by a long exposure in a dim corridor" width="1800" height="3311" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">033</span>
@@ -1160,7 +1575,7 @@
       </figure>
       <figure class="shot" data-index="33" id="plate-034">
         <a class="shot__frame" href="#f/curtain" style="--ratio:0.75" aria-label="Open Curtain full screen">
-          <img src="images/winter-04.jpg" alt="Daylight pooling through a drawn curtain" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-04.jpg" alt="Daylight pooling through a drawn curtain" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">034</span>
@@ -1170,7 +1585,7 @@
       </figure>
       <figure class="shot" data-index="34" id="plate-035">
         <a class="shot__frame" href="#f/park-from-the-sixth-floor" style="--ratio:0.75" aria-label="Open Park, From the Sixth Floor full screen">
-          <img src="images/winter-06.jpg" alt="A snowed-over park seen from above, benches and paths picked out in white" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-06.jpg" alt="A snowed-over park seen from above, benches and paths picked out in white" width="1800" height="2400" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">035</span>
@@ -1180,7 +1595,7 @@
       </figure>
       <figure class="shot" data-index="35" id="plate-036">
         <a class="shot__frame" href="#f/she-was-faster-than-the-shutter" style="--ratio:0.8761" aria-label="Open She Was Faster Than the Shutter full screen">
-          <img src="images/winter-07.jpg" alt="A figure crossing in front of a bright window, smeared by a long exposure" width="1800" loading="lazy" decoding="async">
+          <img src="images/winter-07.jpg" alt="A figure crossing in front of a bright window, smeared by a long exposure" width="1800" height="2055" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">036</span>
@@ -1190,7 +1605,7 @@
       </figure>
       <figure class="shot" data-index="36" id="plate-037">
         <a class="shot__frame" href="#f/the-physical-go-home" style="--ratio:0.8315" aria-label="Open The Physical Go Home full screen">
-          <img src="images/printed-01.jpg" alt="A zine page: a framed text reading &quot;The physical go home but the connection still stay strong&quot;, above a small dark photograph" width="1800" loading="lazy" decoding="async">
+          <img src="images/printed-01.jpg" alt="A zine page: a framed text reading &quot;The physical go home but the connection still stay strong&quot;, above a small dark photograph" width="1800" height="2165" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">037</span>
@@ -1200,7 +1615,7 @@
       </figure>
       <figure class="shot" data-index="37" id="plate-038">
         <a class="shot__frame" href="#f/plates-009-010" style="--ratio:1.4138" aria-label="Open Plates 009 — 010 full screen">
-          <img src="images/printed-02.jpg" alt="A layout sheet of five black and white London street frames, numbered 009 and 010" width="1800" loading="lazy" decoding="async">
+          <img src="images/printed-02.jpg" alt="A layout sheet of five black and white London street frames, numbered 009 and 010" width="1800" height="1273" loading="lazy" decoding="async">
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">038</span>
@@ -1244,6 +1659,34 @@
         <div><dt>Working since</dt><dd id="aboutSince"></dd></div>
         <div><dt>Formats</dt><dd id="aboutFormats"></dd></div>
       </dl>
+
+      <!-- Written by tools/build-seo.mjs from SITE.faq, and marked up as
+           FAQPage in the same pass, so the text a machine quotes is exactly
+           the text on the page. Do not edit here; edit js/data.js. -->
+      <!-- generated-faq:start -->
+      <dl class="about__faq reveal">
+        <div>
+          <dt>Who is Sam?</dt>
+          <dd>Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. He has photographed in Tunis and London since 2018.</dd>
+        </div>
+        <div>
+          <dt>What kind of photography does Sam shoot?</dt>
+          <dd>Portraiture, fashion and jewellery campaigns, experimental colour film, and black and white street photography.</dd>
+        </div>
+        <div>
+          <dt>What does Sam shoot on?</dt>
+          <dd>Mostly 35mm film, with some digital work. Scans are published as the lab returned them rather than graded back towards a corrected image.</dd>
+        </div>
+        <div>
+          <dt>Where is Sam based?</dt>
+          <dd>Tunis, Tunisia. Much of the black and white work was made in London between 2021 and 2022.</dd>
+        </div>
+        <div>
+          <dt>Is Sam available for commissions?</dt>
+          <dd>Yes — editorial, portrait and fashion commissions, and prints. Enquiries by email.</dd>
+        </div>
+      </dl>
+<!-- generated-faq:end -->
     </div>
   </section>
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.w3.org/2000/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sam-photography.vercel.app/</loc>
     <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/latent-01.jpg</image:loc>
       <image:title>Arm, Burned In</image:title>
@@ -192,6 +194,34 @@
       <image:loc>https://sam-photography.vercel.app/images/printed-02.jpg</image:loc>
       <image:title>Plates 009 — 010</image:title>
       <image:caption>A layout sheet of five black and white London street frames, numbered 009 and 010</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sam-photography.vercel.app/journal/</loc>
+    <lastmod>2022-04-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sam-photography.vercel.app/journal/what-the-lab-sent-back/</loc>
+    <lastmod>2022-04-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sam-photography.vercel.app/images/latent-01.jpg</image:loc>
+      <image:title>What the lab sent back</image:title>
+      <image:caption>A red light leak cutting across a bare arm on green-cast colour film</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sam-photography.vercel.app/journal/shooting-tunis-in-january/</loc>
+    <lastmod>2022-01-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sam-photography.vercel.app/images/winter-04.jpg</image:loc>
+      <image:title>Shooting Tunis in January</image:title>
+      <image:caption>Daylight pooling through a drawn curtain</image:caption>
     </image:image>
   </url>
 </urlset>

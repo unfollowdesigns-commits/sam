@@ -1,0 +1,49 @@
+# Sam — Photographer
+
+> Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. The work covers portraiture, jewellery and fashion campaigns, experimental colour film, and black and white street photography made in Tunis and London between 2018 and 2022.
+
+The site holds 38 photographs in 6 series, made between 2018 and 2022, on 35mm film and digital.
+
+Contact: hello@example.com
+Available for: editorial, portraiture, fashion, prints
+
+## Series
+
+- **Latent** (2019) — 5 photographs
+- **Sitters** (2019 — 2020) — 12 photographs
+- **Concrete** (2018 — 2021) — 8 photographs
+- **Still** (2019 — 2022) — 5 photographs
+- **Winter Light** (2021 — 2022) — 6 photographs
+- **Printed** (2021) — 2 photographs
+
+## Questions
+
+**Who is Sam?**
+Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. He has photographed in Tunis and London since 2018.
+
+**What kind of photography does Sam shoot?**
+Portraiture, fashion and jewellery campaigns, experimental colour film, and black and white street photography.
+
+**What does Sam shoot on?**
+Mostly 35mm film, with some digital work. Scans are published as the lab returned them rather than graded back towards a corrected image.
+
+**Where is Sam based?**
+Tunis, Tunisia. Much of the black and white work was made in London between 2021 and 2022.
+
+**Is Sam available for commissions?**
+Yes — editorial, portrait and fashion commissions, and prints. Enquiries by email.
+
+## Journal
+
+- [What the lab sent back](https://sam-photography.vercel.app/journal/what-the-lab-sent-back/) — 2022-04-02. Five rolls came back from the lab wrong, and one of them became a series. A note on keeping the frames you did not plan.
+- [Shooting Tunis in January](https://sam-photography.vercel.app/journal/shooting-tunis-in-january/) — 2022-01-18. January in Tunis is not winter, but the light behaves as though it were — low, long, and gone by five.
+
+## Pages
+
+- [https://sam-photography.vercel.app/](https://sam-photography.vercel.app/) — the work, about and contact
+- [https://sam-photography.vercel.app/journal/](https://sam-photography.vercel.app/journal/) — writing
+- [https://sam-photography.vercel.app/sitemap.xml](https://sam-photography.vercel.app/sitemap.xml)
+
+## Use
+
+All photographs are the property of Sam. Reproduction requires permission; enquiries to hello@example.com.

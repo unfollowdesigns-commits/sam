@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sam — Journal</title>
+    <link>https://sam-photography.vercel.app/journal/</link>
+    <description>Writing on film, process and the work, by Sam.</description>
+    <language>en</language>
+    <atom:link href="https://sam-photography.vercel.app/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>What the lab sent back</title>
+      <link>https://sam-photography.vercel.app/journal/what-the-lab-sent-back/</link>
+      <guid isPermaLink="true">https://sam-photography.vercel.app/journal/what-the-lab-sent-back/</guid>
+      <pubDate>Sat, 02 Apr 2022 12:00:00 GMT</pubDate>
+      <description>Five rolls came back from the lab wrong, and one of them became a series. A note on keeping the frames you did not plan.</description>
+    </item>
+    <item>
+      <title>Shooting Tunis in January</title>
+      <link>https://sam-photography.vercel.app/journal/shooting-tunis-in-january/</link>
+      <guid isPermaLink="true">https://sam-photography.vercel.app/journal/shooting-tunis-in-january/</guid>
+      <pubDate>Tue, 18 Jan 2022 12:00:00 GMT</pubDate>
+      <description>January in Tunis is not winter, but the light behaves as though it were — low, long, and gone by five.</description>
+    </item>
+  </channel>
+</rss>
