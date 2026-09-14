@@ -11,12 +11,19 @@ js/gallery.js       grid, filters, series index
 js/lightbox.js      full-screen viewer
 js/main.js          copy, theme, loader, cursor, scroll
 images/             photographs, resized to 1800px and stripped of EXIF
-js/lqip.js          generated blur-up placeholders (see below)
-tools/build-lqip.mjs
-tools/find-dupes.mjs
-tools/build-seo.mjs
+images/r/           generated: AVIF and WebP at 480/960/1440
+journal/posts/      write a markdown file here to publish a post
+js/lqip.js          generated: blur-up placeholders
+js/sizes.js         generated: the widths that exist for each photograph
+tools/build-responsive.mjs   AVIF and WebP derivatives
+tools/build-lqip.mjs         blur-up placeholders
+tools/build-journal.mjs      journal pages and feed.xml
+tools/build-seo.mjs          gallery markup, FAQ, structured data, sitemap
+tools/find-dupes.mjs         flags the same photograph published twice
 sitemap.xml         generated
 robots.txt          generated
+llms.txt            generated
+feed.xml            generated
 ```
 
 ## Adding your photographs
@@ -68,8 +75,9 @@ had it; the rest show the year alone rather than a guessed place.
 The site is set as printed matter rather than as a screen: a warm paper stock
 with a little tooth in it, ink-dark as the alternate, a serif for titles and a
 monospace for everything factual. Each frame is a catalogue entry — plate
-number, title, then series / place / year as a data row under a hairline. Dark
-mode follows the system; the toggle overrides and is remembered.
+number, title, then series / place / year as a data row under a hairline. The site
+opens light — the work is printed on paper — and the toggle overrides that and
+is remembered.
 
 ## Blur-up placeholders
 
@@ -79,9 +87,16 @@ empty box. It is generated, and the output is committed, so the site itself
 still has no build step. After adding or replacing photographs:
 
 ```sh
-npm i sharp          # dev-only, not a site dependency
-node tools/build-lqip.mjs
+npm i sharp                      # dev-only, not a site dependency
+node tools/build-responsive.mjs  # AVIF/WebP at each width (skips what exists)
+node tools/build-lqip.mjs        # blur-up placeholders
+node tools/find-dupes.mjs        # check you have not published one twice
+node tools/build-seo.mjs         # markup, structured data, sitemap
 ```
+
+The derivatives matter: the originals are up to 670KB each, and without
+`images/r/` a phone is sent all 6.7MB of them. With it, the same gallery is
+about 2.2MB and every frame arrives as AVIF.
 
 ## Checking for duplicates
 

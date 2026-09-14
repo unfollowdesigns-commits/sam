@@ -3,6 +3,7 @@
  * gallery, the series index and the viewer.
  */
 import { SITE, PHOTOS } from './data.js';
+import { SIZES } from './sizes.js';
 import { createGallery, createSeriesIndex, slugOf, seriesTitle } from './gallery.js';
 import { createLightbox } from './lightbox.js';
 
@@ -20,6 +21,12 @@ function fillCopy() {
 
   const aboutImage = document.getElementById('aboutImage');
   if (aboutImage && SITE.about) {
+    const info = SIZES[SITE.about.src];
+    if (info?.widths?.length) {
+      const stem = SITE.about.src.replace(/^images\//, '').replace(/\.[^.]+$/, '');
+      aboutImage.sizes = '(max-width: 949px) 92vw, 42vw';
+      aboutImage.srcset = info.widths.map((w) => `images/r/${stem}-${w}.webp ${w}w`).join(', ');
+    }
     aboutImage.src = SITE.about.src;
     aboutImage.alt = SITE.about.alt;
     aboutImage.style.setProperty('--about-ratio', String(SITE.about.ratio));

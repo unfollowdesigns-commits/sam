@@ -368,6 +368,7 @@ button {
   z-index: -2;
   will-change: transform;
 }
+.hero__media picture { display: contents; }
 .hero__media img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -652,6 +653,11 @@ button {
 }
 .shot.is-in .shot__frame { clip-path: inset(0 0 0 0); }
 
+/* <picture> is only a wrapper for choosing a file; it must not become a box
+   between the frame and the image, or the aspect ratio below has nothing to
+   apply to. */
+.shot__frame picture { display: contents; }
+
 .shot__frame img {
   width: 100%;
   aspect-ratio: var(--ratio, 3 / 2);
@@ -666,6 +672,31 @@ button {
 }
 /* The photograph resolves out of its own blurred colours. */
 .shot__frame.is-loaded img { opacity: 1; }
+
+/* A frame whose file never arrived. It reads as an empty plate — the stock
+   with nothing printed on it — rather than as a permanently blurred
+   photograph, which is what it looked like when failure and success shared
+   a state. The caption underneath still names what should be here. */
+.shot__frame.is-failed {
+  background: var(--bg-soft);
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+/* The <img> stays in the document — it carries the alt text, and the aspect
+   ratio that holds the frame open — but the browser's own broken-image
+   rendering of that alt text is not wanted on top of the plate. */
+.shot__frame.is-failed img { opacity: 0; }
+.shot__frame.is-failed::after {
+  content: 'Image unavailable';
+  position: absolute;
+  inset: auto 0 50% 0;
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: center;
+}
 .shot.is-in .shot__frame img { --sc: 1.04; }
 @media (hover: hover) {
   .shot__frame:hover img { --sc: 1.09; }

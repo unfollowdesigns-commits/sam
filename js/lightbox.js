@@ -6,8 +6,22 @@
  * horizontal swipes all move; focus is trapped while open and handed back to
  * the thumbnail on close.
  */
+import { SIZES } from './sizes.js';
+
 const FOCUSABLE = 'button:not([disabled])';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+
+/**
+ * The viewer fills the screen, so it asks for a file sized to the screen
+ * rather than always the largest one. On a phone that is the 480 or 960
+ * derivative instead of 1800px of film grain.
+ */
+function srcsetFor(src, ext) {
+  const info = SIZES[src];
+  if (!info?.widths?.length) return null;
+  const stem = src.replace(/^images\//, '').replace(/\.[^.]+$/, '');
+  return info.widths.map((w) => `images/r/${stem}-${w}.${ext} ${w}w`).join(', ');
+}
 
 /**
  * Animate the full-screen image out of (or back into) the grid frame that was
@@ -55,6 +69,16 @@ export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
     const photo = list[index];
 
     root.classList.remove('is-loaded');
+    // WebP rather than AVIF here: the viewer is one large image decoded while
+    // the plate animates in, and AVIF decoding is the slower of the two at
+    // full-screen sizes. The srcset still keeps a phone off the 1800px file.
+    const webp = srcsetFor(photo.src, 'webp');
+    if (webp) {
+      image.sizes = '100vw';
+      image.srcset = webp;
+    } else {
+      image.removeAttribute('srcset');
+    }
     image.src = photo.src;
     image.alt = photo.alt || photo.title;
 
@@ -97,8 +121,13 @@ export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
         originRect = null;
       });
     };
-    if (image.complete) done();
-    else image.addEventListener('load', done, { once: true });
+    if (image.complete && image.naturalWidth > 0) done();
+    else {
+      image.addEventListener('load', done, { once: true });
+      // Without this a file that fails to load leaves the viewer permanently
+      // blank, with no way to tell that from one still loading.
+      image.addEventListener('error', done, { once: true });
+    }
 
     // Warm the neighbours so paging feels instant.
     [list[(index + 1) % list.length], list[(index - 1 + list.length) % list.length]]

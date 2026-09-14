@@ -7,6 +7,25 @@
  */
 import { PHOTOS, SERIES } from './data.js';
 import { LQIP } from './lqip.js';
+import { SIZES } from './sizes.js';
+
+/* How wide a frame is painted, so the browser can pick a file before it knows
+   the layout. The rhythm below varies the spans, so this is an upper bound
+   rather than an exact figure — erring wide costs bytes, erring narrow costs
+   sharpness, and sharpness is the point. */
+const PAINTED_AT = '(max-width: 749px) 94vw, 60vw';
+
+/**
+ * The derivatives built by tools/build-responsive.mjs, as a srcset. Returns
+ * null for anything that has none, so the original JPEG is simply used.
+ */
+function derivatives(src) {
+  const info = SIZES[src];
+  if (!info?.widths?.length) return null;
+  const stem = src.replace(/^images\//, '').replace(/\.[^.]+$/, '');
+  const set = (ext) => info.widths.map((w) => `images/r/${stem}-${w}.${ext} ${w}w`).join(', ');
+  return { avif: set('avif'), webp: set('webp'), width: info.width, height: info.height };
+}
 
 /* Width/offset patterns, cycled so the page never settles into a grid.
    'e' is the marginal thumbnail; 'bleed' runs past the page margin. */
@@ -37,15 +56,62 @@ function photoNode(photo, index) {
   if (seed) button.style.backgroundImage = `url("${seed}")`;
 
   const img = document.createElement('img');
-  img.src = photo.src;
   img.alt = photo.alt || photo.title;
   img.loading = index < 2 ? 'eager' : 'lazy';
   img.decoding = 'async';
-  const settle = () => button.classList.add('is-loaded');
-  if (img.complete) settle();
-  else img.addEventListener('load', settle, { once: true });
-  img.addEventListener('error', settle, { once: true });
-  button.append(img);
+
+  // A frame that fails must not look like a frame that succeeded. Treating
+  // the two the same left an empty <img> at full opacity over the blurred
+  // stand-in, so a photograph that never arrived read as a photograph that
+  // was simply blurry — and stayed that way for good.
+  const arrived = () => {
+    button.classList.remove('is-failed');
+    button.classList.add('is-loaded');
+  };
+  const lost = () => {
+    // One retry, because the common failure is a dropped connection rather
+    // than a missing file. It drops to the original JPEG: if a derivative is
+    // the thing that is missing, retrying the same one only fails again.
+    if (!button.dataset.retried) {
+      button.dataset.retried = '1';
+      picture.querySelectorAll('source').forEach((el) => el.remove());
+      setTimeout(() => { img.src = `${photo.src}?retry=1`; }, 400);
+      return;
+    }
+    // Out of retries: drop the blur and say so, rather than leave a
+    // placeholder standing in for the work.
+    button.style.backgroundImage = '';
+    button.classList.add('is-loaded', 'is-failed');
+  };
+
+  img.addEventListener('load', arrived);
+  img.addEventListener('error', lost);
+
+  // AVIF first, then WebP, then the original — the browser takes the first it
+  // understands at the smallest width that still covers the frame. These are
+  // film scans, and grain is the case WebP handles worst, which is why AVIF
+  // is worth carrying as well rather than relying on WebP alone.
+  const picture = document.createElement('picture');
+  const alt = derivatives(photo.src);
+  if (alt) {
+    img.sizes = PAINTED_AT;
+    img.width = alt.width;
+    img.height = alt.height;
+    for (const [type, srcset] of [['image/avif', alt.avif], ['image/webp', alt.webp]]) {
+      const source = document.createElement('source');
+      source.type = type;
+      source.srcset = srcset;
+      source.sizes = PAINTED_AT;
+      picture.append(source);
+    }
+  }
+  picture.append(img);
+  img.src = photo.src;
+  // Set after the listeners, but a cached file can still be complete by now
+  // and fire nothing, so check rather than wait for an event that has passed.
+  if (img.complete && img.naturalWidth > 0) arrived();
+
+  button.append(picture);
 
   // Caption as a catalogue entry: plate number, title, then the recorded
   // facts as a data row under a hairline.

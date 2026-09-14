@@ -24,6 +24,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SITE, SERIES, PHOTOS } from '../js/data.js';
+import { SIZES } from '../js/sizes.js';
 import { readPosts } from './posts.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -42,15 +43,37 @@ const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolean);
 
 /* --- 1. Gallery markup, so the work exists without JavaScript ----------- */
+// This has to name exactly the same files the script will ask for once it
+// runs, because the script clears the grid and rebuilds it. If the two
+// disagree, the browser downloads the whole gallery twice — once for the
+// markup it is about to throw away, and again for what replaces it. Matching
+// URLs make the rebuild a cache hit and cost nothing.
+const PAINTED_AT = '(max-width: 749px) 94vw, 60vw';
+
+const srcsetFor = (src, ext) => {
+  const info = SIZES[src];
+  if (!info?.widths?.length) return null;
+  const stem = src.replace(/^images\//, '').replace(/\.[^.]+$/, '');
+  return info.widths.map((w) => `images/r/${stem}-${w}.${ext} ${w}w`).join(', ');
+};
+
 const figures = PHOTOS.map((p, i) => {
   const plate = String(i + 1).padStart(3, '0');
   // Real pixel dimensions, so a crawler — and a browser that has not loaded
   // the stylesheet yet — reserves the right box and the page does not shift.
-  const w = 1800;
-  const h = Math.round(w / p.ratio);
+  const w = SIZES[p.src]?.width ?? 1800;
+  const h = SIZES[p.src]?.height ?? Math.round(w / p.ratio);
+  const avif = srcsetFor(p.src, 'avif');
+  const webp = srcsetFor(p.src, 'webp');
+  const sources = avif && webp
+    ? `\n            <source type="image/avif" srcset="${avif}" sizes="${PAINTED_AT}">`
+      + `\n            <source type="image/webp" srcset="${webp}" sizes="${PAINTED_AT}">`
+    : '';
   return `      <figure class="shot" data-index="${i}" id="plate-${plate}">
         <a class="shot__frame" href="#f/${slugOf(p)}" style="--ratio:${p.ratio}" aria-label="Open ${esc(p.title)} full screen">
-          <img src="${p.src}" alt="${esc(p.alt)}" width="${w}" height="${h}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
+          <picture>${sources}
+            <img src="${p.src}"${avif ? ` sizes="${PAINTED_AT}"` : ''} alt="${esc(p.alt)}" width="${w}" height="${h}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
+          </picture>
         </a>
         <figcaption class="shot__cap">
           <span class="shot__plate">${plate}</span>
