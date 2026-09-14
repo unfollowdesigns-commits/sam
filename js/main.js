@@ -93,10 +93,11 @@ function initTheme() {
   let stored = null;
   try { stored = localStorage.getItem(KEY); } catch { /* private browsing */ }
 
-  const initial =
-    stored ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
-  apply(initial);
+  // The work is printed on paper, so the site opens on paper. A visitor who
+  // has chosen dark here before keeps that choice; the operating system's
+  // preference does not get a vote, because the ground these pictures sit on
+  // is part of the picture.
+  apply(stored === 'dark' ? 'dark' : 'light');
 
   function apply(theme) {
     document.documentElement.dataset.theme = theme;

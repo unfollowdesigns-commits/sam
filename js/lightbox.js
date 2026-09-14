@@ -60,9 +60,11 @@ export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
 
     plateNo.textContent = String(index + 1).padStart(3, '0');
     title.textContent = photo.title;
-    // The alt text already describes the picture plainly; it reads as plate
-    // text, so there is no second description to write or keep in step.
-    note.textContent = photo.alt || '';
+    // `alt` is written for screen readers and stays plain. `note` is the line
+    // a person reads on the plate — it is allowed to be short, odd, or absent.
+    // A frame with nothing to say says nothing rather than describing itself.
+    note.textContent = photo.note || '';
+    note.hidden = !photo.note;
 
     // Only fields the file actually recorded — no invented rows.
     const rows = [
