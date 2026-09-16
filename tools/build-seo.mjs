@@ -25,6 +25,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SITE, SERIES, PHOTOS } from '../js/data.js';
 import { SIZES } from '../js/sizes.js';
+import { sizesFor, variantsFor } from '../js/layout.js';
 import { readPosts } from './posts.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -47,8 +48,9 @@ const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolea
 // runs, because the script clears the grid and rebuilds it. If the two
 // disagree, the browser downloads the whole gallery twice — once for the
 // markup it is about to throw away, and again for what replaces it. Matching
-// URLs make the rebuild a cache hit and cost nothing.
-const PAINTED_AT = '(max-width: 749px) 94vw, 60vw';
+// URLs make the rebuild a cache hit and cost nothing. That includes `sizes`:
+// the rhythm comes from js/layout.js so both sides compute it identically.
+const variants = variantsFor(PHOTOS);
 
 const srcsetFor = (src, ext) => {
   const info = SIZES[src];
@@ -65,14 +67,15 @@ const figures = PHOTOS.map((p, i) => {
   const h = SIZES[p.src]?.height ?? Math.round(w / p.ratio);
   const avif = srcsetFor(p.src, 'avif');
   const webp = srcsetFor(p.src, 'webp');
+  const painted = sizesFor(variants[i]);
   const sources = avif && webp
-    ? `\n            <source type="image/avif" srcset="${avif}" sizes="${PAINTED_AT}">`
-      + `\n            <source type="image/webp" srcset="${webp}" sizes="${PAINTED_AT}">`
+    ? `\n            <source type="image/avif" srcset="${avif}" sizes="${painted}">`
+      + `\n            <source type="image/webp" srcset="${webp}" sizes="${painted}">`
     : '';
   return `      <figure class="shot" data-index="${i}" id="plate-${plate}">
         <a class="shot__frame" href="#f/${slugOf(p)}" style="--ratio:${p.ratio}" aria-label="Open ${esc(p.title)} full screen">
           <picture>${sources}
-            <img src="${p.src}"${avif ? ` sizes="${PAINTED_AT}"` : ''} alt="${esc(p.alt)}" width="${w}" height="${h}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
+            <img src="${p.src}"${avif ? ` sizes="${painted}"` : ''} alt="${esc(p.alt)}" width="${w}" height="${h}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">

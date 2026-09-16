@@ -12,7 +12,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1680
     ]
   },
   "images/concrete-01.jpg": {
@@ -20,7 +21,8 @@ export const SIZES = {
     "height": 868,
     "widths": [
       480,
-      960
+      960,
+      1334
     ]
   },
   "images/concrete-02.jpg": {
@@ -28,7 +30,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1207
     ]
   },
   "images/concrete-03.jpg": {
@@ -36,14 +39,16 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1306
     ]
   },
   "images/concrete-04.jpg": {
     "width": 854,
     "height": 921,
     "widths": [
-      480
+      480,
+      854
     ]
   },
   "images/concrete-05.jpg": {
@@ -51,7 +56,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/concrete-06.jpg": {
@@ -59,7 +65,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1374
     ]
   },
   "images/concrete-07.jpg": {
@@ -67,7 +74,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1123
     ]
   },
   "images/concrete-08.jpg": {
@@ -76,7 +84,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1512
     ]
   },
   "images/hero.jpg": {
@@ -85,7 +94,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/latent-01.jpg": {
@@ -94,7 +104,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/latent-03.jpg": {
@@ -103,7 +114,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/latent-04.jpg": {
@@ -112,7 +124,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/latent-05.jpg": {
@@ -121,7 +134,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/latent-07.jpg": {
@@ -129,7 +143,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1241
     ]
   },
   "images/printed-01.jpg": {
@@ -138,7 +153,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1497
     ]
   },
   "images/printed-02.jpg": {
@@ -147,7 +163,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/sitters-01.jpg": {
@@ -156,7 +173,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1512
     ]
   },
   "images/sitters-02.jpg": {
@@ -164,7 +182,8 @@ export const SIZES = {
     "height": 1001,
     "widths": [
       480,
-      960
+      960,
+      1001
     ]
   },
   "images/sitters-03.jpg": {
@@ -172,7 +191,8 @@ export const SIZES = {
     "height": 990,
     "widths": [
       480,
-      960
+      960,
+      970
     ]
   },
   "images/sitters-04.jpg": {
@@ -180,7 +200,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1202
     ]
   },
   "images/sitters-05.jpg": {
@@ -189,7 +210,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/sitters-06.jpg": {
@@ -197,7 +219,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1135
     ]
   },
   "images/sitters-07.jpg": {
@@ -206,7 +229,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1509
     ]
   },
   "images/sitters-08.jpg": {
@@ -214,7 +238,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1193
     ]
   },
   "images/sitters-09.jpg": {
@@ -222,7 +247,8 @@ export const SIZES = {
     "height": 1024,
     "widths": [
       480,
-      960
+      960,
+      1024
     ]
   },
   "images/sitters-10.jpg": {
@@ -230,7 +256,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/sitters-11.jpg": {
@@ -238,14 +265,16 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1202
     ]
   },
   "images/sitters-12.jpg": {
     "width": 562,
     "height": 517,
     "widths": [
-      480
+      480,
+      562
     ]
   },
   "images/still-01.jpg": {
@@ -253,7 +282,8 @@ export const SIZES = {
     "height": 1761,
     "widths": [
       480,
-      960
+      960,
+      1411
     ]
   },
   "images/still-02.jpg": {
@@ -262,7 +292,8 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1500
     ]
   },
   "images/still-03.jpg": {
@@ -271,14 +302,16 @@ export const SIZES = {
     "widths": [
       480,
       960,
-      1440
+      1440,
+      1800
     ]
   },
   "images/still-04.jpg": {
     "width": 924,
     "height": 1800,
     "widths": [
-      480
+      480,
+      924
     ]
   },
   "images/still-05.jpg": {
@@ -286,7 +319,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1037
     ]
   },
   "images/winter-01.jpg": {
@@ -294,7 +328,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/winter-02.jpg": {
@@ -302,14 +337,16 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/winter-03.jpg": {
     "width": 822,
     "height": 1512,
     "widths": [
-      480
+      480,
+      822
     ]
   },
   "images/winter-04.jpg": {
@@ -317,7 +354,8 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/winter-06.jpg": {
@@ -325,14 +363,16 @@ export const SIZES = {
     "height": 1800,
     "widths": [
       480,
-      960
+      960,
+      1350
     ]
   },
   "images/winter-07.jpg": {
     "width": 792,
     "height": 904,
     "widths": [
-      480
+      480,
+      792
     ]
   }
 };

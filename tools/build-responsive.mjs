@@ -28,8 +28,13 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const IMAGES = join(ROOT, 'images');
 const OUT = join(IMAGES, 'r');
 
-/** The widths a frame is ever painted at, across every layout this site has. */
-export const WIDTHS = [480, 960, 1440];
+/**
+ * The widths a frame is ever painted at, across every layout this site has.
+ * 1800 is here because the feature plate runs the full viewport width: capped
+ * at 1440 it was being stretched, which is exactly the softness the
+ * derivatives were meant to remove.
+ */
+export const WIDTHS = [480, 960, 1440, 1800];
 
 const FORMATS = [
   ['avif', (p) => p.avif({ quality: 55, effort: 4 })],
@@ -53,9 +58,11 @@ for (const file of sources) {
   const meta = await sharp(src).metadata();
   before += statSync(src).size;
 
-  // Never upscale: a 562px frame gets one derivative, not three blurry ones.
-  const widths = WIDTHS.filter((w) => w <= meta.width);
-  if (!widths.length) widths.push(meta.width);
+  // Never upscale — a 562px frame gets one derivative, not three blurry ones —
+  // but always offer the native width as the top rung. Without it a frame
+  // whose width falls between two ladder steps tops out below its own size,
+  // and the browser stretches a derivative when a sharper file existed.
+  const widths = [...new Set([...WIDTHS.filter((w) => w < meta.width), meta.width])];
 
   manifest[`images/${file}`] = { width: meta.width, height: meta.height, widths };
 

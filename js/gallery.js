@@ -8,12 +8,7 @@
 import { PHOTOS, SERIES } from './data.js';
 import { LQIP } from './lqip.js';
 import { SIZES } from './sizes.js';
-
-/* How wide a frame is painted, so the browser can pick a file before it knows
-   the layout. The rhythm below varies the spans, so this is an upper bound
-   rather than an exact figure — erring wide costs bytes, erring narrow costs
-   sharpness, and sharpness is the point. */
-const PAINTED_AT = '(max-width: 749px) 94vw, 60vw';
+import { RHYTHM, sizesFor, variantsFor } from './layout.js';
 
 /**
  * The derivatives built by tools/build-responsive.mjs, as a srcset. Returns
@@ -27,10 +22,6 @@ function derivatives(src) {
   return { avif: set('avif'), webp: set('webp'), width: info.width, height: info.height };
 }
 
-/* Width/offset patterns, cycled so the page never settles into a grid.
-   'e' is the marginal thumbnail; 'bleed' runs past the page margin. */
-const RHYTHM = ['a', 'b', 'c', 'e', 'd', 'f'];
-
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 
 /** Stable, readable id for deep links: 'Red Arm' -> 'red-arm'. */
@@ -38,7 +29,7 @@ export const slugOf = (photo) =>
   photo.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-function photoNode(photo, index) {
+function photoNode(photo, index, variant) {
   const fig = document.createElement('figure');
   fig.className = 'shot';
   fig.dataset.index = String(index);
@@ -94,14 +85,18 @@ function photoNode(photo, index) {
   const picture = document.createElement('picture');
   const alt = derivatives(photo.src);
   if (alt) {
-    img.sizes = PAINTED_AT;
+    // What this particular frame is painted at, not an average over all of
+    // them: the feature plate is 100vw and the marginal thumbnail is 28vw,
+    // and one number for both leaves one soft and the other wasteful.
+    const painted = sizesFor(variant);
+    img.sizes = painted;
     img.width = alt.width;
     img.height = alt.height;
     for (const [type, srcset] of [['image/avif', alt.avif], ['image/webp', alt.webp]]) {
       const source = document.createElement('source');
       source.type = type;
       source.srcset = srcset;
-      source.sizes = PAINTED_AT;
+      source.sizes = painted;
       picture.append(source);
     }
   }
@@ -151,18 +146,20 @@ export function createGallery({ onOpen, observe }) {
     grid.scrollLeft = 0;
 
     grid.replaceChildren();
-    let step = 0;
+    // Worked out before anything is built, because each frame needs to know
+    // how wide it will be painted in order to ask for the right file.
+    const variants = variantsFor(visible, { strip });
     visible.forEach((photo, i) => {
-      const node = photoNode(photo, i);
+      const variant = variants[i];
+      const node = photoNode(photo, i, variant);
       if (strip) {
         // In the strip every plate is already present; nothing is withheld.
         node.classList.add('is-in');
-      } else if (photo.feature) {
+      } else if (variant === 'bleed') {
         // A feature plate takes a whole screen and restarts the rhythm.
         node.classList.add('shot--bleed');
-        step = 0;
       } else {
-        node.classList.add(`shot--${RHYTHM[step++ % RHYTHM.length]}`);
+        node.classList.add(`shot--${variant}`);
       }
       const frame = node.querySelector('.shot__frame');
       frame.addEventListener('click', () => onOpen(visible, i, frame));
