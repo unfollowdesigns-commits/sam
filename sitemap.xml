@@ -7,12 +7,12 @@
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/latent-01.jpg</image:loc>
-      <image:title>Arm, Burned In</image:title>
+      <image:title>Arm</image:title>
       <image:caption>A red light leak cutting across a bare arm on green-cast colour film</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/latent-03.jpg</image:loc>
-      <image:title>Two Reds and a Blue</image:title>
+      <image:title>Leak</image:title>
       <image:caption>Blue and red streaks crossing a green frame</image:caption>
     </image:image>
     <image:image>
@@ -42,7 +42,7 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-03.jpg</image:loc>
-      <image:title>Nine Bars</image:title>
+      <image:title>Blinds</image:title>
       <image:caption>A figure in dark fur under hard stripes of window light</image:caption>
     </image:image>
     <image:image>
@@ -52,17 +52,17 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-05.jpg</image:loc>
-      <image:title>Gold, Looking Up</image:title>
+      <image:title>Gold</image:title>
       <image:caption>A head tipped back in warm light, gold earrings catching the sun</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-06.jpg</image:loc>
-      <image:title>He Chose the Spot</image:title>
+      <image:title>Scrapyard</image:title>
       <image:caption>A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-07.jpg</image:loc>
-      <image:title>On the Floor</image:title>
+      <image:title>Workshop</image:title>
       <image:caption>A woman in a white tee in a workshop, benches and working figures behind her</image:caption>
     </image:image>
     <image:image>
@@ -72,12 +72,12 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-09.jpg</image:loc>
-      <image:title>KEPT — Diptych</image:title>
+      <image:title>KEPT</image:title>
       <image:caption>Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-10.jpg</image:loc>
-      <image:title>Silver, Chained</image:title>
+      <image:title>Chain</image:title>
       <image:caption>A face in silver makeup wearing a head chain and ear chain, in black and white</image:caption>
     </image:image>
     <image:image>
@@ -87,12 +87,12 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/sitters-12.jpg</image:loc>
-      <image:title>Study: Two Legs, One Chair</image:title>
+      <image:title>Chair</image:title>
       <image:caption>Two legs in dark tights raised over the back of a wire chair, in grainy black and white</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-01.jpg</image:loc>
-      <image:title>Cyan Grid</image:title>
+      <image:title>Balconies</image:title>
       <image:caption>A grid of apartment balconies in cold cyan light</image:caption>
     </image:image>
     <image:image>
@@ -107,52 +107,52 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-04.jpg</image:loc>
-      <image:title>Lamp and Two Birds</image:title>
+      <image:title>Streetlight</image:title>
       <image:caption>A streetlight and two small birds against a flat blue sky</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-05.jpg</image:loc>
-      <image:title>Shadow Fall</image:title>
+      <image:title>Wall</image:title>
       <image:caption>Hard-edged shadows thrown across a bare wall</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-06.jpg</image:loc>
-      <image:title>The City, From a Bus Shelter</image:title>
+      <image:title>The City</image:title>
       <image:caption>Glass towers rising behind a bus shelter in the City</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-07.jpg</image:loc>
-      <image:title>Eighty Balconies</image:title>
+      <image:title>Block</image:title>
       <image:caption>A repeating grid of balconies on a tall block, seen from below against a cyan sky</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/concrete-08.jpg</image:loc>
-      <image:title>Not All of These Are Birds</image:title>
+      <image:title>Swifts</image:title>
       <image:caption>A flock of birds over a corner building, with two larger shapes among them</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/still-01.jpg</image:loc>
-      <image:title>Lemon, Noon</image:title>
+      <image:title>Lemon</image:title>
       <image:caption>A single slice of lemon on a pale concrete floor in hard sunlight</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/still-02.jpg</image:loc>
-      <image:title>Pencil and the Shadow of Something Else</image:title>
+      <image:title>Pencil</image:title>
       <image:caption>A pencil lying on concrete, crossed by the soft shadow of something outside the frame</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/still-03.jpg</image:loc>
-      <image:title>Cup, Face Down</image:title>
+      <image:title>Cup</image:title>
       <image:caption>A tipped-over cup on stone, its long shadow thrown across the frame</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/still-04.jpg</image:loc>
-      <image:title>Leaning Out</image:title>
+      <image:title>Leaves</image:title>
       <image:caption>Cannabis leaves leaning out from the left of the frame against a flat white wall</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/still-05.jpg</image:loc>
-      <image:title>Fish, Held Up to the Window</image:title>
+      <image:title>Fish</image:title>
       <image:caption>A goldfish in a clear plastic bottle, held up in two hands against warm window light</image:caption>
     </image:image>
     <image:image>
@@ -162,7 +162,7 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/winter-02.jpg</image:loc>
-      <image:title>Path, With One Figure</image:title>
+      <image:title>Path</image:title>
       <image:caption>A snow-covered path running between trees, one figure far off</image:caption>
     </image:image>
     <image:image>
@@ -177,12 +177,12 @@
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/winter-06.jpg</image:loc>
-      <image:title>Park, From the Sixth Floor</image:title>
+      <image:title>Park</image:title>
       <image:caption>A snowed-over park seen from above, benches and paths picked out in white</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://sam-photography.vercel.app/images/winter-07.jpg</image:loc>
-      <image:title>She Was Faster Than the Shutter</image:title>
+      <image:title>Window</image:title>
       <image:caption>A figure crossing in front of a bright window, smeared by a long exposure</image:caption>
     </image:image>
     <image:image>

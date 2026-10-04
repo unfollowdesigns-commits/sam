@@ -45,7 +45,7 @@ const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolea
 
 /* The caption's data line, matching js/gallery.js exactly: what the frame
    recorded, and 'n.d.' where it recorded no date. */
-const captionFacts = (p) => [p.location, p.year || 'n.d.'].filter(Boolean).join(' / ');
+const captionFacts = (p) => [p.location, p.year || 'Undated'].filter(Boolean).join(' / ');
 
 /* --- 1. Gallery markup, so the work exists without JavaScript ----------- */
 // This has to name exactly the same files the script will ask for once it

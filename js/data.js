@@ -101,7 +101,7 @@ export const PHOTOS = [
   {
     src: 'images/latent-01.jpg',
     alt: 'A red light leak cutting across a bare arm on green-cast colour film',
-    title: 'Arm, Burned In',
+    title: 'Arm',
     note: 'Nothing about this was decided by me.',
     series: 'latent',
     year: '2019',
@@ -111,7 +111,7 @@ export const PHOTOS = [
   {
     src: 'images/latent-03.jpg',
     alt: 'Blue and red streaks crossing a green frame',
-    title: 'Two Reds and a Blue',
+    title: 'Leak',
     series: 'latent',
     year: '2019',
     ratio: 1.5088,
@@ -171,7 +171,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-03.jpg',
     alt: 'A figure in dark fur under hard stripes of window light',
-    title: 'Nine Bars',
+    title: 'Blinds',
     note: 'The blinds did the work.',
     series: 'sitters',
     year: '2020',
@@ -188,7 +188,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-05.jpg',
     alt: 'A head tipped back in warm light, gold earrings catching the sun',
-    title: 'Gold, Looking Up',
+    title: 'Gold',
     note: 'Late afternoon, which in Tunis is still the middle of the day.',
     series: 'sitters',
     year: '2019',
@@ -199,8 +199,8 @@ export const PHOTOS = [
   {
     src: 'images/sitters-06.jpg',
     alt: 'A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard',
-    title: 'He Chose the Spot',
-    note: 'And he was right about the spot.',
+    title: 'Scrapyard',
+    note: 'He picked the spot, not me.',
     series: 'sitters',
     year: '2019',
     ratio: 0.6306,
@@ -208,7 +208,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-07.jpg',
     alt: 'A woman in a white tee in a workshop, benches and working figures behind her',
-    title: 'On the Floor',
+    title: 'Workshop',
     note: 'Made between two orders going out. Nobody stopped.',
     series: 'sitters',
     year: '2020',
@@ -226,7 +226,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-09.jpg',
     alt: 'Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky',
-    title: 'KEPT — Diptych',
+    title: 'KEPT',
     note: 'Two frames, one second apart. The shirt supplied the title.',
     series: 'sitters',
     ratio: 1,
@@ -235,7 +235,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-10.jpg',
     alt: 'A face in silver makeup wearing a head chain and ear chain, in black and white',
-    title: 'Silver, Chained',
+    title: 'Chain',
     series: 'sitters',
     year: '2020',
     ratio: 0.75,
@@ -252,7 +252,7 @@ export const PHOTOS = [
   {
     src: 'images/sitters-12.jpg',
     alt: 'Two legs in dark tights raised over the back of a wire chair, in grainy black and white',
-    title: 'Study: Two Legs, One Chair',
+    title: 'Chair',
     note: 'Pushed film, and still not enough of it.',
     series: 'sitters',
     ratio: 1.087,
@@ -263,7 +263,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-01.jpg',
     alt: 'A grid of apartment balconies in cold cyan light',
-    title: 'Cyan Grid',
+    title: 'Balconies',
     series: 'concrete',
     year: '2018',
     ratio: 1.5369,
@@ -290,7 +290,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-04.jpg',
     alt: 'A streetlight and two small birds against a flat blue sky',
-    title: 'Lamp and Two Birds',
+    title: 'Streetlight',
     series: 'concrete',
     year: '2018',
     ratio: 0.9273,
@@ -299,7 +299,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-05.jpg',
     alt: 'Hard-edged shadows thrown across a bare wall',
-    title: 'Shadow Fall',
+    title: 'Wall',
     note: 'One wall, one hour, nothing else happening anywhere.',
     series: 'concrete',
     location: 'Tunis, TN',
@@ -309,7 +309,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-06.jpg',
     alt: 'Glass towers rising behind a bus shelter in the City',
-    title: 'The City, From a Bus Shelter',
+    title: 'The City',
     series: 'concrete',
     location: 'London, UK',
     year: '2021',
@@ -318,7 +318,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-07.jpg',
     alt: 'A repeating grid of balconies on a tall block, seen from below against a cyan sky',
-    title: 'Eighty Balconies',
+    title: 'Block',
     note: 'The sky came back this colour. I left it.',
     series: 'concrete',
     ratio: 0.6239,
@@ -326,7 +326,7 @@ export const PHOTOS = [
   {
     src: 'images/concrete-08.jpg',
     alt: 'A flock of birds over a corner building, with two larger shapes among them',
-    title: 'Not All of These Are Birds',
+    title: 'Swifts',
     note: 'Look again at the middle of the frame.',
     series: 'concrete',
     ratio: 1.509,
@@ -336,7 +336,7 @@ export const PHOTOS = [
   {
     src: 'images/still-01.jpg',
     alt: 'A single slice of lemon on a pale concrete floor in hard sunlight',
-    title: 'Lemon, Noon',
+    title: 'Lemon',
     note: 'Cut in the morning. By the time the light was right it had gone to glass.',
     series: 'still',
     ratio: 0.8012,
@@ -345,14 +345,14 @@ export const PHOTOS = [
   {
     src: 'images/still-02.jpg',
     alt: 'A pencil lying on concrete, crossed by the soft shadow of something outside the frame',
-    title: 'Pencil and the Shadow of Something Else',
+    title: 'Pencil',
     series: 'still',
     ratio: 1,
   },
   {
     src: 'images/still-03.jpg',
     alt: 'A tipped-over cup on stone, its long shadow thrown across the frame',
-    title: 'Cup, Face Down',
+    title: 'Cup',
     note: 'The shadow is the better object.',
     series: 'still',
     ratio: 1.6319,
@@ -360,7 +360,7 @@ export const PHOTOS = [
   {
     src: 'images/still-04.jpg',
     alt: 'Cannabis leaves leaning out from the left of the frame against a flat white wall',
-    title: 'Leaning Out',
+    title: 'Leaves',
     note: 'Somebody else’s balcony, and a lot of white wall behind it.',
     series: 'still',
     ratio: 0.5133,
@@ -368,7 +368,7 @@ export const PHOTOS = [
   {
     src: 'images/still-05.jpg',
     alt: 'A goldfish in a clear plastic bottle, held up in two hands against warm window light',
-    title: 'Fish, Held Up to the Window',
+    title: 'Fish',
     note: 'So the water would do something.',
     series: 'still',
     ratio: 0.5761,
@@ -387,7 +387,7 @@ export const PHOTOS = [
   {
     src: 'images/winter-02.jpg',
     alt: 'A snow-covered path running between trees, one figure far off',
-    title: 'Path, With One Figure',
+    title: 'Path',
     note: 'A long way off, and getting further.',
     series: 'winter',
     location: 'London, UK',
@@ -416,7 +416,7 @@ export const PHOTOS = [
   {
     src: 'images/winter-06.jpg',
     alt: 'A snowed-over park seen from above, benches and paths picked out in white',
-    title: 'Park, From the Sixth Floor',
+    title: 'Park',
     series: 'winter',
     location: 'London, UK',
     year: '2021',
@@ -425,7 +425,7 @@ export const PHOTOS = [
   {
     src: 'images/winter-07.jpg',
     alt: 'A figure crossing in front of a bright window, smeared by a long exposure',
-    title: 'She Was Faster Than the Shutter',
+    title: 'Window',
     note: 'One attempt. There is never a second one of these.',
     series: 'winter',
     ratio: 0.8761,

@@ -562,10 +562,9 @@ button {
   width: 100%;
   position: relative;
   overflow: hidden;
+  /* Plain stock while the file is on its way. Nothing stands in for the
+     photograph — an approximation of the work is worse than its absence. */
   background: var(--bg-soft);
-  /* Holds the blurred stand-in until the real file arrives. */
-  background-size: cover;
-  background-position: center;
   box-shadow: var(--lift-1);
   transition: box-shadow 0.55s var(--ease), transform 0.55s var(--ease);
 }

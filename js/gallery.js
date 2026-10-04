@@ -6,7 +6,6 @@
  * whatever is actually on screen.
  */
 import { PHOTOS, SERIES } from './data.js';
-import { LQIP } from './lqip.js';
 import { SIZES } from './sizes.js';
 import { layoutFor, sizesFor } from './layout.js';
 
@@ -24,9 +23,9 @@ function derivatives(src) {
 
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 
-/** The caption's data line: what the frame recorded, 'n.d.' where it did not. */
+/** The caption's data line: what the frame recorded, 'Undated' where it did not. */
 export const factsOf = (photo) =>
-  [photo.location, photo.year || 'n.d.'].filter(Boolean).join(' / ');
+  [photo.location, photo.year || 'Undated'].filter(Boolean).join(' / ');
 
 /** Stable, readable id for deep links: 'Red Arm' -> 'red-arm'. */
 export const slugOf = (photo) =>
@@ -45,10 +44,11 @@ function photoNode(photo, index, variant) {
 
   button.setAttribute('aria-label', `Open ${photo.title} full screen`);
 
-  // The blurred stand-in sits behind the real file and is revealed through it,
-  // so a frame arrives in its own colours rather than as an empty box.
-  const seed = LQIP[photo.src];
-  if (seed) button.style.backgroundImage = `url("${seed}")`;
+  // No blurred stand-in. A 24px copy of the photograph scaled up to full size
+  // is a bad reproduction of the work, and it was on screen for over a second
+  // on every frame the reader scrolled to — long enough to be read as the
+  // photograph itself rather than as loading. The frame holds its shape in
+  // plain stock and the picture arrives when it arrives.
 
   const img = document.createElement('img');
   img.alt = photo.alt || photo.title;
@@ -73,9 +73,8 @@ function photoNode(photo, index, variant) {
       setTimeout(() => { img.src = `${photo.src}?retry=1`; }, 400);
       return;
     }
-    // Out of retries: drop the blur and say so, rather than leave a
-    // placeholder standing in for the work.
-    button.style.backgroundImage = '';
+    // Out of retries: say so, rather than leave an empty frame that is
+    // indistinguishable from one still loading.
     button.classList.add('is-loaded', 'is-failed');
   };
 
