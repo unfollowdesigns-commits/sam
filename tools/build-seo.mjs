@@ -25,7 +25,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SITE, SERIES, PHOTOS } from '../js/data.js';
 import { SIZES } from '../js/sizes.js';
-import { sizesFor, variantsFor } from '../js/layout.js';
+import { layoutFor, sizesFor } from '../js/layout.js';
 import { readPosts } from './posts.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -43,6 +43,10 @@ const slugOf = (p) => p.title.toLowerCase().normalize('NFD')
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolean);
 
+/* The caption's data line, matching js/gallery.js exactly: what the frame
+   recorded, and 'n.d.' where it recorded no date. */
+const captionFacts = (p) => [p.location, p.year || 'n.d.'].filter(Boolean).join(' / ');
+
 /* --- 1. Gallery markup, so the work exists without JavaScript ----------- */
 // This has to name exactly the same files the script will ask for once it
 // runs, because the script clears the grid and rebuilds it. If the two
@@ -50,7 +54,8 @@ const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolea
 // markup it is about to throw away, and again for what replaces it. Matching
 // URLs make the rebuild a cache hit and cost nothing. That includes `sizes`:
 // the rhythm comes from js/layout.js so both sides compute it identically.
-const variants = variantsFor(PHOTOS);
+const plan = layoutFor(PHOTOS);
+const kindOf = new Map(plan.map((p) => [p.index, p.kind]));
 
 const srcsetFor = (src, ext) => {
   const info = SIZES[src];
@@ -67,7 +72,7 @@ const figures = PHOTOS.map((p, i) => {
   const h = SIZES[p.src]?.height ?? Math.round(w / p.ratio);
   const avif = srcsetFor(p.src, 'avif');
   const webp = srcsetFor(p.src, 'webp');
-  const painted = sizesFor(variants[i]);
+  const painted = sizesFor(kindOf.get(i));
   const sources = avif && webp
     ? `\n            <source type="image/avif" srcset="${avif}" sizes="${painted}">`
       + `\n            <source type="image/webp" srcset="${webp}" sizes="${painted}">`
@@ -81,7 +86,7 @@ const figures = PHOTOS.map((p, i) => {
         <figcaption class="shot__cap">
           <span class="shot__plate">${plate}</span>
           <span class="shot__name">${esc(p.title)}</span>
-          <span class="shot__where">${esc(factsOf(p).join(' / '))}</span>
+          <span class="shot__where">${esc(captionFacts(p))}</span>
         </figcaption>
       </figure>`;
 }).join('\n');
@@ -190,7 +195,7 @@ const graph = {
       // Names the two blocks a voice assistant should read aloud.
       speakable: {
         '@type': 'SpeakableSpecification',
-        cssSelector: ['.hero__sub', '.about__lead'],
+        cssSelector: ['.title__facts', '.about__lead'],
       },
       breadcrumb: { '@id': `${base}/#breadcrumb` },
     },

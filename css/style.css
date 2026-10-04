@@ -3,12 +3,6 @@
    A single stylesheet, ordered: tokens, base, chrome, sections, viewer.
    ========================================================================= */
 
-@property --sc {
-  syntax: '<number>';
-  inherits: false;
-  initial-value: 1.12;
-}
-
 /* --- Tokens ------------------------------------------------------------ */
 :root {
   /* Paper, not screen: a warm stock with ink on it. */
@@ -167,7 +161,7 @@ button {
 
 /* Every piece of micro-copy on the page is set as catalogue data. */
 .label, .site-nav a, .filters button, .section__title .idx,
-.hero__count, .about__meta dt, .lightbox__meta, .lightbox__counter,
+.about__meta dt, .lightbox__meta, .lightbox__counter,
 .site-foot, .scroll-cue span:last-child, .shot__plate, .shot__where,
 .index-row__side, .about__services li {
   font-family: var(--font-ui);
@@ -175,99 +169,6 @@ button {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-weight: 400;
-}
-
-/* --- Loader ------------------------------------------------------------ */
-.loader {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: grid;
-  place-content: center;
-  gap: 2rem;
-  background: var(--bg);
-  transition: opacity 0.5s var(--ease), visibility 0.5s;
-}
-.loader.is-done { opacity: 0; visibility: hidden; }
-
-.loader__inner {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-}
-.loader__word {
-  font-family: var(--font-display);
-  font-size: var(--step-3);
-  letter-spacing: -0.02em;
-}
-.loader__count {
-  font-size: var(--step--1);
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-.loader__bar {
-  position: relative;
-  width: min(52vw, 22rem);
-  height: 7px;
-  /* An empty run of dots that fills in as the frames arrive. */
-  background-image: radial-gradient(var(--faint) 2.6px, transparent 2.7px);
-  background-size: 13px 7px;
-  overflow: hidden;
-}
-.loader__bar i {
-  display: block;
-  height: 100%;
-  width: 0;
-  background-image: radial-gradient(var(--ink) 2.6px, transparent 2.7px);
-  background-size: 13px 7px;
-  transition: width 0.35s var(--ease);
-}
-
-/* --- Cursor & scroll progress ------------------------------------------ */
-.cursor {
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 190;
-  width: 9px; height: 9px;
-  margin: -4.5px 0 0 -4.5px;
-  border-radius: 50%;
-  background: var(--ink);
-  display: grid;
-  place-content: center;
-  pointer-events: none;
-  mix-blend-mode: difference;
-  opacity: 0;
-  transition: width 0.4s var(--ease), height 0.4s var(--ease),
-              margin 0.4s var(--ease), opacity 0.3s, background-color 0.4s;
-}
-.cursor span {
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--bg);
-  opacity: 0;
-  transform: scale(0.7);
-  transition: opacity 0.25s, transform 0.4s var(--ease);
-  white-space: nowrap;
-}
-.cursor.is-active { opacity: 1; }
-.cursor.is-grown {
-  width: 84px; height: 84px;
-  margin: -42px 0 0 -42px;
-}
-.cursor.is-grown span { opacity: 1; transform: none; }
-
-.scroll-progress {
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 120;
-  height: 2px;
-  width: 100%;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  will-change: transform;
 }
 
 /* --- Header ------------------------------------------------------------ */
@@ -288,16 +189,14 @@ button {
   transition: transform 0.5s var(--ease), opacity 0.4s, color 0.4s var(--ease),
               background-color 0.5s var(--ease), border-color 0.5s var(--ease);
 }
-/* Over the hero it is glassless — the photograph should not be veiled. */
+/* Over the title page there is nothing to veil, so the chrome drops away and
+   leaves only type on paper. It takes its glass back once the work starts. */
 .site-head.is-over-hero {
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
   border-bottom-color: transparent;
 }
-/* Over the hero the header sits on the photograph's own scrim, so it stays
-   light in both themes; past it, it picks the page's ink back up. */
-.site-head.is-over-hero { color: #f6f4f0; }
 .site-head.is-hidden { transform: translateY(-110%); opacity: 0; }
 
 .site-head__mark {
@@ -351,93 +250,96 @@ button {
 .theme-toggle[aria-pressed='true'] .theme-toggle__track i { transform: translateX(20px); }
 
 /* --- Hero -------------------------------------------------------------- */
-.hero {
-  position: relative;
+/* --- Title page ----------------------------------------------------------
+   A monograph does not open with a photograph and a slogan across it. It
+   opens on the stock: who made the work, where, when, on what — then the
+   work. Everything here is type on paper, which is also the fastest possible
+   first paint, because there is nothing to load.
+   ------------------------------------------------------------------------- */
+.title {
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: var(--gutter);
-  padding-bottom: clamp(1.5rem, 4vh, 3rem);
-  overflow: hidden;
-  isolation: isolate;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: calc(var(--head-h) + clamp(4rem, 14vh, 10rem)) var(--gutter)
+           clamp(2.5rem, 7vh, 5rem);
 }
-.hero__media {
-  position: absolute;
-  inset: -12% 0;
-  z-index: -2;
-  will-change: transform;
-}
-.hero__media picture { display: contents; }
-.hero__media img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transform: scale(1.08);
-  animation: heroDrift 22s var(--ease) forwards;
-}
-@keyframes heroDrift { to { transform: scale(1); } }
 
-.hero__veil {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(180deg, rgb(0 0 0 / 0.5) 0%, rgb(0 0 0 / 0.1) 30%, rgb(0 0 0 / 0.12) 45%, rgb(0 0 0 / 0.72) 100%);
-}
-.hero, .hero a { color: #f6f4f0; }
+.title__block { align-self: center; width: 100%; }
 
-.hero__type { margin-top: auto; }
-.hero h1 { font-size: var(--step-4); }
-
-/* Each line is a mask; the span inside slides up through it. */
-.line { display: block; overflow: hidden; padding-block: 0.04em; }
-.line > span {
-  display: block;
-  transform: translateY(105%);
-  transition: transform 1.1s var(--ease);
+/* Set to fill the measure rather than to a type scale. On a title page the
+   name is the image — it is the only thing on the stock, so it takes the
+   room a photograph would. */
+.title__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(5.5rem, 27vw, 22rem);
+  line-height: 0.78;
+  letter-spacing: -0.045em;
 }
-.is-ready .line > span { transform: none; }
-.is-ready .line:nth-child(2) > span { transition-delay: 0.12s; }
 
-.hero__sub {
-  max-width: 34ch;
-  margin-top: clamp(1rem, 2.4vw, 1.8rem);
-  font-size: var(--step-1);
-  color: rgb(246 244 240 / 0.78);
+.title__role {
+  margin: clamp(0.8rem, 2.4vh, 1.8rem) 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  text-transform: uppercase;
+  letter-spacing: 0.34em;
+  color: var(--muted);
 }
-.hero__sub span { display: block; color: rgb(246 244 240 / 0.55); }
 
-.hero__foot {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--gap);
-  margin-top: clamp(2.5rem, 7vh, 5rem);
-  padding-top: 1.2rem;
-  border-top: 1px solid rgb(246 244 240 / 0.2);
+/* The colophon: the facts a catalogue puts on the title page, set as data
+   rows so they read as record rather than as marketing. */
+.title__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, max-content));
+  gap: clamp(1.1rem, 3vw, 3.2rem);
+  margin: clamp(2.5rem, 7vh, 4.5rem) 0 0;
+  padding-top: clamp(1.2rem, 3vh, 2rem);
+  border-top: 1px solid var(--line);
 }
-.scroll-cue {
-  display: inline-flex;
+.title__facts dt {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+}
+.title__facts dd {
+  margin: 0.45rem 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--step-0);
+  color: var(--ink);
+}
+
+/* The one thing to do on this page, set as the first plate number. */
+.title__enter {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
   align-items: center;
-  gap: 0.8rem;
+  gap: 1rem;
+  color: inherit;
+  text-decoration: none;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
 }
-.scroll-cue__line {
-  display: block;
-  width: 3.2rem; height: 1px;
-  background: rgb(246 244 240 / 0.35);
-  overflow: hidden;
+.title__enter-no {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  color: var(--accent);
+  letter-spacing: 0.1em;
 }
-.scroll-cue__line i {
-  display: block;
-  width: 40%; height: 100%;
-  background: #f6f4f0;
-  animation: cueSlide 2.4s var(--ease-io) infinite;
+.title__enter-label {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
 }
-@keyframes cueSlide {
-  0% { transform: translateX(-100%); }
-  60%, 100% { transform: translateX(250%); }
+.title__enter-rule {
+  height: 1px;
+  background: var(--line);
+  transition: background-color 0.5s var(--ease);
 }
-.hero__count { color: rgb(246 244 240 / 0.6); }
+.title__enter:hover .title__enter-rule { background: var(--accent); }
 
 /* --- Section framework -------------------------------------------------- */
 .section {
@@ -447,7 +349,7 @@ button {
 .section {
   border-top: 1px solid var(--line);
 }
-.hero + .section { border-top: 0; }
+.title + .section { border-top: 0; }
 
 /* Every section opens like a title page: plate in the margin, title in the
    serif, and a standfirst set narrow off to the side. */
@@ -581,22 +483,50 @@ button {
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: clamp(2.5rem, 6vw, 6rem) var(--gap);
+  gap: clamp(3rem, 7vw, 7rem) var(--gap);
   align-items: start;
 }
 
-.shot { position: relative; grid-column: span 12; }
+.shot { position: relative; grid-column: 1 / -1; }
 
-/* Scale is the point. A plate runs the full measure, the next is a thumbnail
-   pushed into the margin — the jump between them is what makes a page read as
-   a page rather than as a feed. */
+/* A hairline naming the body of work that starts here. Without it the six
+   series ran together into one stream and a deliberate sequence read as a
+   shuffle. It is set as a running head, not a heading: the photographs are
+   the content, this is only the apparatus that tells you where you are. */
+.series-mark {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  margin-top: clamp(1rem, 4vw, 3.5rem);
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.series-mark span { color: var(--ink); }
+.series-mark em { color: var(--faint); font-style: normal; letter-spacing: 0.12em; }
+/* The count sits out at the right edge, the way a running head carries a
+   folio. The rule under the whole row is what makes it read as apparatus
+   rather than as a heading competing with the work. */
+.series-mark b {
+  margin-left: auto;
+  font-weight: 400;
+  color: var(--faint);
+  letter-spacing: 0.12em;
+}
+/* The first one sits directly under the filter bar and needs no extra air. */
+.grid > .series-mark:first-child { margin-top: 0; }
+
+/* The vocabulary is three plates and nothing else: a pair, the full measure,
+   and a feature that takes the screen. Size follows the photograph's shape
+   rather than a cycle, so a frame being large means the picture earned it. */
 @media (min-width: 750px) {
-  .shot--a { grid-column: 1 / span 6; }
-  .shot--b { grid-column: 9 / span 3; margin-top: clamp(4rem, 14vw, 12rem); }
-  .shot--c { grid-column: 3 / span 5; }
-  .shot--d { grid-column: 9 / span 4; margin-top: clamp(2rem, 7vw, 6rem); }
-  .shot--e { grid-column: 1 / span 3; margin-top: clamp(1rem, 5vw, 4rem); }
-  .shot--f { grid-column: 5 / span 7; }
+  .shot--pair.shot--left  { grid-column: 1 / span 6; }
+  .shot--pair.shot--right { grid-column: 7 / span 6; }
+  .shot--full { grid-column: 2 / span 10; }
 
   /* A feature plate is not a wider picture — it is a whole screen. Nothing
      else is visible while it passes, which is the only way a photograph on a
@@ -606,34 +536,25 @@ button {
     margin-inline: calc(var(--gutter) * -1);
     margin-block: clamp(3rem, 9vw, 8rem);
   }
+  /* Capped by height so one plate fills the screen, but the width follows
+     the picture's own ratio — it is never letterboxed to a shape the
+     photographer did not choose. A wide frame gets the full measure; a tall
+     one gets the full height and sits centred. */
+  /* The frame hugs the picture rather than running the full width, so the
+     blurred stand-in behind it never shows as a band beside a tall frame. */
+  .shot--bleed .shot__frame {
+    width: fit-content;
+    margin-inline: auto;
+  }
   .shot--bleed .shot__frame img {
-    aspect-ratio: auto;
-    height: min(94vh, 58rem);
+    width: auto;
+    max-width: 100%;
+    height: min(86vh, 54rem);
   }
   .shot--bleed .shot__cap {
     margin-inline: var(--gutter);
+    max-width: 48rem;
   }
-
-  /* A thumbnail carries its caption up the margin beside it, not beneath. */
-  .shot--e .shot__cap {
-    position: absolute;
-    top: 0;
-    left: calc(100% + 0.85rem);
-    height: 100%;
-    margin: 0;
-    padding: 0 0 0 0.8rem;
-    border-top: 0;
-    border-left: 1px solid var(--line);
-    writing-mode: vertical-rl;
-    /* In vertical-rl the inline axis runs downward, so `row` keeps plate,
-       title and data on one line reading top to bottom. */
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0.85rem;
-  }
-  .shot--e .shot__plate { padding: 0; }
-  .shot--e .shot__name { font-size: var(--step-0); }
 }
 
 .shot__frame {
@@ -646,12 +567,12 @@ button {
   background-size: cover;
   background-position: center;
   box-shadow: var(--lift-1);
-  transition: clip-path 1.1s var(--ease), box-shadow 0.55s var(--ease),
-              transform 0.55s var(--ease);
-  /* The reveal: an inset mask opens upward as the figure enters view. */
-  clip-path: inset(0 0 100% 0);
+  transition: box-shadow 0.55s var(--ease), transform 0.55s var(--ease);
 }
-.shot.is-in .shot__frame { clip-path: inset(0 0 0 0); }
+/* No wipe on entry. Thirty-eight frames each performing the same mask as it
+   crosses the fold is one gesture repeated until it is wallpaper; the
+   photograph simply resolves out of its own blurred colours when the file
+   lands, and nothing else happens. */
 
 /* <picture> is only a wrapper for choosing a file; it must not become a box
    between the frame and the image, or the aspect ratio below has nothing to
@@ -660,15 +581,13 @@ button {
 
 .shot__frame img {
   width: 100%;
+  /* The frame takes the photograph's own ratio and `contain` guarantees it:
+     nothing is ever cropped to suit the layout. The layout gives way to the
+     picture, not the other way round. */
   aspect-ratio: var(--ratio, 3 / 2);
-  object-fit: cover;
-  /* --py is driven per frame from its position on screen; the resting scale
-     leaves just enough headroom that the drift never exposes an edge. */
-  --py: 0px;
-  transform: translate3d(0, var(--py), 0) scale(var(--sc));
+  object-fit: contain;
   opacity: 0;
-  will-change: transform;
-  transition: --sc 1.3s var(--ease), opacity 0.8s var(--ease);
+  transition: opacity 0.8s var(--ease);
 }
 /* The photograph resolves out of its own blurred colours. */
 .shot__frame.is-loaded img { opacity: 1; }
@@ -697,10 +616,11 @@ button {
   color: var(--faint);
   text-align: center;
 }
-.shot.is-in .shot__frame img { --sc: 1.04; }
+/* No zoom on hover and none at rest. A photograph that is 4% enlarged is a
+   photograph 4% cropped, and the crop falls exactly where the photographer
+   chose the edge. The pointer gets the print lifting off the stock instead —
+   which moves the frame, not what is inside it. */
 @media (hover: hover) {
-  .shot__frame:hover img { --sc: 1.09; }
-  /* Lift the print off the page under the pointer. */
   .shot__frame:hover {
     box-shadow: var(--lift-2);
     transform: translateY(-3px);
@@ -781,8 +701,6 @@ button {
   width: auto;
   max-width: none;
   aspect-ratio: var(--ratio, 3 / 2);
-  --sc: 1;
-  --py: 0px;
 }
 /* Captions sit under the plate, never in the margin. */
 .grid.is-strip .shot__cap {
@@ -1189,9 +1107,6 @@ button {
 /* Hero copy is part of the opening sequence, so it rides `is-ready` rather
    than the scroll observer — it sits on the fold edge and would otherwise
    wait for a scroll that may never come. */
-.is-ready .hero .reveal { opacity: 1; transform: none; }
-.hero__sub { transition-delay: 0.35s; }
-.hero__count { transition-delay: 0.55s; }
 
 .reveal {
   opacity: 0;
@@ -1441,12 +1356,11 @@ button {
   .journal__around { grid-template-columns: 1fr; }
   .journal__around-link--next { text-align: left; }
   .shot { margin-top: 0 !important; }
-  .hero__foot { flex-direction: column; align-items: flex-start; }
 }
 
 /* --- Motion & pointer preferences ---------------------------------------- */
 @media (hover: none), (pointer: coarse) {
-  .cursor, .index-preview { display: none; }
+  .index-preview { display: none; }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -1457,15 +1371,14 @@ button {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .shot__frame:hover { transform: none; }
-  .shot__frame img { --py: 0px !important; --sc: 1 !important; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
   .reveal, .shot__cap { opacity: 1; transform: none; }
-  .shot__frame { clip-path: none; }
+
   .shot__frame img { transform: none; opacity: 1; }
   .line > span { transform: none; }
-  .cursor, .index-preview { display: none; }
+  .index-preview { display: none; }
 }

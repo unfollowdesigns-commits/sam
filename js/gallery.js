@@ -8,7 +8,7 @@
 import { PHOTOS, SERIES } from './data.js';
 import { LQIP } from './lqip.js';
 import { SIZES } from './sizes.js';
-import { RHYTHM, sizesFor, variantsFor } from './layout.js';
+import { layoutFor, sizesFor } from './layout.js';
 
 /**
  * The derivatives built by tools/build-responsive.mjs, as a srcset. Returns
@@ -24,6 +24,10 @@ function derivatives(src) {
 
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 
+/** The caption's data line: what the frame recorded, 'n.d.' where it did not. */
+export const factsOf = (photo) =>
+  [photo.location, photo.year || 'n.d.'].filter(Boolean).join(' / ');
+
 /** Stable, readable id for deep links: 'Red Arm' -> 'red-arm'. */
 export const slugOf = (photo) =>
   photo.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -38,7 +42,7 @@ function photoNode(photo, index, variant) {
   button.type = 'button';
   button.className = 'shot__frame';
   button.style.setProperty('--ratio', String(photo.ratio ?? 1.5));
-  button.dataset.cursor = 'View';
+
   button.setAttribute('aria-label', `Open ${photo.title} full screen`);
 
   // The blurred stand-in sits behind the real file and is revealed through it,
@@ -118,8 +122,13 @@ function photoNode(photo, index, variant) {
      <span class="shot__where"></span>`;
   cap.querySelector('.shot__plate').textContent = String(index + 1).padStart(3, '0');
   cap.querySelector('.shot__name').textContent = photo.title;
-  cap.querySelector('.shot__where').textContent =
-    [seriesTitle(photo.series), photo.location, photo.year].filter(Boolean).join(' / ');
+  // The series is already named — by the running head in All work, by the
+  // filter in a single series — so repeating it under all 38 frames is noise.
+  // What is left is what this one frame recorded, and where it recorded
+  // nothing the catalogue convention is to say so rather than leave the line
+  // off: a third of these have no date, and a caption that simply stops reads
+  // as unfinished where 'n.d.' reads as a record.
+  cap.querySelector('.shot__where').textContent = factsOf(photo);
 
   fig.append(button, cap);
   return fig;
@@ -148,27 +157,42 @@ export function createGallery({ onOpen, observe }) {
     grid.replaceChildren();
     // Worked out before anything is built, because each frame needs to know
     // how wide it will be painted in order to ask for the right file.
-    const variants = variantsFor(visible, { strip });
-    visible.forEach((photo, i) => {
-      const variant = variants[i];
-      const node = photoNode(photo, i, variant);
-      if (strip) {
-        // In the strip every plate is already present; nothing is withheld.
-        node.classList.add('is-in');
-      } else if (variant === 'bleed') {
-        // A feature plate takes a whole screen and restarts the rhythm.
-        node.classList.add('shot--bleed');
-      } else {
-        node.classList.add(`shot--${variant}`);
-      }
+    const plan = layoutFor(visible, { strip, grouped: !strip });
+
+    for (const { kind, side, startsSeries, photo, index } of plan) {
+      // In All work the six bodies of work ran together into one stream, so a
+      // deliberate sequence read as a shuffle. Naming each one as it starts is
+      // what turns a stream back into a sequence.
+      if (startsSeries) grid.append(seriesMark(photo.series));
+
+      const node = photoNode(photo, index, kind);
+      node.classList.add(`shot--${kind}`);
+      if (side) node.classList.add(`shot--${side}`);
+      // In the strip every plate is already present; nothing is withheld.
+      if (strip) node.classList.add('is-in');
+
       const frame = node.querySelector('.shot__frame');
-      frame.addEventListener('click', () => onOpen(visible, i, frame));
+      frame.addEventListener('click', () => onOpen(visible, index, frame));
       grid.append(node);
       if (!strip) observe(node);
-    });
+    }
 
     empty.hidden = visible.length > 0;
     listeners.forEach((fn) => fn());
+  }
+
+  /** A hairline naming the body of work the next frames belong to. */
+  function seriesMark(id) {
+    const series = SERIES.find((x) => x.id === id);
+    const count = visible.filter((p) => p.series === id).length;
+    const el = document.createElement('div');
+    el.className = 'series-mark reveal';
+    el.innerHTML = '<span></span><em></em><b></b>';
+    el.querySelector('span').textContent = series?.title ?? id;
+    el.querySelector('em').textContent = series?.years ?? '';
+    el.querySelector('b').textContent = `${count} ${count === 1 ? 'frame' : 'frames'}`;
+    observe(el);
+    return el;
   }
 
   function buildFilters() {

@@ -36,9 +36,20 @@ const OUT = join(IMAGES, 'r');
  */
 export const WIDTHS = [480, 960, 1440, 1800];
 
+/*
+ * Quality is set for film, not for stock photography. Grain is the texture of
+ * this work, and it is the first thing a codec spends when it is squeezed.
+ * Measured against the original scan on a pushed-film frame:
+ *
+ *   avif q55   37.8 dB    grain visibly smoothed
+ *   avif q70   43.9 dB    no visible difference, ~a third more bytes
+ *
+ * The derivatives are still a fraction of the originals, so the extra bytes
+ * are worth paying rather than publishing a smoothed version of the work.
+ */
 const FORMATS = [
-  ['avif', (p) => p.avif({ quality: 55, effort: 4 })],
-  ['webp', (p) => p.webp({ quality: 74, effort: 5 })],
+  ['avif', (p) => p.avif({ quality: 70, effort: 4 })],
+  ['webp', (p) => p.webp({ quality: 84, effort: 5 })],
 ];
 
 mkdirSync(OUT, { recursive: true });

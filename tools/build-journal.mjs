@@ -67,7 +67,7 @@ ${head}</head>
 <body class="is-ready">
 
 <header class="site-head" id="siteHead">
-  <a class="site-head__mark" href="${up}" data-cursor="Home">
+  <a class="site-head__mark" href="${up}">
     <span>${esc(SITE.name)}</span>
     <em>${esc(SITE.role)}</em>
   </a>
@@ -92,7 +92,7 @@ ${body}
 
 <footer class="site-foot">
   <p>&copy; <span id="year"></span> ${esc(SITE.name)}. All photographs are the property of the artist.</p>
-  <a href="#top" data-cursor="Top">Back to top</a>
+  <a href="#top">Back to top</a>
 </footer>
 
 <script type="module" src="${up}js/page.js"></script>

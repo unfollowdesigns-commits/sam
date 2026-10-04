@@ -37,9 +37,22 @@ function fillCopy() {
   document.getElementById('aboutSince').textContent = SITE.since;
   document.getElementById('aboutFormats').textContent = SITE.formats;
   document.getElementById('year').textContent = new Date().getFullYear();
-  document.getElementById('frameCount').textContent = String(PHOTOS.length).padStart(2, '0');
   const workCount = document.getElementById('workCount');
   if (workCount) workCount.textContent = String(PHOTOS.length);
+
+  // The title page carries the same facts the About section does, so both
+  // read from SITE rather than from anything typed into the markup.
+  const seriesCount = new Set(PHOTOS.map((p) => p.series)).size;
+  const titleFacts = {
+    titlePlace: 'Tunis & London',
+    titleYears: `${SITE.since} — 2022`,
+    titleCount: `${PHOTOS.length} frames, ${seriesCount} series`,
+    titleFormat: SITE.formats,
+  };
+  for (const [id, value] of Object.entries(titleFacts)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
 
   const services = document.getElementById('aboutServices');
   SITE.services.forEach((service) => {
@@ -119,7 +132,7 @@ function initTheme() {
   });
 }
 
-/* --- Header, progress bar, hero parallax ---------------------------------- */
+/* --- Header and progress bar ---------------------------------------------- */
 /** The margin rail names the section currently in view. */
 function initRail() {
   const now = document.getElementById('railNow');
@@ -165,7 +178,7 @@ function initScrollChrome() {
   addEventListener('resize', syncHeadHeight, { passive: true });
 
   const hero = document.getElementById('hero');
-  // The point at which the header clears the hero's scrim.
+  // The point at which the header clears the title page and the work starts.
   const heroDepth = () => (hero?.offsetHeight ?? 0) - head.offsetHeight * 1.4;
 
   let last = window.scrollY;
@@ -203,139 +216,20 @@ function initScrollChrome() {
   frame();
 }
 
-/* --- Drift ------------------------------------------------------------------
-   Each photograph moves a little inside its own frame as it crosses the
-   screen. It is barely perceptible per frame, but it is the difference
-   between pictures pasted onto a page and pictures sitting in it. */
-function initDrift() {
-  if (reduced.matches) return;
-
-  const RANGE = 26; // px of travel across a full pass
-  let frames = [];
-  let ticking = false;
-
-  function collect() {
-    frames = [...document.querySelectorAll('.shot__frame img')];
-  }
-
-  function apply() {
-    ticking = false;
-    const h = innerHeight;
-    for (const img of frames) {
-      const box = img.getBoundingClientRect();
-      if (box.bottom < -200 || box.top > h + 200) continue;
-      // -1 entering from below, 0 centred, +1 leaving at the top.
-      const progress = clamp((h / 2 - (box.top + box.height / 2)) / (h / 2 + box.height / 2), -1, 1);
-      img.style.setProperty('--py', `${(progress * RANGE).toFixed(2)}px`);
-    }
-  }
-
-  addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(apply);
-  }, { passive: true });
-  addEventListener('resize', apply, { passive: true });
-
-  collect();
-  apply();
-  return collect;
-}
-
-/* --- Cursor ---------------------------------------------------------------- */
-function initCursor() {
-  if (!fine.matches || reduced.matches) return;
-
-  const dot = document.getElementById('cursor');
-  const label = document.getElementById('cursorLabel');
-
-  let x = innerWidth / 2;
-  let y = innerHeight / 2;
-  let cx = x;
-  let cy = y;
-
-  addEventListener('pointermove', (e) => {
-    x = e.clientX;
-    y = e.clientY;
-    dot.classList.add('is-active');
-
-    const target = e.target.closest('[data-cursor]');
-    dot.classList.toggle('is-grown', Boolean(target));
-    if (target) label.textContent = target.dataset.cursor;
-  }, { passive: true });
-
-  addEventListener('pointerdown', () => dot.classList.add('is-grown'));
-  addEventListener('pointerup', () => dot.classList.remove('is-grown'));
-  document.addEventListener('mouseleave', () => dot.classList.remove('is-active'));
-
-  (function follow() {
-    cx += (x - cx) * 0.18;
-    cy += (y - cy) * 0.18;
-    dot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-    requestAnimationFrame(follow);
-  })();
-}
-
-/* --- Loader ---------------------------------------------------------------- */
-function runLoader() {
-  const loader = document.getElementById('loader');
-  const bar = document.getElementById('loaderBar');
-  const count = document.getElementById('loaderCount');
-
-  // Only images that actually fetch up front can report progress; lazy ones
-  // would leave the bar stranded.
-  const watched = [...document.images].filter((img) => img.loading !== 'lazy');
-  const total = Math.max(watched.length, 1);
-  let done = 0;
-  let shown = 0;
-
-  const tick = () => { done += 1; };
-  watched.forEach((img) => {
-    if (img.complete) tick();
-    else {
-      img.addEventListener('load', tick, { once: true });
-      img.addEventListener('error', tick, { once: true });
-    }
-  });
-
-  const started = performance.now();
-  let finished = false;
-
-  function finish() {
-    if (finished) return;
-    finished = true;
-    bar.style.width = '100%';
-    count.textContent = '100';
-    loader.classList.add('is-done');
-    document.body.classList.add('is-ready');
-    setTimeout(() => loader.remove(), 700);
-  }
-
-  (function step() {
-    const elapsed = performance.now() - started;
-    // Never flash past instantly, never hold the page hostage to a slow asset.
-    const real = (done / total) * 100;
-    const floor = Math.min((elapsed / 900) * 100, 96);
-    shown = clamp(Math.max(shown, Math.min(real, floor)), 0, 100);
-
-    count.textContent = String(Math.round(shown)).padStart(2, '0');
-    bar.style.width = `${shown}%`;
-
-    if ((done >= total && elapsed > 600) || elapsed > 4000) finish();
-    else requestAnimationFrame(step);
-  })();
-}
-
 /* --- Boot ------------------------------------------------------------------ */
 function boot() {
-  // Whatever happens below, the curtain has to come up — a stuck loader would
-  // hide the static half of the page that works perfectly well without it.
+  // The work is on screen from the first paint. There is no loading screen:
+  // holding a photographer's pictures behind an animated counter for a second
+  // is an effect played at the viewer's expense, and it delayed the largest
+  // paint on the page by exactly as long as it ran.
+  //
+  // `is-ready` is set whatever happens below: a failure in the gallery must
+  // not leave the page blank.
+  document.body.classList.add('is-ready');
   try {
     build();
   } catch (error) {
     console.error('[portfolio] initialisation failed', error);
-  } finally {
-    runLoader();
   }
 }
 
@@ -344,7 +238,7 @@ function build() {
   initTheme();
 
   const observe = createRevealer();
-  document.querySelectorAll('.reveal:not(.hero .reveal)').forEach(observe);
+  document.querySelectorAll('.reveal').forEach(observe);
 
   // Each photograph gets its own address, so a single frame can be sent to
   // someone. '#f/…' matches no element id, so the browser never jumps.
@@ -403,10 +297,6 @@ function build() {
 
   initScrollChrome();
   initRail();
-  const recollectDrift = initDrift();
-  // The grid re-renders on filter, so the drift needs the new nodes.
-  if (recollectDrift) gallery.onRender(recollectDrift);
-  initCursor();
 
   // Honour a link that points straight at one photograph.
   syncFromHash();
