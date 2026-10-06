@@ -7,6 +7,7 @@
  * the thumbnail on close.
  */
 import { SIZES } from './sizes.js';
+import { PALETTE } from './palette.js';
 
 const FOCUSABLE = 'button:not([disabled])';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -53,6 +54,7 @@ export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
   const plateNo = document.getElementById('lbPlate');
   const note = document.getElementById('lbNote');
   const data = document.getElementById('lbData');
+  const palette = document.getElementById('lbPalette');
   const counter = document.getElementById('lbCounter');
   const ticks = document.getElementById('lbTicks');
   const prev = document.getElementById('lbPrev');
@@ -103,6 +105,21 @@ export function createLightbox({ onOpen, onClose, seriesOf } = {}) {
       dd.textContent = value;
       return [dt, dd];
     }));
+
+    // The frame's own colours, read off the scan. On a body of work published
+    // as the lab returned it, this is not decoration — it is the record of
+    // what happened on the roll, and it is the one row here that was measured
+    // rather than typed.
+    const swatches = PALETTE[photo.src]?.swatches ?? [];
+    palette.hidden = !swatches.length;
+    if (swatches.length) {
+      palette.querySelector('ol').replaceChildren(...swatches.map((c) => {
+        const li = document.createElement('li');
+        li.style.setProperty('--c', c);
+        li.textContent = c.toUpperCase();
+        return li;
+      }));
+    }
 
     counter.textContent =
       `${String(index + 1).padStart(3, '0')} / ${String(list.length).padStart(3, '0')}`;

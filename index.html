@@ -175,7 +175,7 @@
       "primaryImageOfPage": {
         "@id": "https://sam-photography.vercel.app/#f/arm"
       },
-      "dateModified": "2026-10-04",
+      "dateModified": "2026-10-06",
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
@@ -1220,6 +1220,11 @@
 
     <div class="filters" id="filters" role="group" aria-label="Filter photographs by series"></div>
 
+    <!-- Filter by what the film did. Built from js/palette.js, which is read
+         off the scans by tools/build-palette.mjs — every swatch below is a
+         colour measured out of these photographs, not a colour chosen. -->
+    <div class="swatches" id="swatches" role="group" aria-label="Filter photographs by the colour the film returned"></div>
+
     <p class="no-js" hidden>Every photograph below is here without JavaScript.
       Turn it on for the filters and the full-screen viewer, or write to
       <a href="mailto:hello@example.com">hello@example.com</a>.</p>
@@ -1866,6 +1871,13 @@
       <h2 class="plate__title" id="lbTitle"></h2>
       <p class="plate__note" id="lbNote"></p>
       <dl class="plate__data" id="lbData"></dl>
+
+      <!-- The colours measured out of this frame, darkest to lightest.
+           Filled from js/palette.js; see tools/build-palette.mjs. -->
+      <figure class="plate__palette" id="lbPalette" hidden>
+        <figcaption>What the film returned</figcaption>
+        <ol></ol>
+      </figure>
       <div class="plate__seq">
         <span class="plate__count" id="lbCounter"></span>
         <span class="plate__ticks" id="lbTicks" aria-hidden="true"></span>

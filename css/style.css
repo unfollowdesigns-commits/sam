@@ -479,6 +479,81 @@ button {
   color: var(--bg);
 }
 
+/* --- Colour ---------------------------------------------------------------
+   The second way into the work, and the one that belongs to it: these scans
+   are published as the lab returned them, so the cast is not a style applied
+   afterwards — it is what happened on the roll. Every swatch below is a
+   colour measured out of the photographs by tools/build-palette.mjs.
+
+   Several can be on at once. Set as specimen chips rather than as a picker:
+   a bar of the real colours, the name, and how many frames carry it.
+   ------------------------------------------------------------------------- */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.7rem;
+  align-items: stretch;
+  margin: calc(clamp(2rem, 5vh, 3.5rem) * -1 + 0.2rem) 0 clamp(2rem, 5vh, 3.5rem);
+  padding-top: 0.9rem;
+}
+
+.swatch {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.7rem 0.4rem 0.4rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
+              background-color 0.3s var(--ease);
+}
+.swatch:hover { color: var(--ink); border-color: var(--ink); }
+
+/* Pressed is a filled chip, the same language the series filter uses, so the
+   two rows read as one control rather than as two unrelated widgets. */
+.swatch[aria-pressed='true'] {
+  color: var(--bg);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* The specimen itself: hard stops, so it reads as a set of measured colours
+   and not as a gradient someone designed. */
+.swatch__bar {
+  width: 3.4rem;
+  height: 1.15rem;
+  background: linear-gradient(90deg, var(--bar));
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.1);
+}
+
+.swatch__n {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+}
+
+.swatch--clear {
+  grid-template-columns: auto;
+  padding-inline: 0.85rem;
+  border-style: dashed;
+}
+
+/* While a colour filter is on, the series row stays available but steps back:
+   colour is what the reader is working with. */
+.swatches.is-filtering + .grid { margin-top: 0; }
+
+@media (max-width: 749px) {
+  .swatch__bar { width: 2.2rem; }
+  .swatch { padding-inline: 0.45rem 0.55rem; }
+}
+
 /* --- Gallery grid ------------------------------------------------------- */
 .grid {
   display: grid;
@@ -1018,6 +1093,43 @@ button {
   margin: 0;
 }
 .plate__data dt { color: rgb(236 231 220 / 0.45); text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* The colours read off this scan, darkest to lightest. The one row on the
+   plate that was measured rather than typed, so it is set as a specimen
+   strip with the values under it, the way a colour reference prints. */
+.plate__palette {
+  margin: 1.4rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgb(236 231 220 / 0.14);
+}
+.plate__palette figcaption {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgb(236 231 220 / 0.45);
+}
+.plate__palette ol {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.plate__palette li {
+  /* The swatch is the block; the value sits under it, rotated upright so five
+     hex codes fit a narrow plate without shrinking to nothing. */
+  display: block;
+  padding-top: 2.6rem;
+  background: linear-gradient(var(--c), var(--c)) top / 100% 2.2rem no-repeat;
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  letter-spacing: 0.02em;
+  color: rgb(236 231 220 / 0.42);
+  text-align: center;
+}
 
 .plate__seq {
   display: flex;

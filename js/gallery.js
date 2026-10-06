@@ -8,6 +8,7 @@
 import { PHOTOS, SERIES } from './data.js';
 import { SIZES } from './sizes.js';
 import { layoutFor, sizesFor } from './layout.js';
+import { PALETTE, FAMILIES } from './palette.js';
 
 /**
  * The derivatives built by tools/build-responsive.mjs, as a srcset. Returns
@@ -137,19 +138,31 @@ export function createGallery({ onOpen, observe }) {
   const grid = document.getElementById('grid');
   const empty = document.getElementById('gridEmpty');
   const filters = document.getElementById('filters');
+  const swatchBar = document.getElementById('swatches');
 
   let active = 'all';
+  // Colour is a second axis, and it is the one that belongs to this work: the
+  // scans are published as the lab returned them, so what the film did to the
+  // colour is the constant running through everything. Several can be on at
+  // once — a reader looking for the black and white and the green rolls wants
+  // both, not one after the other.
+  const colours = new Set();
   let visible = [];
 
   const listeners = [];
 
   function render() {
-    visible = active === 'all' ? PHOTOS : PHOTOS.filter((p) => p.series === active);
+    const bySeries = active === 'all' ? PHOTOS : PHOTOS.filter((p) => p.series === active);
+    visible = colours.size
+      ? bySeries.filter((p) => colours.has(PALETTE[p.src]?.family))
+      : bySeries;
 
     // Two ways of reading, not one. All the work is an editorial page you
     // scroll down; a single series is a strip you travel along sideways, the
-    // way you would pull a contact sheet across a light table.
-    const strip = active !== 'all';
+    // way you would pull a contact sheet across a light table. Filtering by
+    // colour cuts across the series, so it reads down the page like the whole
+    // body of work does.
+    const strip = active !== 'all' && !colours.size;
     grid.classList.toggle('is-strip', strip);
     grid.scrollLeft = 0;
 
@@ -216,6 +229,73 @@ export function createGallery({ onOpen, observe }) {
     render();
   }
 
+  /* --- Colour -------------------------------------------------------------
+     One chip per family, each painted with colours taken from the frames in
+     that family rather than with a colour picked to represent it. The chip
+     for the black and white work is grey because the work is grey.
+     ---------------------------------------------------------------------- */
+  function buildSwatches() {
+    if (!swatchBar) return;
+
+    for (const family of FAMILIES) {
+      const members = PHOTOS.filter((p) => PALETTE[p.src]?.family === family.id);
+      if (!members.length) continue;
+
+      // The chip's own bar: the mid-tone of a handful of frames in the family,
+      // so the reader is choosing from the actual colours on the rolls.
+      const bar = members
+        .slice(0, 5)
+        .map((p) => PALETTE[p.src].swatches[3] ?? PALETTE[p.src].swatches.at(-1));
+
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'swatch';
+      button.dataset.family = family.id;
+      button.setAttribute('aria-pressed', 'false');
+      button.title = family.note;
+      button.innerHTML =
+        `<span class="swatch__bar" aria-hidden="true"></span>
+         <span class="swatch__name"></span>
+         <span class="swatch__n"></span>`;
+      button.querySelector('.swatch__bar').style.setProperty(
+        '--bar', bar.map((c, i) => `${c} ${(i / bar.length) * 100}% ${((i + 1) / bar.length) * 100}%`).join(', ')
+      );
+      button.querySelector('.swatch__name').textContent = family.title;
+      button.querySelector('.swatch__n').textContent = String(members.length);
+      button.addEventListener('click', () => toggleColour(family.id));
+      swatchBar.append(button);
+    }
+
+    const clear = document.createElement('button');
+    clear.type = 'button';
+    clear.className = 'swatch swatch--clear';
+    clear.textContent = 'Clear';
+    clear.hidden = true;
+    clear.addEventListener('click', () => {
+      colours.clear();
+      syncSwatches();
+      render();
+    });
+    swatchBar.append(clear);
+  }
+
+  function toggleColour(id) {
+    if (colours.has(id)) colours.delete(id);
+    else colours.add(id);
+    syncSwatches();
+    render();
+  }
+
+  function syncSwatches() {
+    if (!swatchBar) return;
+    swatchBar.querySelectorAll('.swatch[data-family]').forEach((b) =>
+      b.setAttribute('aria-pressed', String(colours.has(b.dataset.family)))
+    );
+    const clear = swatchBar.querySelector('.swatch--clear');
+    if (clear) clear.hidden = colours.size === 0;
+    swatchBar.classList.toggle('is-filtering', colours.size > 0);
+  }
+
   /** How much room the strip still has in a given direction. */
   function stripRoom(delta) {
     const max = grid.scrollWidth - grid.clientWidth;
@@ -246,6 +326,7 @@ export function createGallery({ onOpen, observe }) {
   });
 
   buildFilters();
+  buildSwatches();
   render();
 
   /** Find a frame by slug across the whole set, ignoring the active filter. */

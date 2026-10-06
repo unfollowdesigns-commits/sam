@@ -12,9 +12,11 @@ js/lightbox.js      full-screen viewer
 js/main.js          copy, theme, loader, cursor, scroll
 images/             photographs, resized to 1800px and stripped of EXIF
 images/r/           generated: AVIF and WebP at 480/960/1440
+js/palette.js       generated: the colour measured out of each scan
 journal/posts/      write a markdown file here to publish a post
 js/sizes.js         generated: the widths that exist for each photograph
 tools/build-responsive.mjs   AVIF and WebP derivatives
+tools/build-palette.mjs      dominant colours and colour family per frame
 tools/build-journal.mjs      journal pages and feed.xml
 tools/build-seo.mjs          gallery markup, FAQ, structured data, sitemap
 tools/find-dupes.mjs         flags the same photograph published twice
@@ -85,6 +87,7 @@ dropping anything new into `images/`:
 ```sh
 npm i sharp                      # dev-only, not a site dependency
 node tools/build-responsive.mjs  # AVIF/WebP at each width (skips what exists)
+node tools/build-palette.mjs     # reads the colour out of each scan
 node tools/find-dupes.mjs        # check you have not published one twice
 node tools/build-seo.mjs         # markup, structured data, sitemap
 ```
