@@ -5,18 +5,18 @@ no framework, no dependencies — open `index.html` and it runs.
 
 ```
 index.html          the page
-css/style.css       all styling
+css/crt.css         the gallery's styling
+css/style.css       the journal's styling
 js/data.js          ← the only file you need to edit
-js/gallery.js       grid, filters, series index
-js/lightbox.js      full-screen viewer
-js/main.js          copy, theme, loader, cursor, scroll
+js/scene.js         the WebGL scene: mosaic, room, picture tube
+js/viewer.js        full-screen viewer
+js/main.js          copy, scroll, deep links, menu, loader
+js/page.js          the small script the journal pages share
 images/             photographs, resized to 1800px and stripped of EXIF
 images/r/           generated: AVIF and WebP at 480/960/1440
-js/palette.js       generated: the colour measured out of each scan
 journal/posts/      write a markdown file here to publish a post
 js/sizes.js         generated: the widths that exist for each photograph
 tools/build-responsive.mjs   AVIF and WebP derivatives
-tools/build-palette.mjs      dominant colours and colour family per frame
 tools/build-journal.mjs      journal pages and feed.xml
 tools/build-seo.mjs          gallery markup, FAQ, structured data, sitemap
 tools/find-dupes.mjs         flags the same photograph published twice
@@ -47,19 +47,20 @@ caption — comes from `js/data.js`.
 }
 ```
 
-`ratio` is worth getting right — it reserves the correct space before the image
-loads, so the grid never jumps while you scroll. `location` is optional: leave it
+`ratio` is worth getting right — it is the shape the print is hung at in the
+room, before its file has even arrived. `location` is optional: leave it
 off and the caption shows just the year.
 
 Series live in the `SERIES` array; add, rename or reorder them freely and the
-filters and the series index follow. Your name, tagline, intro, email and social
+room, the series list and the menu follow. Keep each series' photographs
+together in `PHOTOS` — the room hangs them in the order they are written. Your name, tagline, intro, email and social
 links are in `SITE` at the top of the same file.
 
 ### A note on image size
 
-Export at around 2000px on the long edge and save as JPEG or WebP. The grid
-never displays a frame wider than about 1100px, so anything larger is bandwidth
-you're paying for and your visitors are waiting on.
+Export at around 2000px on the long edge and save as JPEG or WebP. The room
+hangs each print from its 960px derivative (480px on a phone); only the viewer
+asks for more, and never for more than the screen can show.
 
 ## About the images currently in here
 
@@ -72,12 +73,27 @@ had it; the rest show the year alone rather than a guessed place.
 
 ## The look
 
-The site is set as printed matter rather than as a screen: a warm paper stock
-with a little tooth in it, ink-dark as the alternate, a serif for titles and a
-monospace for everything factual. Each frame is a catalogue entry — plate
-number, title, then series / place / year as a data row under a hairline. The site
-opens light — the work is printed on paper — and the toggle overrides that and
-is remembered.
+The gallery is the work played back on a monitor. Three things are drawn
+behind the text, in plain WebGL with no library (`js/scene.js`):
+
+- **The mosaic** — one photograph broken into raised blocks on a grid, behind
+  the title and again behind About.
+- **The room** — every photograph hung as a print in a white void, each series
+  behind its title card. Scrolling walks the camera through it; the caption
+  at the bottom left names the print it is standing in front of.
+- **The tube** — the finished frame bent, scanned and smeared the way a
+  monitor playing back tape would show it.
+
+Type is Doto, a dot-matrix face, for names and titles, and IBM Plex Mono for
+everything factual.
+
+The room is for effect. **The viewer is where a photograph is shown whole**,
+flat, uncropped and with nothing done to it — click a print, or use *View
+whole* under its caption.
+
+To change which photographs sit behind the title and About, edit `backdrops`
+in `js/main.js`. The journal keeps its own printed-page look in
+`css/style.css`.
 
 ## Rebuilding after you add photographs
 
@@ -87,7 +103,6 @@ dropping anything new into `images/`:
 ```sh
 npm i sharp                      # dev-only, not a site dependency
 node tools/build-responsive.mjs  # AVIF/WebP at each width (skips what exists)
-node tools/build-palette.mjs     # reads the colour out of each scan
 node tools/find-dupes.mjs        # check you have not published one twice
 node tools/build-seo.mjs         # markup, structured data, sitemap
 ```
@@ -123,8 +138,9 @@ and most answer engines do not — would see an empty page where the work is.
 
 1. **The gallery markup, into `index.html`** between `generated-grid` markers.
    Every photograph, plate number, caption and alt text is in the HTML source.
-   The script replaces it on load with the same content, laid out and
-   interactive, so there is no hidden text and no mismatch.
+   With the scene running that list is kept off screen but stays reachable:
+   a screen reader reads it, and tabbing to a photograph walks the camera to
+   its print. Where the scene cannot run it is simply the gallery.
 2. **JSON-LD** describing the photographer (`Person`), the site, and every
    photograph as an `ImageObject` carrying its creator, medium, year and place.
    This is what lets an answer engine say who made a picture and where.
@@ -161,22 +177,26 @@ For GitHub Pages: Settings → Pages → deploy from a branch, pick the branch a
 
 ## What's built in
 
-- **Series filter** that re-flows the editorial grid for whatever it's showing
-- **Full-screen viewer** with arrow keys, Escape, swipe, focus trapping, and
-  neighbouring frames preloaded so paging is instant. It flies out of the frame
-  you clicked and back into wherever that frame has moved to
+- **Scroll-driven room** — the scroll is the browser's own (the work section
+  is simply very tall), so the keyboard, the scrollbar, a trackpad and a thumb
+  all work and nothing is intercepted
+- **Series list and menu** that jump the camera to a series' title card
+- **Full-screen viewer** — a native `<dialog>` with arrow keys, Escape, swipe,
+  and neighbouring frames preloaded so paging is instant
 - **A link per photograph** — opening one sets `#f/<slug>`, and that link opens
   the viewer directly. Paging replaces the history entry; Back closes
-- **Series index** with a preview that trails the pointer
-- **Light and dark themes**, following the system by default and remembered once
-  the visitor chooses
-- **Reduced-motion support** — every reveal, parallax and custom cursor turns off
-  for visitors who ask for it
-- **Degrades gracefully** — with JavaScript off, the hero, about and contact
-  sections still render and the loading curtain never appears
+- **Lazy textures** — only the prints near the camera are loaded, and those far
+  behind it are released
+- **Reduced-motion support** — the tearing, the noise, the drift and the pointer
+  parallax all stop for visitors who ask for it; the camera then moves only
+  when they scroll
+- **Degrades gracefully** — without WebGL, or with JavaScript off, the page is a
+  dark page of text with every photograph in a plain column, and the loading
+  screen never appears
 
 ## Typefaces
 
-Instrument Serif and Inter, loaded from Google Fonts, with Iowan Old Style /
-Georgia and the system sans as fallbacks. To self-host them instead, drop the
-files in and replace the `<link>` in `index.html` with an `@font-face` block.
+Doto and IBM Plex Mono on the gallery, Instrument Serif and IBM Plex Mono on
+the journal, all loaded from Google Fonts with system monospace and serif
+fallbacks. To self-host them instead, drop the files in and replace the
+`<link>` in the page with an `@font-face` block.

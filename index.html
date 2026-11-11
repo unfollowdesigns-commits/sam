@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sam — Photographer</title>
 <meta name="description" content="Selected photographs by Sam — 35mm film, portraits and cities. Editorial, portrait and fashion commissions.">
-<meta name="theme-color" content="#eae6dc">
+<meta name="theme-color" content="#050505">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sam — Photographer">
@@ -27,10 +27,19 @@
 <link rel="alternate" type="application/rss+xml" title="Sam — Journal" href="https://sam-photography.vercel.app/feed.xml">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b0b0c'/><circle cx='16' cy='16' r='6' fill='%23f2efe9'/></svg>">
 
+<!-- Before anything paints: say that scripting is on, and whether the scene
+     can run, so the photographs in the HTML are not fetched twice. -->
+<script>
+(function (c) {
+  c.remove('no-js'); c.add('js');
+  if (window.WebGLRenderingContext) c.add('gl');
+})(document.documentElement.classList);
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/crt.css">
 
 <!-- generated-jsonld:start -->
 <script type="application/ld+json">
@@ -175,7 +184,7 @@
       "primaryImageOfPage": {
         "@id": "https://sam-photography.vercel.app/#f/arm"
       },
-      "dateModified": "2026-10-06",
+      "dateModified": "2026-11-11",
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
@@ -1131,67 +1140,60 @@
 }
 </script>
 <!-- generated-jsonld:end -->
-
-<noscript>
-  <style>
-    /* The plates are in the HTML, so without scripting they are simply shown
-       as they are — only the parts the script builds are hidden. */
-    .filters, .index-list { display: none !important; }
-    .reveal, .shot__cap { opacity: 1 !important; transform: none !important; }
-    .line > span { transform: none !important; }
-    .shot__frame { clip-path: none !important; }
-    .shot__frame img { opacity: 1 !important; transform: none !important; }
-    .no-js { display: block !important; }
-  </style>
-</noscript>
 </head>
 <body>
 
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-<div class="rail" aria-hidden="true">
-  <span class="rail__mark">Sam</span>
-  <span class="rail__rule"></span>
-  <span class="rail__now" id="railNow">Selected work</span>
-</div>
-
 <a class="skip-link" href="#work">Skip to the work</a>
 
-<header class="site-head" id="siteHead">
-  <a class="site-head__mark" href="#top">
-    <span>Sam</span>
-    <em>Photographer</em>
-  </a>
+<!-- Shown only while scripting is on and the scene is not yet ready. -->
+<div class="loader" id="loader" aria-hidden="true">
+  <p class="loader__word">Loading</p>
+  <p class="loader__count" id="loaderCount">00/00</p>
+</div>
 
-  <nav class="site-nav" aria-label="Primary">
-    <a href="#work">Work</a>
-    <a href="#series">Series</a>
-    <a href="journal/">Journal</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+<!-- The picture tube: js/scene.js draws everything behind the text here. -->
+<canvas class="scene" id="scene" aria-hidden="true"></canvas>
+
+<header class="head">
+  <a class="head__mark" href="#top">Sam</a>
+  <nav class="head__nav" aria-label="Primary">
+    <a class="head__talk" href="#contact">Let&rsquo;s talk<i aria-hidden="true"></i></a>
+    <button class="head__menu" id="menuBtn" type="button" aria-haspopup="dialog" aria-expanded="false">
+      Menu
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 2.5h10M1 6h10M1 9.5h10"/></svg>
+    </button>
   </nav>
-
-  <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">
-    <span class="theme-toggle__track"><i></i></span>
-    <span class="visually-hidden">Switch between dark and light</span>
-  </button>
 </header>
+
+<dialog class="menu" id="menu" aria-label="Menu">
+  <button class="menu__close" id="menuClose" type="button">Close [x]</button>
+  <nav class="menu__nav" aria-label="Sections">
+    <ul class="menu__main">
+      <li><a href="#top">Index</a></li>
+      <li>
+        <a href="#work">Selected work</a>
+        <ul class="menu__series" id="menuSeries"></ul>
+      </li>
+      <li><a href="#about">About</a></li>
+      <li><a href="journal/">Journal</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</dialog>
 
 <main id="top">
 
-  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
-  <!-- The title page. Not a photograph with a tagline over it — a monograph
-       opens on the stock, with who made the work, where, when and on what,
-       and then the work begins. The facts are filled from js/data.js so there
-       is one place to change them. -->
+  <!-- ── Title ────────────────────────────────────────────────────────── -->
+  <!-- Who made the work, where, when and on what. The facts are filled from
+       js/data.js so there is one place to change them. -->
   <section class="title" id="hero">
-    <div class="title__block">
-      <!-- A screen reader and a crawler both need to know whose site this is;
-           the role and the city are set below for a sighted reader, so they
-           ride the heading itself without being drawn twice. -->
-      <h1 class="title__name">Sam<span class="visually-hidden"> — photographer, Tunis</span></h1>
-      <p class="title__role">Photographer</p>
+    <div class="title__name">
+      <h1>Sam<span class="visually-hidden"> — photographer, Tunis</span></h1>
+      <p class="title__sub"><span>// Portfolio</span><span id="titleYear">©</span></p>
+    </div>
 
+    <div class="title__side">
+      <p class="title__line" id="titleLine">What the film kept.</p>
       <dl class="title__facts">
         <div><dt>Based</dt><dd id="titlePlace">—</dd></div>
         <div><dt>Years</dt><dd id="titleYears">—</dd></div>
@@ -1200,46 +1202,44 @@
       </dl>
     </div>
 
-    <a class="title__enter" href="#work">
-      <span class="title__enter-no">01</span>
-      <span class="title__enter-label">Selected work</span>
-      <span class="title__enter-rule"></span>
-    </a>
+    <a class="title__enter" href="#work">&gt; Selected work</a>
   </section>
 
   <!-- ── Work ─────────────────────────────────────────────────────────── -->
-  <section class="section" id="work">
-    <header class="opener">
-      <span class="opener__plate">01</span>
-      <h2 class="opener__title">Selected&nbsp;work</h2>
-      <p class="opener__note reveal">
-        <span id="workCount">—</span> frames, 2018 — 2022. Thirty-five millimetre
-        unless the caption says otherwise; scans left as the lab returned them.
-      </p>
-    </header>
+  <!-- With the scene running this section is many screens tall and the
+       sticky block below stays put while the camera travels the room.
+       Without it, the photographs under #grid are simply shown. -->
+  <section class="work" id="work">
+    <div class="work__hud">
+      <div class="work__index" data-solid>
+        <h2>Selected work</h2>
+        <ol class="work__series" id="seriesList"></ol>
+      </div>
 
-    <div class="filters" id="filters" role="group" aria-label="Filter photographs by series"></div>
+      <!-- The print the camera is standing in front of. -->
+      <div class="work__caption" data-solid aria-live="off">
+        <p class="work__count" id="capCount"></p>
+        <p class="work__name" id="capTitle"></p>
+        <p class="work__note" id="capNote" hidden></p>
+        <p class="work__facts" id="capFacts"></p>
+        <a class="work__open" id="capOpen" href="#work">&gt; View whole</a>
+      </div>
+    </div>
 
-    <!-- Filter by what the film did. Built from js/palette.js, which is read
-         off the scans by tools/build-palette.mjs — every swatch below is a
-         colour measured out of these photographs, not a colour chosen. -->
-    <div class="swatches" id="swatches" role="group" aria-label="Filter photographs by the colour the film returned"></div>
-
-    <p class="no-js" hidden>Every photograph below is here without JavaScript.
-      Turn it on for the filters and the full-screen viewer, or write to
-      <a href="mailto:hello@example.com">hello@example.com</a>.</p>
+    <p class="work__plain">Thirty-five millimetre unless the caption says
+      otherwise; scans left as the lab returned them.</p>
 
     <!-- Written by tools/build-seo.mjs so the work is in the HTML source for
-         crawlers and answer engines. The script replaces it on load with the
-         same content, laid out and interactive. -->
+         crawlers and answer engines, and for any browser the scene cannot
+         run in. Each link opens that photograph whole. -->
     <div class="grid" id="grid">
 <!-- generated-grid:start -->
       <figure class="shot" data-index="0" id="plate-001">
-        <a class="shot__frame" href="#f/arm" style="--ratio:1.5088" aria-label="Open Arm full screen">
+        <a class="shot__frame" href="#f/arm" style="--ratio:1.5088" aria-label="View Arm whole">
           <picture>
-            <source type="image/avif" srcset="images/r/latent-01-480.avif 480w, images/r/latent-01-960.avif 960w, images/r/latent-01-1440.avif 1440w, images/r/latent-01-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 115vw">
-            <source type="image/webp" srcset="images/r/latent-01-480.webp 480w, images/r/latent-01-960.webp 960w, images/r/latent-01-1440.webp 1440w, images/r/latent-01-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 115vw">
-            <img src="images/latent-01.jpg" sizes="(max-width: 749px) 92vw, 115vw" alt="A red light leak cutting across a bare arm on green-cast colour film" width="1800" height="1193" loading="eager" decoding="async">
+            <source type="image/avif" srcset="images/r/latent-01-480.avif 480w, images/r/latent-01-960.avif 960w, images/r/latent-01-1440.avif 1440w, images/r/latent-01-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/latent-01-480.webp 480w, images/r/latent-01-960.webp 960w, images/r/latent-01-1440.webp 1440w, images/r/latent-01-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/latent-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A red light leak cutting across a bare arm on green-cast colour film" width="1800" height="1193" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1249,11 +1249,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="1" id="plate-002">
-        <a class="shot__frame" href="#f/leak" style="--ratio:1.5088" aria-label="Open Leak full screen">
+        <a class="shot__frame" href="#f/leak" style="--ratio:1.5088" aria-label="View Leak whole">
           <picture>
-            <source type="image/avif" srcset="images/r/latent-03-480.avif 480w, images/r/latent-03-960.avif 960w, images/r/latent-03-1440.avif 1440w, images/r/latent-03-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 92vw">
-            <source type="image/webp" srcset="images/r/latent-03-480.webp 480w, images/r/latent-03-960.webp 960w, images/r/latent-03-1440.webp 1440w, images/r/latent-03-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 92vw">
-            <img src="images/latent-03.jpg" sizes="(max-width: 749px) 92vw, 92vw" alt="Blue and red streaks crossing a green frame" width="1800" height="1193" loading="eager" decoding="async">
+            <source type="image/avif" srcset="images/r/latent-03-480.avif 480w, images/r/latent-03-960.avif 960w, images/r/latent-03-1440.avif 1440w, images/r/latent-03-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/latent-03-480.webp 480w, images/r/latent-03-960.webp 960w, images/r/latent-03-1440.webp 1440w, images/r/latent-03-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/latent-03.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Blue and red streaks crossing a green frame" width="1800" height="1193" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1263,11 +1263,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="2" id="plate-003">
-        <a class="shot__frame" href="#f/tube" style="--ratio:1.5088" aria-label="Open Tube full screen">
+        <a class="shot__frame" href="#f/tube" style="--ratio:1.5088" aria-label="View Tube whole">
           <picture>
-            <source type="image/avif" srcset="images/r/latent-04-480.avif 480w, images/r/latent-04-960.avif 960w, images/r/latent-04-1440.avif 1440w, images/r/latent-04-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 92vw">
-            <source type="image/webp" srcset="images/r/latent-04-480.webp 480w, images/r/latent-04-960.webp 960w, images/r/latent-04-1440.webp 1440w, images/r/latent-04-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 92vw">
-            <img src="images/latent-04.jpg" sizes="(max-width: 749px) 92vw, 92vw" alt="A neon tube burning pink against a dark, blue-smeared frame" width="1800" height="1193" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/latent-04-480.avif 480w, images/r/latent-04-960.avif 960w, images/r/latent-04-1440.avif 1440w, images/r/latent-04-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/latent-04-480.webp 480w, images/r/latent-04-960.webp 960w, images/r/latent-04-1440.webp 1440w, images/r/latent-04-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/latent-04.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A neon tube burning pink against a dark, blue-smeared frame" width="1800" height="1193" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1277,11 +1277,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="3" id="plate-004">
-        <a class="shot__frame" href="#f/bloom" style="--ratio:1.5088" aria-label="Open Bloom full screen">
+        <a class="shot__frame" href="#f/bloom" style="--ratio:1.5088" aria-label="View Bloom whole">
           <picture>
-            <source type="image/avif" srcset="images/r/latent-05-480.avif 480w, images/r/latent-05-960.avif 960w, images/r/latent-05-1440.avif 1440w, images/r/latent-05-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/latent-05-480.webp 480w, images/r/latent-05-960.webp 960w, images/r/latent-05-1440.webp 1440w, images/r/latent-05-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/latent-05.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A red bloom and a blue streak crossing green-cast film" width="1800" height="1193" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/latent-05-480.avif 480w, images/r/latent-05-960.avif 960w, images/r/latent-05-1440.avif 1440w, images/r/latent-05-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/latent-05-480.webp 480w, images/r/latent-05-960.webp 960w, images/r/latent-05-1440.webp 1440w, images/r/latent-05-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/latent-05.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A red bloom and a blue streak crossing green-cast film" width="1800" height="1193" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1291,11 +1291,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="4" id="plate-005">
-        <a class="shot__frame" href="#f/opal" style="--ratio:0.6894" aria-label="Open Opal full screen">
+        <a class="shot__frame" href="#f/opal" style="--ratio:0.6894" aria-label="View Opal whole">
           <picture>
-            <source type="image/avif" srcset="images/r/latent-07-480.avif 480w, images/r/latent-07-960.avif 960w, images/r/latent-07-1241.avif 1241w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/latent-07-480.webp 480w, images/r/latent-07-960.webp 960w, images/r/latent-07-1241.webp 1241w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/latent-07.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A double exposure: a figure in cold blue crossed by a band of orange light" width="1241" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/latent-07-480.avif 480w, images/r/latent-07-960.avif 960w, images/r/latent-07-1241.avif 1241w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/latent-07-480.webp 480w, images/r/latent-07-960.webp 960w, images/r/latent-07-1241.webp 1241w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/latent-07.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A double exposure: a figure in cold blue crossed by a band of orange light" width="1241" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1305,11 +1305,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="5" id="plate-006">
-        <a class="shot__frame" href="#f/between-setups" style="--ratio:1.509" aria-label="Open Between Setups full screen">
+        <a class="shot__frame" href="#f/between-setups" style="--ratio:1.509" aria-label="View Between Setups whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-01-480.avif 480w, images/r/sitters-01-960.avif 960w, images/r/sitters-01-1440.avif 1440w, images/r/sitters-01-1512.avif 1512w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-01-480.webp 480w, images/r/sitters-01-960.webp 960w, images/r/sitters-01-1440.webp 1440w, images/r/sitters-01-1512.webp 1512w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-01.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A woman in a black blazer standing beside an exposed studio light stand" width="1512" height="1002" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-01-480.avif 480w, images/r/sitters-01-960.avif 960w, images/r/sitters-01-1440.avif 1440w, images/r/sitters-01-1512.avif 1512w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-01-480.webp 480w, images/r/sitters-01-960.webp 960w, images/r/sitters-01-1440.webp 1440w, images/r/sitters-01-1512.webp 1512w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A woman in a black blazer standing beside an exposed studio light stand" width="1512" height="1002" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1319,11 +1319,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="6" id="plate-007">
-        <a class="shot__frame" href="#f/veil" style="--ratio:1" aria-label="Open Veil full screen">
+        <a class="shot__frame" href="#f/veil" style="--ratio:1" aria-label="View Veil whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-02-480.avif 480w, images/r/sitters-02-960.avif 960w, images/r/sitters-02-1001.avif 1001w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-02-480.webp 480w, images/r/sitters-02-960.webp 960w, images/r/sitters-02-1001.webp 1001w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-02.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A face behind a beaded veil, eyes closed" width="1001" height="1001" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-02-480.avif 480w, images/r/sitters-02-960.avif 960w, images/r/sitters-02-1001.avif 1001w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-02-480.webp 480w, images/r/sitters-02-960.webp 960w, images/r/sitters-02-1001.webp 1001w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-02.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A face behind a beaded veil, eyes closed" width="1001" height="1001" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1333,11 +1333,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="7" id="plate-008">
-        <a class="shot__frame" href="#f/blinds" style="--ratio:0.9798" aria-label="Open Blinds full screen">
+        <a class="shot__frame" href="#f/blinds" style="--ratio:0.9798" aria-label="View Blinds whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-03-480.avif 480w, images/r/sitters-03-960.avif 960w, images/r/sitters-03-970.avif 970w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-03-480.webp 480w, images/r/sitters-03-960.webp 960w, images/r/sitters-03-970.webp 970w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-03.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A figure in dark fur under hard stripes of window light" width="970" height="990" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-03-480.avif 480w, images/r/sitters-03-960.avif 960w, images/r/sitters-03-970.avif 970w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-03-480.webp 480w, images/r/sitters-03-960.webp 960w, images/r/sitters-03-970.webp 970w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-03.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A figure in dark fur under hard stripes of window light" width="970" height="990" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1347,11 +1347,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="8" id="plate-009">
-        <a class="shot__frame" href="#f/sheaf" style="--ratio:0.6678" aria-label="Open Sheaf full screen">
+        <a class="shot__frame" href="#f/sheaf" style="--ratio:0.6678" aria-label="View Sheaf whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-04-480.avif 480w, images/r/sitters-04-960.avif 960w, images/r/sitters-04-1202.avif 1202w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-04-480.webp 480w, images/r/sitters-04-960.webp 960w, images/r/sitters-04-1202.webp 1202w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-04.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A model on a white paper backdrop holding a sheaf of dried stems" width="1202" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-04-480.avif 480w, images/r/sitters-04-960.avif 960w, images/r/sitters-04-1202.avif 1202w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-04-480.webp 480w, images/r/sitters-04-960.webp 960w, images/r/sitters-04-1202.webp 1202w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-04.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A model on a white paper backdrop holding a sheaf of dried stems" width="1202" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1361,11 +1361,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="9" id="plate-010">
-        <a class="shot__frame" href="#f/gold" style="--ratio:1.4975" aria-label="Open Gold full screen">
+        <a class="shot__frame" href="#f/gold" style="--ratio:1.4975" aria-label="View Gold whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-05-480.avif 480w, images/r/sitters-05-960.avif 960w, images/r/sitters-05-1440.avif 1440w, images/r/sitters-05-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 115vw">
-            <source type="image/webp" srcset="images/r/sitters-05-480.webp 480w, images/r/sitters-05-960.webp 960w, images/r/sitters-05-1440.webp 1440w, images/r/sitters-05-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 115vw">
-            <img src="images/sitters-05.jpg" sizes="(max-width: 749px) 92vw, 115vw" alt="A head tipped back in warm light, gold earrings catching the sun" width="1800" height="1202" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-05-480.avif 480w, images/r/sitters-05-960.avif 960w, images/r/sitters-05-1440.avif 1440w, images/r/sitters-05-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-05-480.webp 480w, images/r/sitters-05-960.webp 960w, images/r/sitters-05-1440.webp 1440w, images/r/sitters-05-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-05.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A head tipped back in warm light, gold earrings catching the sun" width="1800" height="1202" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1375,11 +1375,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="10" id="plate-011">
-        <a class="shot__frame" href="#f/scrapyard" style="--ratio:0.6306" aria-label="Open Scrapyard full screen">
+        <a class="shot__frame" href="#f/scrapyard" style="--ratio:0.6306" aria-label="View Scrapyard whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-06-480.avif 480w, images/r/sitters-06-960.avif 960w, images/r/sitters-06-1135.avif 1135w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-06-480.webp 480w, images/r/sitters-06-960.webp 960w, images/r/sitters-06-1135.webp 1135w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-06.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard" width="1135" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-06-480.avif 480w, images/r/sitters-06-960.avif 960w, images/r/sitters-06-1135.avif 1135w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-06-480.webp 480w, images/r/sitters-06-960.webp 960w, images/r/sitters-06-1135.webp 1135w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-06.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A young man in a cap and graphic tee standing beside a wrecked car in a scrapyard" width="1135" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1389,11 +1389,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="11" id="plate-012">
-        <a class="shot__frame" href="#f/workshop" style="--ratio:1.509" aria-label="Open Workshop full screen">
+        <a class="shot__frame" href="#f/workshop" style="--ratio:1.509" aria-label="View Workshop whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-07-480.avif 480w, images/r/sitters-07-960.avif 960w, images/r/sitters-07-1440.avif 1440w, images/r/sitters-07-1509.avif 1509w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-07-480.webp 480w, images/r/sitters-07-960.webp 960w, images/r/sitters-07-1440.webp 1440w, images/r/sitters-07-1509.webp 1509w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-07.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A woman in a white tee in a workshop, benches and working figures behind her" width="1509" height="1000" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-07-480.avif 480w, images/r/sitters-07-960.avif 960w, images/r/sitters-07-1440.avif 1440w, images/r/sitters-07-1509.avif 1509w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-07-480.webp 480w, images/r/sitters-07-960.webp 960w, images/r/sitters-07-1440.webp 1440w, images/r/sitters-07-1509.webp 1509w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-07.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A woman in a white tee in a workshop, benches and working figures behind her" width="1509" height="1000" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1403,11 +1403,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="12" id="plate-013">
-        <a class="shot__frame" href="#f/sfayaa" style="--ratio:0.6628" aria-label="Open Sfayaa full screen">
+        <a class="shot__frame" href="#f/sfayaa" style="--ratio:0.6628" aria-label="View Sfayaa whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-08-480.avif 480w, images/r/sitters-08-960.avif 960w, images/r/sitters-08-1193.avif 1193w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-08-480.webp 480w, images/r/sitters-08-960.webp 960w, images/r/sitters-08-1193.webp 1193w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-08.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A figure in black against a bright wall, caught mid-turn" width="1193" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-08-480.avif 480w, images/r/sitters-08-960.avif 960w, images/r/sitters-08-1193.avif 1193w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-08-480.webp 480w, images/r/sitters-08-960.webp 960w, images/r/sitters-08-1193.webp 1193w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-08.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A figure in black against a bright wall, caught mid-turn" width="1193" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1417,11 +1417,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="13" id="plate-014">
-        <a class="shot__frame" href="#f/kept" style="--ratio:1" aria-label="Open KEPT full screen">
+        <a class="shot__frame" href="#f/kept" style="--ratio:1" aria-label="View KEPT whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-09-480.avif 480w, images/r/sitters-09-960.avif 960w, images/r/sitters-09-1024.avif 1024w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-09-480.webp 480w, images/r/sitters-09-960.webp 960w, images/r/sitters-09-1024.webp 1024w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-09.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky" width="1024" height="1024" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-09-480.avif 480w, images/r/sitters-09-960.avif 960w, images/r/sitters-09-1024.avif 1024w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-09-480.webp 480w, images/r/sitters-09-960.webp 960w, images/r/sitters-09-1024.webp 1024w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-09.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Two frames side by side: a figure in a KEPT shirt, arms crossed over the face against a blue sky" width="1024" height="1024" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1431,11 +1431,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="14" id="plate-015">
-        <a class="shot__frame" href="#f/chain" style="--ratio:0.75" aria-label="Open Chain full screen">
+        <a class="shot__frame" href="#f/chain" style="--ratio:0.75" aria-label="View Chain whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-10-480.avif 480w, images/r/sitters-10-960.avif 960w, images/r/sitters-10-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-10-480.webp 480w, images/r/sitters-10-960.webp 960w, images/r/sitters-10-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-10.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A face in silver makeup wearing a head chain and ear chain, in black and white" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-10-480.avif 480w, images/r/sitters-10-960.avif 960w, images/r/sitters-10-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-10-480.webp 480w, images/r/sitters-10-960.webp 960w, images/r/sitters-10-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-10.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A face in silver makeup wearing a head chain and ear chain, in black and white" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1445,11 +1445,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="15" id="plate-016">
-        <a class="shot__frame" href="#f/pampas" style="--ratio:0.6678" aria-label="Open Pampas full screen">
+        <a class="shot__frame" href="#f/pampas" style="--ratio:0.6678" aria-label="View Pampas whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-11-480.avif 480w, images/r/sitters-11-960.avif 960w, images/r/sitters-11-1202.avif 1202w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/sitters-11-480.webp 480w, images/r/sitters-11-960.webp 960w, images/r/sitters-11-1202.webp 1202w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/sitters-11.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Gold necklaces on a bare throat, framed by pampas grass and carnations" width="1202" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-11-480.avif 480w, images/r/sitters-11-960.avif 960w, images/r/sitters-11-1202.avif 1202w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-11-480.webp 480w, images/r/sitters-11-960.webp 960w, images/r/sitters-11-1202.webp 1202w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-11.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Gold necklaces on a bare throat, framed by pampas grass and carnations" width="1202" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1459,11 +1459,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="16" id="plate-017">
-        <a class="shot__frame" href="#f/chair" style="--ratio:1.087" aria-label="Open Chair full screen">
+        <a class="shot__frame" href="#f/chair" style="--ratio:1.087" aria-label="View Chair whole">
           <picture>
-            <source type="image/avif" srcset="images/r/sitters-12-480.avif 480w, images/r/sitters-12-562.avif 562w" sizes="(max-width: 749px) 92vw, 92vw">
-            <source type="image/webp" srcset="images/r/sitters-12-480.webp 480w, images/r/sitters-12-562.webp 562w" sizes="(max-width: 749px) 92vw, 92vw">
-            <img src="images/sitters-12.jpg" sizes="(max-width: 749px) 92vw, 92vw" alt="Two legs in dark tights raised over the back of a wire chair, in grainy black and white" width="562" height="517" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/sitters-12-480.avif 480w, images/r/sitters-12-562.avif 562w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/sitters-12-480.webp 480w, images/r/sitters-12-562.webp 562w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/sitters-12.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Two legs in dark tights raised over the back of a wire chair, in grainy black and white" width="562" height="517" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1473,11 +1473,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="17" id="plate-018">
-        <a class="shot__frame" href="#f/balconies" style="--ratio:1.5369" aria-label="Open Balconies full screen">
+        <a class="shot__frame" href="#f/balconies" style="--ratio:1.5369" aria-label="View Balconies whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-01-480.avif 480w, images/r/concrete-01-960.avif 960w, images/r/concrete-01-1334.avif 1334w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-01-480.webp 480w, images/r/concrete-01-960.webp 960w, images/r/concrete-01-1334.webp 1334w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-01.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A grid of apartment balconies in cold cyan light" width="1334" height="868" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-01-480.avif 480w, images/r/concrete-01-960.avif 960w, images/r/concrete-01-1334.avif 1334w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-01-480.webp 480w, images/r/concrete-01-960.webp 960w, images/r/concrete-01-1334.webp 1334w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A grid of apartment balconies in cold cyan light" width="1334" height="868" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1487,11 +1487,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="18" id="plate-019">
-        <a class="shot__frame" href="#f/rake" style="--ratio:0.6706" aria-label="Open Rake full screen">
+        <a class="shot__frame" href="#f/rake" style="--ratio:0.6706" aria-label="View Rake whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-02-480.avif 480w, images/r/concrete-02-960.avif 960w, images/r/concrete-02-1207.avif 1207w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-02-480.webp 480w, images/r/concrete-02-960.webp 960w, images/r/concrete-02-1207.webp 1207w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-02.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A tower block cutting a hard diagonal across a white sky" width="1207" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-02-480.avif 480w, images/r/concrete-02-960.avif 960w, images/r/concrete-02-1207.avif 1207w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-02-480.webp 480w, images/r/concrete-02-960.webp 960w, images/r/concrete-02-1207.webp 1207w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-02.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A tower block cutting a hard diagonal across a white sky" width="1207" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1501,11 +1501,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="19" id="plate-020">
-        <a class="shot__frame" href="#f/no-entry" style="--ratio:0.7256" aria-label="Open NO ENTRY full screen">
+        <a class="shot__frame" href="#f/no-entry" style="--ratio:0.7256" aria-label="View NO ENTRY whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-03-480.avif 480w, images/r/concrete-03-960.avif 960w, images/r/concrete-03-1306.avif 1306w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-03-480.webp 480w, images/r/concrete-03-960.webp 960w, images/r/concrete-03-1306.webp 1306w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-03.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="The words NO ENTRY painted across wet tarmac" width="1306" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-03-480.avif 480w, images/r/concrete-03-960.avif 960w, images/r/concrete-03-1306.avif 1306w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-03-480.webp 480w, images/r/concrete-03-960.webp 960w, images/r/concrete-03-1306.webp 1306w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-03.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="The words NO ENTRY painted across wet tarmac" width="1306" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1515,11 +1515,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="20" id="plate-021">
-        <a class="shot__frame" href="#f/streetlight" style="--ratio:0.9273" aria-label="Open Streetlight full screen">
+        <a class="shot__frame" href="#f/streetlight" style="--ratio:0.9273" aria-label="View Streetlight whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-04-480.avif 480w, images/r/concrete-04-854.avif 854w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-04-480.webp 480w, images/r/concrete-04-854.webp 854w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-04.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A streetlight and two small birds against a flat blue sky" width="854" height="921" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-04-480.avif 480w, images/r/concrete-04-854.avif 854w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-04-480.webp 480w, images/r/concrete-04-854.webp 854w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-04.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A streetlight and two small birds against a flat blue sky" width="854" height="921" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1529,11 +1529,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="21" id="plate-022">
-        <a class="shot__frame" href="#f/wall" style="--ratio:0.75" aria-label="Open Wall full screen">
+        <a class="shot__frame" href="#f/wall" style="--ratio:0.75" aria-label="View Wall whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-05-480.avif 480w, images/r/concrete-05-960.avif 960w, images/r/concrete-05-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-05-480.webp 480w, images/r/concrete-05-960.webp 960w, images/r/concrete-05-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-05.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Hard-edged shadows thrown across a bare wall" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-05-480.avif 480w, images/r/concrete-05-960.avif 960w, images/r/concrete-05-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-05-480.webp 480w, images/r/concrete-05-960.webp 960w, images/r/concrete-05-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-05.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Hard-edged shadows thrown across a bare wall" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1543,11 +1543,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="22" id="plate-023">
-        <a class="shot__frame" href="#f/the-city" style="--ratio:0.7633" aria-label="Open The City full screen">
+        <a class="shot__frame" href="#f/the-city" style="--ratio:0.7633" aria-label="View The City whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-06-480.avif 480w, images/r/concrete-06-960.avif 960w, images/r/concrete-06-1374.avif 1374w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-06-480.webp 480w, images/r/concrete-06-960.webp 960w, images/r/concrete-06-1374.webp 1374w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-06.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Glass towers rising behind a bus shelter in the City" width="1374" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-06-480.avif 480w, images/r/concrete-06-960.avif 960w, images/r/concrete-06-1374.avif 1374w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-06-480.webp 480w, images/r/concrete-06-960.webp 960w, images/r/concrete-06-1374.webp 1374w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-06.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Glass towers rising behind a bus shelter in the City" width="1374" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1557,11 +1557,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="23" id="plate-024">
-        <a class="shot__frame" href="#f/block" style="--ratio:0.6239" aria-label="Open Block full screen">
+        <a class="shot__frame" href="#f/block" style="--ratio:0.6239" aria-label="View Block whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-07-480.avif 480w, images/r/concrete-07-960.avif 960w, images/r/concrete-07-1123.avif 1123w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-07-480.webp 480w, images/r/concrete-07-960.webp 960w, images/r/concrete-07-1123.webp 1123w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-07.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A repeating grid of balconies on a tall block, seen from below against a cyan sky" width="1123" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-07-480.avif 480w, images/r/concrete-07-960.avif 960w, images/r/concrete-07-1123.avif 1123w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-07-480.webp 480w, images/r/concrete-07-960.webp 960w, images/r/concrete-07-1123.webp 1123w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-07.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A repeating grid of balconies on a tall block, seen from below against a cyan sky" width="1123" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1571,11 +1571,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="24" id="plate-025">
-        <a class="shot__frame" href="#f/swifts" style="--ratio:1.509" aria-label="Open Swifts full screen">
+        <a class="shot__frame" href="#f/swifts" style="--ratio:1.509" aria-label="View Swifts whole">
           <picture>
-            <source type="image/avif" srcset="images/r/concrete-08-480.avif 480w, images/r/concrete-08-960.avif 960w, images/r/concrete-08-1440.avif 1440w, images/r/concrete-08-1512.avif 1512w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/concrete-08-480.webp 480w, images/r/concrete-08-960.webp 960w, images/r/concrete-08-1440.webp 1440w, images/r/concrete-08-1512.webp 1512w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/concrete-08.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A flock of birds over a corner building, with two larger shapes among them" width="1512" height="1002" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/concrete-08-480.avif 480w, images/r/concrete-08-960.avif 960w, images/r/concrete-08-1440.avif 1440w, images/r/concrete-08-1512.avif 1512w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/concrete-08-480.webp 480w, images/r/concrete-08-960.webp 960w, images/r/concrete-08-1440.webp 1440w, images/r/concrete-08-1512.webp 1512w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/concrete-08.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A flock of birds over a corner building, with two larger shapes among them" width="1512" height="1002" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1585,11 +1585,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="25" id="plate-026">
-        <a class="shot__frame" href="#f/lemon" style="--ratio:0.8012" aria-label="Open Lemon full screen">
+        <a class="shot__frame" href="#f/lemon" style="--ratio:0.8012" aria-label="View Lemon whole">
           <picture>
-            <source type="image/avif" srcset="images/r/still-01-480.avif 480w, images/r/still-01-960.avif 960w, images/r/still-01-1411.avif 1411w" sizes="(max-width: 749px) 92vw, 115vw">
-            <source type="image/webp" srcset="images/r/still-01-480.webp 480w, images/r/still-01-960.webp 960w, images/r/still-01-1411.webp 1411w" sizes="(max-width: 749px) 92vw, 115vw">
-            <img src="images/still-01.jpg" sizes="(max-width: 749px) 92vw, 115vw" alt="A single slice of lemon on a pale concrete floor in hard sunlight" width="1411" height="1761" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/still-01-480.avif 480w, images/r/still-01-960.avif 960w, images/r/still-01-1411.avif 1411w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/still-01-480.webp 480w, images/r/still-01-960.webp 960w, images/r/still-01-1411.webp 1411w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/still-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A single slice of lemon on a pale concrete floor in hard sunlight" width="1411" height="1761" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1599,11 +1599,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="26" id="plate-027">
-        <a class="shot__frame" href="#f/pencil" style="--ratio:1" aria-label="Open Pencil full screen">
+        <a class="shot__frame" href="#f/pencil" style="--ratio:1" aria-label="View Pencil whole">
           <picture>
-            <source type="image/avif" srcset="images/r/still-02-480.avif 480w, images/r/still-02-960.avif 960w, images/r/still-02-1440.avif 1440w, images/r/still-02-1500.avif 1500w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/still-02-480.webp 480w, images/r/still-02-960.webp 960w, images/r/still-02-1440.webp 1440w, images/r/still-02-1500.webp 1500w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/still-02.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A pencil lying on concrete, crossed by the soft shadow of something outside the frame" width="1500" height="1500" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/still-02-480.avif 480w, images/r/still-02-960.avif 960w, images/r/still-02-1440.avif 1440w, images/r/still-02-1500.avif 1500w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/still-02-480.webp 480w, images/r/still-02-960.webp 960w, images/r/still-02-1440.webp 1440w, images/r/still-02-1500.webp 1500w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/still-02.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A pencil lying on concrete, crossed by the soft shadow of something outside the frame" width="1500" height="1500" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1613,11 +1613,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="27" id="plate-028">
-        <a class="shot__frame" href="#f/cup" style="--ratio:1.6319" aria-label="Open Cup full screen">
+        <a class="shot__frame" href="#f/cup" style="--ratio:1.6319" aria-label="View Cup whole">
           <picture>
-            <source type="image/avif" srcset="images/r/still-03-480.avif 480w, images/r/still-03-960.avif 960w, images/r/still-03-1440.avif 1440w, images/r/still-03-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/still-03-480.webp 480w, images/r/still-03-960.webp 960w, images/r/still-03-1440.webp 1440w, images/r/still-03-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/still-03.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A tipped-over cup on stone, its long shadow thrown across the frame" width="1800" height="1103" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/still-03-480.avif 480w, images/r/still-03-960.avif 960w, images/r/still-03-1440.avif 1440w, images/r/still-03-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/still-03-480.webp 480w, images/r/still-03-960.webp 960w, images/r/still-03-1440.webp 1440w, images/r/still-03-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/still-03.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A tipped-over cup on stone, its long shadow thrown across the frame" width="1800" height="1103" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1627,11 +1627,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="28" id="plate-029">
-        <a class="shot__frame" href="#f/leaves" style="--ratio:0.5133" aria-label="Open Leaves full screen">
+        <a class="shot__frame" href="#f/leaves" style="--ratio:0.5133" aria-label="View Leaves whole">
           <picture>
-            <source type="image/avif" srcset="images/r/still-04-480.avif 480w, images/r/still-04-924.avif 924w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/still-04-480.webp 480w, images/r/still-04-924.webp 924w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/still-04.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Cannabis leaves leaning out from the left of the frame against a flat white wall" width="924" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/still-04-480.avif 480w, images/r/still-04-924.avif 924w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/still-04-480.webp 480w, images/r/still-04-924.webp 924w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/still-04.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Cannabis leaves leaning out from the left of the frame against a flat white wall" width="924" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1641,11 +1641,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="29" id="plate-030">
-        <a class="shot__frame" href="#f/fish" style="--ratio:0.5761" aria-label="Open Fish full screen">
+        <a class="shot__frame" href="#f/fish" style="--ratio:0.5761" aria-label="View Fish whole">
           <picture>
-            <source type="image/avif" srcset="images/r/still-05-480.avif 480w, images/r/still-05-960.avif 960w, images/r/still-05-1037.avif 1037w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/still-05-480.webp 480w, images/r/still-05-960.webp 960w, images/r/still-05-1037.webp 1037w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/still-05.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A goldfish in a clear plastic bottle, held up in two hands against warm window light" width="1037" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/still-05-480.avif 480w, images/r/still-05-960.avif 960w, images/r/still-05-1037.avif 1037w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/still-05-480.webp 480w, images/r/still-05-960.webp 960w, images/r/still-05-1037.webp 1037w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/still-05.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A goldfish in a clear plastic bottle, held up in two hands against warm window light" width="1037" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1655,11 +1655,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="30" id="plate-031">
-        <a class="shot__frame" href="#f/bare" style="--ratio:0.75" aria-label="Open Bare full screen">
+        <a class="shot__frame" href="#f/bare" style="--ratio:0.75" aria-label="View Bare whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-01-480.avif 480w, images/r/winter-01-960.avif 960w, images/r/winter-01-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-01-480.webp 480w, images/r/winter-01-960.webp 960w, images/r/winter-01-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-01.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Bare branches against a white winter sky" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-01-480.avif 480w, images/r/winter-01-960.avif 960w, images/r/winter-01-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-01-480.webp 480w, images/r/winter-01-960.webp 960w, images/r/winter-01-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Bare branches against a white winter sky" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1669,11 +1669,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="31" id="plate-032">
-        <a class="shot__frame" href="#f/path" style="--ratio:0.75" aria-label="Open Path full screen">
+        <a class="shot__frame" href="#f/path" style="--ratio:0.75" aria-label="View Path whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-02-480.avif 480w, images/r/winter-02-960.avif 960w, images/r/winter-02-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-02-480.webp 480w, images/r/winter-02-960.webp 960w, images/r/winter-02-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-02.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A snow-covered path running between trees, one figure far off" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-02-480.avif 480w, images/r/winter-02-960.avif 960w, images/r/winter-02-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-02-480.webp 480w, images/r/winter-02-960.webp 960w, images/r/winter-02-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-02.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A snow-covered path running between trees, one figure far off" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1683,11 +1683,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="32" id="plate-033">
-        <a class="shot__frame" href="#f/corridor" style="--ratio:0.5437" aria-label="Open Corridor full screen">
+        <a class="shot__frame" href="#f/corridor" style="--ratio:0.5437" aria-label="View Corridor whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-03-480.avif 480w, images/r/winter-03-822.avif 822w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-03-480.webp 480w, images/r/winter-03-822.webp 822w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-03.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A figure blurred by a long exposure in a dim corridor" width="822" height="1512" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-03-480.avif 480w, images/r/winter-03-822.avif 822w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-03-480.webp 480w, images/r/winter-03-822.webp 822w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-03.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A figure blurred by a long exposure in a dim corridor" width="822" height="1512" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1697,11 +1697,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="33" id="plate-034">
-        <a class="shot__frame" href="#f/curtain" style="--ratio:0.75" aria-label="Open Curtain full screen">
+        <a class="shot__frame" href="#f/curtain" style="--ratio:0.75" aria-label="View Curtain whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-04-480.avif 480w, images/r/winter-04-960.avif 960w, images/r/winter-04-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-04-480.webp 480w, images/r/winter-04-960.webp 960w, images/r/winter-04-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-04.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="Daylight pooling through a drawn curtain" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-04-480.avif 480w, images/r/winter-04-960.avif 960w, images/r/winter-04-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-04-480.webp 480w, images/r/winter-04-960.webp 960w, images/r/winter-04-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-04.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="Daylight pooling through a drawn curtain" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1711,11 +1711,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="34" id="plate-035">
-        <a class="shot__frame" href="#f/park" style="--ratio:0.75" aria-label="Open Park full screen">
+        <a class="shot__frame" href="#f/park" style="--ratio:0.75" aria-label="View Park whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-06-480.avif 480w, images/r/winter-06-960.avif 960w, images/r/winter-06-1350.avif 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-06-480.webp 480w, images/r/winter-06-960.webp 960w, images/r/winter-06-1350.webp 1350w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-06.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A snowed-over park seen from above, benches and paths picked out in white" width="1350" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-06-480.avif 480w, images/r/winter-06-960.avif 960w, images/r/winter-06-1350.avif 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-06-480.webp 480w, images/r/winter-06-960.webp 960w, images/r/winter-06-1350.webp 1350w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-06.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A snowed-over park seen from above, benches and paths picked out in white" width="1350" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1725,11 +1725,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="35" id="plate-036">
-        <a class="shot__frame" href="#f/window" style="--ratio:0.8761" aria-label="Open Window full screen">
+        <a class="shot__frame" href="#f/window" style="--ratio:0.8761" aria-label="View Window whole">
           <picture>
-            <source type="image/avif" srcset="images/r/winter-07-480.avif 480w, images/r/winter-07-792.avif 792w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/winter-07-480.webp 480w, images/r/winter-07-792.webp 792w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/winter-07.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A figure crossing in front of a bright window, smeared by a long exposure" width="792" height="904" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/winter-07-480.avif 480w, images/r/winter-07-792.avif 792w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/winter-07-480.webp 480w, images/r/winter-07-792.webp 792w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/winter-07.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A figure crossing in front of a bright window, smeared by a long exposure" width="792" height="904" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1739,11 +1739,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="36" id="plate-037">
-        <a class="shot__frame" href="#f/the-physical-go-home" style="--ratio:0.8315" aria-label="Open The Physical Go Home full screen">
+        <a class="shot__frame" href="#f/the-physical-go-home" style="--ratio:0.8315" aria-label="View The Physical Go Home whole">
           <picture>
-            <source type="image/avif" srcset="images/r/printed-01-480.avif 480w, images/r/printed-01-960.avif 960w, images/r/printed-01-1440.avif 1440w, images/r/printed-01-1497.avif 1497w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/printed-01-480.webp 480w, images/r/printed-01-960.webp 960w, images/r/printed-01-1440.webp 1440w, images/r/printed-01-1497.webp 1497w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/printed-01.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A zine page: a framed text reading &quot;The physical go home but the connection still stay strong&quot;, above a small dark photograph" width="1497" height="1800" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/printed-01-480.avif 480w, images/r/printed-01-960.avif 960w, images/r/printed-01-1440.avif 1440w, images/r/printed-01-1497.avif 1497w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/printed-01-480.webp 480w, images/r/printed-01-960.webp 960w, images/r/printed-01-1440.webp 1440w, images/r/printed-01-1497.webp 1497w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/printed-01.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A zine page: a framed text reading &quot;The physical go home but the connection still stay strong&quot;, above a small dark photograph" width="1497" height="1800" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1753,11 +1753,11 @@
         </figcaption>
       </figure>
       <figure class="shot" data-index="37" id="plate-038">
-        <a class="shot__frame" href="#f/plates-009-010" style="--ratio:1.4138" aria-label="Open Plates 009 — 010 full screen">
+        <a class="shot__frame" href="#f/plates-009-010" style="--ratio:1.4138" aria-label="View Plates 009 — 010 whole">
           <picture>
-            <source type="image/avif" srcset="images/r/printed-02-480.avif 480w, images/r/printed-02-960.avif 960w, images/r/printed-02-1440.avif 1440w, images/r/printed-02-1800.avif 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <source type="image/webp" srcset="images/r/printed-02-480.webp 480w, images/r/printed-02-960.webp 960w, images/r/printed-02-1440.webp 1440w, images/r/printed-02-1800.webp 1800w" sizes="(max-width: 749px) 92vw, 46vw">
-            <img src="images/printed-02.jpg" sizes="(max-width: 749px) 92vw, 46vw" alt="A layout sheet of five black and white London street frames, numbered 009 and 010" width="1800" height="1273" loading="lazy" decoding="async">
+            <source type="image/avif" srcset="images/r/printed-02-480.avif 480w, images/r/printed-02-960.avif 960w, images/r/printed-02-1440.avif 1440w, images/r/printed-02-1800.avif 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <source type="image/webp" srcset="images/r/printed-02-480.webp 480w, images/r/printed-02-960.webp 960w, images/r/printed-02-1440.webp 1440w, images/r/printed-02-1800.webp 1800w" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw">
+            <img src="images/printed-02.jpg" sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw" alt="A layout sheet of five black and white London street frames, numbered 009 and 010" width="1800" height="1273" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -1768,46 +1768,29 @@
       </figure>
 <!-- generated-grid:end -->
     </div>
-
-    <p class="grid__empty" id="gridEmpty" hidden>Nothing in this series yet.</p>
-  </section>
-
-  <!-- ── Series index ─────────────────────────────────────────────────── -->
-  <section class="section section--index" id="series">
-    <header class="opener">
-      <span class="opener__plate">02</span>
-      <h2 class="opener__title">Series</h2>
-      <p class="opener__note reveal">
-        Four bodies of work. Pick one to filter the plates above.
-      </p>
-    </header>
-    <ul class="index-list" id="indexList"></ul>
-    <div class="index-preview" id="indexPreview" aria-hidden="true"></div>
   </section>
 
   <!-- ── About ────────────────────────────────────────────────────────── -->
-  <section class="section section--about" id="about">
-    <div class="about__media reveal">
-      <img id="aboutImage" alt="" loading="lazy" decoding="async">
-    </div>
-    <div class="about__body">
-      <header class="opener opener--stacked">
-        <span class="opener__plate">03</span>
-        <h2 class="opener__title">About</h2>
-      </header>
-      <p class="about__lead reveal" id="aboutLead"></p>
-      <ul class="about__services reveal" id="aboutServices"></ul>
-      <dl class="about__meta reveal">
+  <section class="about" id="about">
+    <div class="about__col">
+      <p class="kicker">About</p>
+      <h2 class="about__lead" id="aboutLead"></h2>
+      <ul class="about__services" id="aboutServices"></ul>
+      <dl class="about__facts">
         <div><dt>Based in</dt><dd id="aboutLocation"></dd></div>
         <div><dt>Working since</dt><dd id="aboutSince"></dd></div>
         <div><dt>Formats</dt><dd id="aboutFormats"></dd></div>
       </dl>
+      <a class="about__more" href="journal/">&gt; Read the journal</a>
+    </div>
 
+    <div class="about__col about__col--faq">
+      <p class="kicker">Asked often</p>
       <!-- Written by tools/build-seo.mjs from SITE.faq, and marked up as
            FAQPage in the same pass, so the text a machine quotes is exactly
            the text on the page. Do not edit here; edit js/data.js. -->
       <!-- generated-faq:start -->
-      <dl class="about__faq reveal">
+      <dl class="about__faq">
         <div>
           <dt>Who is Sam?</dt>
           <dd>Sam is a photographer based in Tunis, Tunisia, working mainly on 35mm film. He has photographed in Tunis and London since 2018.</dd>
@@ -1834,61 +1817,37 @@
   </section>
 
   <!-- ── Contact ──────────────────────────────────────────────────────── -->
-  <section class="section section--contact" id="contact">
-    <header class="opener opener--centred">
-      <span class="opener__plate">04</span>
-      <h2 class="opener__title">Contact</h2>
-    </header>
-    <p class="contact__lead reveal">Commissions, prints and exhibitions.</p>
-    <a class="contact__mail display reveal" id="contactMail" href="#"></a>
-    <ul class="contact__social reveal" id="contactSocial"></ul>
+  <section class="contact" id="contact">
+    <p class="kicker">Contact</p>
+    <h2 class="contact__lead">Commissions, prints and exhibitions.</h2>
+    <a class="contact__mail" id="contactMail" href="mailto:hello@example.com">hello@example.com</a>
+    <ul class="contact__social" id="contactSocial"></ul>
   </section>
 </main>
 
-<footer class="site-foot">
-  <p>&copy; <span id="year"></span> Sam. All photographs are the property of the artist.</p>
+<footer class="foot">
+  <p>&copy; <span id="year">2026</span> Sam. All photographs are the property of the artist.</p>
   <a href="#top">Back to top</a>
 </footer>
 
-<!-- ── Lightbox ───────────────────────────────────────────────────────── -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
-  <button class="lightbox__close" id="lbClose" type="button" aria-label="Close viewer">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
-  </button>
-
-  <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="Previous photograph">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4L7 12l8 8"/></svg>
-  </button>
-
-  <!-- The plate: the photograph and the apparatus that describes it. -->
-  <div class="lightbox__plate">
-    <figure class="lightbox__stage">
-      <img id="lbImage" alt="">
-    </figure>
-
-    <aside class="plate">
-      <span class="plate__no" id="lbPlate"></span>
-      <h2 class="plate__title" id="lbTitle"></h2>
-      <p class="plate__note" id="lbNote"></p>
-      <dl class="plate__data" id="lbData"></dl>
-
-      <!-- The colours measured out of this frame, darkest to lightest.
-           Filled from js/palette.js; see tools/build-palette.mjs. -->
-      <figure class="plate__palette" id="lbPalette" hidden>
-        <figcaption>What the film returned</figcaption>
-        <ol></ol>
-      </figure>
-      <div class="plate__seq">
-        <span class="plate__count" id="lbCounter"></span>
-        <span class="plate__ticks" id="lbTicks" aria-hidden="true"></span>
-      </div>
-    </aside>
+<!-- ── Viewer ─────────────────────────────────────────────────────────── -->
+<!-- One photograph, whole, with nothing done to it. -->
+<dialog class="viewer" id="viewer" aria-label="Photograph viewer">
+  <button class="viewer__close" id="viewerClose" type="button">Close [x]</button>
+  <figure class="viewer__stage">
+    <picture class="viewer__picture"></picture>
+    <figcaption class="viewer__caption">
+      <p class="viewer__count" id="viewerCount"></p>
+      <h2 class="viewer__title" id="viewerTitle"></h2>
+      <p class="viewer__note" id="viewerNote" hidden></p>
+      <p class="viewer__facts" id="viewerFacts"></p>
+    </figcaption>
+  </figure>
+  <div class="viewer__nav">
+    <button id="viewerPrev" type="button" aria-label="Previous photograph">&lt; Prev</button>
+    <button id="viewerNext" type="button" aria-label="Next photograph">Next &gt;</button>
   </div>
-
-  <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="Next photograph">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
-  </button>
-</div>
+</dialog>
 
 <script type="module" src="js/main.js"></script>
 </body>

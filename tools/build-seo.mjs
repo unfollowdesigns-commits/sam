@@ -25,7 +25,6 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SITE, SERIES, PHOTOS } from '../js/data.js';
 import { SIZES } from '../js/sizes.js';
-import { layoutFor, sizesFor } from '../js/layout.js';
 import { readPosts } from './posts.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -43,19 +42,17 @@ const slugOf = (p) => p.title.toLowerCase().normalize('NFD')
 const seriesTitle = (id) => SERIES.find((s) => s.id === id)?.title ?? id;
 const factsOf = (p) => [seriesTitle(p.series), p.location, p.year].filter(Boolean);
 
-/* The caption's data line, matching js/gallery.js exactly: what the frame
+/* The caption's data line, matching js/main.js exactly: what the frame
    recorded, and 'n.d.' where it recorded no date. */
 const captionFacts = (p) => [p.location, p.year || 'Undated'].filter(Boolean).join(' / ');
 
 /* --- 1. Gallery markup, so the work exists without JavaScript ----------- */
-// This has to name exactly the same files the script will ask for once it
-// runs, because the script clears the grid and rebuilds it. If the two
-// disagree, the browser downloads the whole gallery twice — once for the
-// markup it is about to throw away, and again for what replaces it. Matching
-// URLs make the rebuild a cache hit and cost nothing. That includes `sizes`:
-// the rhythm comes from js/layout.js so both sides compute it identically.
-const plan = layoutFor(PHOTOS);
-const kindOf = new Map(plan.map((p) => [p.index, p.kind]));
+// With the scene running this list is kept off screen — the room is what is
+// looked at — and is there for crawlers, screen readers and the keyboard.
+// Where the scene cannot run, css/crt.css lays it out in up to three columns,
+// which is what `sizes` below describes. Every image is lazy: with the scene
+// running none of them should be fetched at all.
+const painted = '(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 31vw';
 
 const srcsetFor = (src, ext) => {
   const info = SIZES[src];
@@ -72,15 +69,14 @@ const figures = PHOTOS.map((p, i) => {
   const h = SIZES[p.src]?.height ?? Math.round(w / p.ratio);
   const avif = srcsetFor(p.src, 'avif');
   const webp = srcsetFor(p.src, 'webp');
-  const painted = sizesFor(kindOf.get(i));
   const sources = avif && webp
     ? `\n            <source type="image/avif" srcset="${avif}" sizes="${painted}">`
       + `\n            <source type="image/webp" srcset="${webp}" sizes="${painted}">`
     : '';
   return `      <figure class="shot" data-index="${i}" id="plate-${plate}">
-        <a class="shot__frame" href="#f/${slugOf(p)}" style="--ratio:${p.ratio}" aria-label="Open ${esc(p.title)} full screen">
+        <a class="shot__frame" href="#f/${slugOf(p)}" style="--ratio:${p.ratio}" aria-label="View ${esc(p.title)} whole">
           <picture>${sources}
-            <img src="${p.src}"${avif ? ` sizes="${painted}"` : ''} alt="${esc(p.alt)}" width="${w}" height="${h}" loading="${i < 2 ? 'eager' : 'lazy'}" decoding="async">
+            <img src="${p.src}"${avif ? ` sizes="${painted}"` : ''} alt="${esc(p.alt)}" width="${w}" height="${h}" loading="lazy" decoding="async">
           </picture>
         </a>
         <figcaption class="shot__cap">
@@ -92,7 +88,7 @@ const figures = PHOTOS.map((p, i) => {
 }).join('\n');
 
 /* --- 2. The FAQ, on the page and in the graph --------------------------- */
-const faqMarkup = `      <dl class="about__faq reveal">
+const faqMarkup = `      <dl class="about__faq">
 ${SITE.faq.map(({ q, a }) => `        <div>
           <dt>${esc(q)}</dt>
           <dd>${esc(a)}</dd>
