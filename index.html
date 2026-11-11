@@ -33,6 +33,10 @@
 (function (c) {
   c.remove('no-js'); c.add('js');
   if (window.WebGLRenderingContext) c.add('gl');
+  /* If the script never arrives — the file opened straight off a disk, a
+     blocked request — do not sit on the loading screen: show the plain page. */
+  window.samPlain = function () { if (!c.contains('is-ready')) { c.remove('gl'); c.add('is-ready'); } };
+  setTimeout(function () { if (!window.samRunning) window.samPlain(); }, 3000);
 })(document.documentElement.classList);
 </script>
 
@@ -1849,6 +1853,6 @@
   </div>
 </dialog>
 
-<script type="module" src="js/main.js"></script>
+<script type="module" src="js/main.js" onerror="samPlain()"></script>
 </body>
 </html>

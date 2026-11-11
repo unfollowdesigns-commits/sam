@@ -11,6 +11,7 @@ import { SITE, SERIES, PHOTOS } from './data.js';
 import { createScene } from './scene.js';
 import { createViewer } from './viewer.js';
 
+window.samRunning = true;   // tells the page's own fallback the script arrived
 const root = document.documentElement;
 const $ = (id) => document.getElementById(id);
 const pad = (n) => String(n).padStart(2, '0');
